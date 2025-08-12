@@ -44,7 +44,7 @@ export default function OpenQASMPlayground() {
     if (!code.trim()) {
       toast({
         title: "Error",
-        description: "Please enter some OpenQASM code to execute",
+        description: "Please enter some OpenQASM code to run",
         variant: "destructive",
       })
       return
@@ -155,17 +155,10 @@ export default function OpenQASMPlayground() {
                     disabled={isLoading}
                     className="bg-blue-600 hover:bg-blue-700 text-white"
                   >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Executing...
-                      </>
-                    ) : (
-                      <>
-                        <Play className="mr-2 h-4 w-4" />
-                        Execute
-                      </>
-                    )}
+                    <>
+                      <Play className="h-4 w-4" />
+                      Run
+                    </>
                   </Button>
                 </div>
               </CardContent>
@@ -263,8 +256,7 @@ export default function OpenQASMPlayground() {
                 )}
 
                 {!result && !error && !isLoading && (
-                  <div className="text-center py-12 text-gray-400 min-h-[200px] flex flex-col justify-center">
-                    <p>Execute your OpenQASM code to see results</p>
+                  <div className="text-center py-12 text-gray-400 min-h-[100px] flex flex-col justify-center">
                   </div>
                 )}
               </CardContent>
