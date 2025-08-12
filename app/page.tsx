@@ -2,10 +2,10 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, Play, Copy, RotateCcw } from "lucide-react"
+import { Loader2, Play, Copy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface QuantumState {
@@ -134,7 +134,6 @@ export default function OpenQASMPlayground() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white mb-2 text-left">OpenQASM 3.0 Playground</h1>
-          <p className="text-lg text-gray-300 text-left">Write and execute OpenQASM 3.0 quantum circuits</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -142,31 +141,6 @@ export default function OpenQASMPlayground() {
           <div className="lg:col-span-2 space-y-6">
             {/* Code Editor */}
             <Card className="h-fit bg-gray-800 border-gray-700">
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-white">Code Editor</CardTitle>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => copyToClipboard(code)}
-                      className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
-                    >
-                      <Copy className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={resetCode}
-                      className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
-                    >
-                      <RotateCcw className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </CardHeader>
               <CardContent>
                 <Textarea
                   value={code}
@@ -199,12 +173,6 @@ export default function OpenQASMPlayground() {
 
             {/* Results */}
             <Card className="h-fit min-h-[300px] bg-gray-800 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white">Simulation Results</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Raw JSON response from the quantum simulator
-                </CardDescription>
-              </CardHeader>
               <CardContent>
                 {error && (
                   <div className="bg-red-900/50 border border-red-700 rounded-lg p-4 mb-4">
@@ -229,7 +197,7 @@ export default function OpenQASMPlayground() {
                 {result && (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold text-white">JSON Response</h3>
+                      <h3 className="text-lg font-semibold text-white">Quantum States</h3>
                       <Button
                         variant="outline"
                         size="sm"
@@ -241,17 +209,59 @@ export default function OpenQASMPlayground() {
                       </Button>
                     </div>
 
-                    <div className="bg-gray-900 rounded-lg p-4 overflow-auto min-h-[200px]">
-                      <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
-                        {JSON.stringify(result, null, 2)}
-                      </pre>
+                    <div className="space-y-3">
+                      {result.state.map((state, index) => {
+                        return (
+                          <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className="text-white font-medium">|{state.binaryString}⟩</h4>
+                            </div>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {/* Probability Bar */}
+                              <div className="space-y-2">
+                                <div className="flex justify-between text-sm">
+                                  <span className="text-gray-400">Probability</span>
+                                  <span className="text-white">{state.probability?.toFixed(6) || "0.000000"}</span>
+                                </div>
+                                <div className="w-full bg-gray-700 rounded-full h-2">
+                                  <div
+                                    className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+                                    style={{ width: `${(state.probability || 0) * 100}%` }}
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Amplitude */}
+                              <div className="space-y-2">
+                                <span className="text-gray-400 text-sm">Amplitude</span>
+                                <div className="text-white font-mono text-sm">
+                                  {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
+                                  {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
                     </div>
+
+                    {/* Collapsible JSON view */}
+                    <details className="mt-4">
+                      <summary className="cursor-pointer text-gray-400 hover:text-white transition-colors">
+                        Show Raw JSON
+                      </summary>
+                      <div className="bg-gray-900 rounded-lg p-4 mt-2 overflow-auto max-h-60">
+                        <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
+                          {JSON.stringify(result, null, 2)}
+                        </pre>
+                      </div>
+                    </details>
                   </div>
                 )}
 
                 {!result && !error && !isLoading && (
                   <div className="text-center py-12 text-gray-400 min-h-[200px] flex flex-col justify-center">
-                    <Play className="mx-auto h-12 w-12 mb-4 opacity-50" />
                     <p>Execute your OpenQASM code to see results</p>
                   </div>
                 )}
@@ -263,9 +273,6 @@ export default function OpenQASMPlayground() {
             <Card className="h-fit bg-gray-800 border-gray-700">
               <CardHeader>
                 <CardTitle className="text-white">Examples</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Click on any example to load it into the editor
-                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
