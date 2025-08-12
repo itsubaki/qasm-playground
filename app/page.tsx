@@ -162,7 +162,7 @@ export default function OpenQASMPlayground() {
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter your OpenQASM code here..."
-                  className="min-h-[120px] font-mono text-sm"
+                  className="min-h-[240px] font-mono text-sm"
                 />
                 <div className="flex justify-between items-center mt-4">
                   <div className="text-sm text-gray-500">Lines: {code.split("\n").length}</div>
