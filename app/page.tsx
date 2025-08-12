@@ -130,28 +130,38 @@ export default function OpenQASMPlayground() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2 text-left">OpenQASM 3.0 Playground</h1>
-          <p className="text-lg text-gray-600 text-left">Write and execute OpenQASM 3.0 quantum circuits</p>
+          <h1 className="text-4xl font-bold text-white mb-2 text-left">OpenQASM 3.0 Playground</h1>
+          <p className="text-lg text-gray-300 text-left">Write and execute OpenQASM 3.0 quantum circuits</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Left column - Code Editor and Results */}
           <div className="lg:col-span-2 space-y-6">
             {/* Code Editor */}
-            <Card className="h-fit">
+            <Card className="h-fit bg-gray-800 border-gray-700">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div>
-                    <CardTitle>Code Editor</CardTitle>
+                    <CardTitle className="text-white">Code Editor</CardTitle>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" onClick={() => copyToClipboard(code)}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => copyToClipboard(code)}
+                      className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
+                    >
                       <Copy className="h-4 w-4" />
                     </Button>
-                    <Button variant="outline" size="sm" onClick={resetCode}>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={resetCode}
+                      className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
+                    >
                       <RotateCcw className="h-4 w-4" />
                     </Button>
                   </div>
@@ -162,11 +172,15 @@ export default function OpenQASMPlayground() {
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter your OpenQASM code here..."
-                  className="min-h-[240px] font-mono text-sm"
+                  className="min-h-[240px] font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400"
                 />
                 <div className="flex justify-between items-center mt-4">
-                  <div className="text-sm text-gray-500">Lines: {code.split("\n").length}</div>
-                  <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700">
+                  <div className="text-sm text-gray-400">Lines: {code.split("\n").length}</div>
+                  <Button
+                    onClick={executeCode}
+                    disabled={isLoading}
+                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                  >
                     {isLoading ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -184,27 +198,29 @@ export default function OpenQASMPlayground() {
             </Card>
 
             {/* Results */}
-            <Card className="h-fit min-h-[300px]">
+            <Card className="h-fit min-h-[300px] bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle>Simulation Results</CardTitle>
-                <CardDescription>Raw JSON response from the quantum simulator</CardDescription>
+                <CardTitle className="text-white">Simulation Results</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Raw JSON response from the quantum simulator
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {error && (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
+                  <div className="bg-red-900/50 border border-red-700 rounded-lg p-4 mb-4">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="text-red-800 font-semibold">Error Details</h3>
+                      <h3 className="text-red-300 font-semibold">Error Details</h3>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => copyToClipboard(error)}
-                        className="text-red-600 border-red-300 hover:bg-red-100"
+                        className="text-red-300 border-red-600 hover:bg-red-800/50 bg-red-900/30"
                       >
                         <Copy className="h-4 w-4 mr-2" />
                         Copy Error
                       </Button>
                     </div>
-                    <pre className="text-red-700 text-sm whitespace-pre-wrap font-mono bg-red-100 p-3 rounded border overflow-auto max-h-40">
+                    <pre className="text-red-200 text-sm whitespace-pre-wrap font-mono bg-red-950/50 p-3 rounded border border-red-800 overflow-auto max-h-40">
                       {error}
                     </pre>
                   </div>
@@ -213,11 +229,12 @@ export default function OpenQASMPlayground() {
                 {result && (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">JSON Response</h3>
+                      <h3 className="text-lg font-semibold text-white">JSON Response</h3>
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
+                        className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
                       >
                         <Copy className="h-4 w-4 mr-2" />
                         Copy JSON
@@ -233,7 +250,7 @@ export default function OpenQASMPlayground() {
                 )}
 
                 {!result && !error && !isLoading && (
-                  <div className="text-center py-12 text-gray-500 min-h-[200px] flex flex-col justify-center">
+                  <div className="text-center py-12 text-gray-400 min-h-[200px] flex flex-col justify-center">
                     <Play className="mx-auto h-12 w-12 mb-4 opacity-50" />
                     <p>Execute your OpenQASM code to see results</p>
                   </div>
@@ -243,10 +260,12 @@ export default function OpenQASMPlayground() {
           </div>
 
           <div className="lg:col-span-1">
-            <Card className="h-fit">
+            <Card className="h-fit bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle>Example Circuits</CardTitle>
-                <CardDescription>Click on any example to load it into the editor</CardDescription>
+                <CardTitle className="text-white">Example Circuits</CardTitle>
+                <CardDescription className="text-gray-400">
+                  Click on any example to load it into the editor
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -321,12 +340,14 @@ cx q[0], q[1];
                   ].map((example, index) => (
                     <div
                       key={index}
-                      className="border rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors"
+                      className="border border-gray-600 rounded-lg p-4 cursor-pointer hover:bg-gray-700 transition-colors bg-gray-750"
                       onClick={() => setCode(example.code)}
                     >
-                      <h4 className="font-semibold mb-2">{example.name}</h4>
-                      <p className="text-sm text-gray-600 mb-3">{example.description}</p>
-                      <Badge variant="outline">Click to load</Badge>
+                      <h4 className="font-semibold mb-2 text-white">{example.name}</h4>
+                      <p className="text-sm text-gray-300 mb-3">{example.description}</p>
+                      <Badge variant="outline" className="border-gray-500 text-gray-300">
+                        Click to load
+                      </Badge>
                     </div>
                   ))}
                 </div>
