@@ -297,7 +297,6 @@ gate y q { U(pi, pi/2.0, pi/2.0) q; }
 gate z q { U(0, pi, 0) q; }
 gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1;}
 
-
 qubit[2] q;
 reset q;
 
