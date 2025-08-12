@@ -262,7 +262,7 @@ export default function OpenQASMPlayground() {
           <div className="lg:col-span-1">
             <Card className="h-fit bg-gray-800 border-gray-700">
               <CardHeader>
-                <CardTitle className="text-white">Example Circuits</CardTitle>
+                <CardTitle className="text-white">Examples</CardTitle>
                 <CardDescription className="text-gray-400">
                   Click on any example to load it into the editor
                 </CardDescription>
@@ -283,6 +283,26 @@ reset q;
 
 h q[0];
 cx q[0], q[1];`,
+                    },
+                    {
+                      name: "Standard Gates",
+                      description: "Defines standard quantum gates using unitary operations.",
+                      code: `OPENQASM 3.0;
+
+gate i q { U(0, 0, 0) q; }
+gate h q { U(pi/2.0, 0, pi) q; }
+gate x q { U(pi, 0, pi) q; }
+gate y q { U(pi, pi/2.0, pi/2.0) q; }
+gate z q { U(0, pi, 0) q; }
+gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1;}
+
+
+qubit[2] q;
+reset q;
+
+h q[0];
+cx q[0], q[1];
+`,
                     },
                     {
                       name: "Quantum Fourier Transform",
@@ -315,26 +335,6 @@ reset q;
 
 x q[2];
 qft(q);
-`,
-                    },
-                    {
-                      name: "Standard Gates",
-                      description: "Defines standard quantum gates using unitary operations.",
-                      code: `OPENQASM 3.0;
-
-gate i q { U(0, 0, 0) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
-gate x q { U(pi, 0, pi) q; }
-gate y q { U(pi, pi/2.0, pi/2.0) q; }
-gate z q { U(0, pi, 0) q; }
-gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1;}
-
-
-qubit[2] q;
-reset q;
-
-h q[0];
-cx q[0], q[1];
 `,
                     },
                   ].map((example, index) => (
