@@ -211,6 +211,8 @@ export default function OpenQASMPlayground() {
 
                     <div className="space-y-3">
                       {result.state.map((state, index) => {
+                        const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
+                 
                         return (
                           <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
                             <div className="flex items-center justify-between mb-3">
@@ -352,9 +354,6 @@ qft(q);
                     >
                       <h4 className="font-semibold mb-2 text-white">{example.name}</h4>
                       <p className="text-sm text-gray-300 mb-3">{example.description}</p>
-                      <Badge variant="outline" className="border-gray-500 text-gray-300">
-                        Click to load
-                      </Badge>
                     </div>
                   ))}
                 </div>
