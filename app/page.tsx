@@ -153,8 +153,8 @@ export default function OpenQASMPlayground() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="font-bold text-white text-left text-2xl leading-7 mt-3 mb-0">OpenQASM 3.0 Playground</h1>
+        <div className="text-center mb-4">
+          <h1 className="font-bold text-white text-left text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
