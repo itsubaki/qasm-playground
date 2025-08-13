@@ -14,7 +14,7 @@ interface QuantumState {
   }
   probability: number
   int: number[]
-  binary_string: string[]
+  binaryString: string[]
 }
 
 interface SimulationResult {
@@ -179,7 +179,11 @@ export default function OpenQASMPlayground() {
                     onChange={(e) => setCode(e.target.value)}
                     placeholder="Enter your OpenQASM code here..."
                     className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 pl-14 resize-none"
-                    style={{ height: `${editorHeight}px` }}
+                    style={{
+                      height: `${editorHeight}px`,
+                      fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
+                      lineHeight: "1.4",
+                    }}
                   />
                 </div>
                 <div className="flex justify-end items-center mt-4">
@@ -238,7 +242,7 @@ export default function OpenQASMPlayground() {
                     <div className="space-y-3">
                       {result.state.map((state, index) => {
                         const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
-
+                        
                         return (
                           <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
                             <div className="flex items-center justify-between mb-3">
