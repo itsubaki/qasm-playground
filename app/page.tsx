@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -106,22 +106,6 @@ export default function OpenQASMPlayground() {
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
 
-  // Calculate editor height based on number of lines
-  const calculateEditorHeight = (codeText: string) => {
-    const lines = codeText.split("\n").length
-    const minHeight = 400
-    const lineHeight = 22.4 // Updated to match textarea line height (16px * 1.4)
-    const padding = 16 // top and bottom padding
-    const calculatedHeight = Math.max(minHeight, lines * lineHeight + padding)
-    return calculatedHeight
-  }
-
-  const [editorHeight, setEditorHeight] = useState(calculateEditorHeight(defaultCode))
-
-  useEffect(() => {
-    setEditorHeight(calculateEditorHeight(code))
-  }, [code])
-
   const executeCode = async () => {
     if (!code.trim()) {
       toast({
@@ -224,6 +208,9 @@ export default function OpenQASMPlayground() {
     }
   }
 
+  const lineCount = code.split("\n").length
+  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1)
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
@@ -256,15 +243,20 @@ export default function OpenQASMPlayground() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="relative flex-1">
-                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gray-900 border-r border-gray-600 flex flex-col text-xs text-gray-400 font-mono pt-2 pb-2 rounded-l-md overflow-hidden">
-                  {code.split("\n").map((_, index) => (
+              <div className="relative flex-1 flex">
+                {/* Line numbers */}
+                <div className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none">
+                  {lineNumbers.map((lineNum) => (
                     <div
-                      key={index}
-                      className="flex items-center justify-end pr-2 flex-shrink-0"
-                      style={{ height: "22.4px", lineHeight: "22.4px" }}
+                      key={lineNum}
+                      className="text-gray-500 font-mono text-sm"
+                      style={{
+                        lineHeight: "1.4",
+                        fontSize: "14px",
+                        height: "19.6px", // 14px * 1.4 line-height
+                      }}
                     >
-                      {index + 1}
+                      {lineNum}
                     </div>
                   ))}
                 </div>
@@ -272,11 +264,11 @@ export default function OpenQASMPlayground() {
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter your OpenQASM code here..."
-                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 pl-14 resize-none h-full"
+                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-600 flex-1 border-l-0 rounded-l-none"
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
-                    fontSize: "14px", // Explicitly set font size to match line number calculation
+                    fontSize: "14px",
                   }}
                 />
               </div>
