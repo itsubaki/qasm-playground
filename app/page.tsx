@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -105,6 +105,15 @@ export default function OpenQASMPlayground() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const lineNumbersRef = useRef<HTMLDivElement>(null)
+
+  const handleScroll = () => {
+    if (textareaRef.current && lineNumbersRef.current) {
+      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
+    }
+  }
 
   const executeCode = async () => {
     if (!code.trim()) {
@@ -220,8 +229,8 @@ export default function OpenQASMPlayground() {
 
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
           {/* Code Editor */}
-          <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col">
-            <CardContent className="flex-1 flex flex-col">
+          <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col h-full">
+            <CardContent className="flex-1 flex flex-col p-6 h-full">
               <div className="flex justify-end items-center gap-3 mt-0 mb-4">
                 <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
                   Run
@@ -243,9 +252,14 @@ export default function OpenQASMPlayground() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="relative flex-1 flex">
-                {/* Line numbers */}
-                <div className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none">
+              <div className="relative flex-1 flex overflow-hidden min-h-0">
+                <div
+                  ref={lineNumbersRef}
+                  className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide"
+                  style={{
+                    height: "100%",
+                  }}
+                >
                   {lineNumbers.map((lineNum) => (
                     <div
                       key={lineNum}
@@ -261,10 +275,12 @@ export default function OpenQASMPlayground() {
                   ))}
                 </div>
                 <Textarea
+                  ref={textareaRef}
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
+                  onScroll={handleScroll}
                   placeholder="Enter your OpenQASM code here..."
-                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-600 flex-1 border-l-0 rounded-l-none"
+                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-600 flex-1 border-l-0 rounded-l-none overflow-y-auto"
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
@@ -276,8 +292,8 @@ export default function OpenQASMPlayground() {
           </Card>
 
           {/* Results */}
-          <Card className="lg:w-[30%] bg-gray-800 border-gray-700 flex flex-col">
-            <CardContent className="flex-1 overflow-auto">
+          <Card className="lg:w-[30%] bg-gray-800 border-gray-700 flex flex-col h-full">
+            <CardContent className="flex-1 overflow-auto p-6">
               {error && (
                 <div className="bg-red-900/50 border border-red-700 rounded-lg p-4 mb-4">
                   <div className="flex items-center justify-between mb-2">
