@@ -21,7 +21,9 @@ interface SimulationResult {
   state: QuantumState[]
 }
 
-const defaultCode = `OPENQASM 3.0;
+const defaultCode = `// Bell State
+
+OPENQASM 3.0;
 
 gate h q { U(pi/2.0, 0, pi) q; }
 gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
@@ -310,21 +312,14 @@ export default function OpenQASMPlayground() {
                     {
                       name: "Bell State",
                       description: "Creates an entangled Bell state.",
-                      code: `OPENQASM 3.0;
-
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
-
-qubit[2] q;
-reset q;
-
-h q[0];
-cx q[0], q[1];`,
+                      code: defaultCode,
                     },
                     {
                       name: "Standard Gates",
                       description: "Defines standard quantum gates using unitary operations.",
-                      code: `OPENQASM 3.0;
+                      code: `// Standard Gates
+
+OPENQASM 3.0;
 
 gate i q { U(0, 0, 0) q; }
 gate h q { U(pi/2.0, 0, pi) q; }
@@ -344,7 +339,9 @@ cx q[0], q[1];
                       name: "Quantum Fourier Transform",
                       description:
                         "Implements the Quantum Fourier Transform on a 3-qubit register, including controlled phase rotations and qubit swaps to reverse order.",
-                      code: `OPENQASM 3.0;
+                      code: `// Quantum Fourier Transform
+
+OPENQASM 3.0;
 
 gate x q { U(pi, 0, pi) q; }
 gate h q { U(pi/2.0, 0, pi) q; }
