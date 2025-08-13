@@ -1,11 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { Loader2, Play, Copy } from "lucide-react"
+import { Play, Copy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface QuantumState {
@@ -39,6 +38,22 @@ export default function OpenQASMPlayground() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
+
+  // Calculate editor height based on number of lines
+  const calculateEditorHeight = (codeText: string) => {
+    const lines = codeText.split("\n").length
+    const minHeight = 400
+    const lineHeight = 20 // approximate line height in pixels
+    const padding = 16 // top and bottom padding
+    const calculatedHeight = Math.max(minHeight, lines * lineHeight + padding)
+    return calculatedHeight
+  }
+
+  const [editorHeight, setEditorHeight] = useState(calculateEditorHeight(defaultCode))
+
+  useEffect(() => {
+    setEditorHeight(calculateEditorHeight(code))
+  }, [code])
 
   const executeCode = async () => {
     if (!code.trim()) {
@@ -129,6 +144,12 @@ export default function OpenQASMPlayground() {
     setError(null)
   }
 
+  const loadExample = (exampleCode: string) => {
+    setCode(exampleCode)
+    setResult(null)
+    setError(null)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
@@ -142,14 +163,26 @@ export default function OpenQASMPlayground() {
             {/* Code Editor */}
             <Card className="h-fit bg-gray-800 border-gray-700">
               <CardContent>
-                <Textarea
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  placeholder="Enter your OpenQASM code here..."
-                  className="min-h-[400px] font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400"
-                />
-                <div className="flex justify-between items-center mt-4">
-                  <div className="text-sm text-gray-400">Lines: {code.split("\n").length}</div>
+                <div className="relative">
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-12 bg-gray-900 border-r border-gray-600 flex flex-col text-xs text-gray-400 font-mono pt-2 pb-2 rounded-l-md"
+                    style={{ height: `${editorHeight}px` }}
+                  >
+                    {code.split("\n").map((_, index) => (
+                      <div key={index} className="h-5 flex items-center justify-end pr-2 leading-5">
+                        {index + 1}
+                      </div>
+                    ))}
+                  </div>
+                  <Textarea
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    placeholder="Enter your OpenQASM code here..."
+                    className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 pl-14 resize-none"
+                    style={{ height: `${editorHeight}px` }}
+                  />
+                </div>
+                <div className="flex justify-end items-center mt-4">
                   <Button
                     onClick={executeCode}
                     disabled={isLoading}
@@ -205,7 +238,7 @@ export default function OpenQASMPlayground() {
                     <div className="space-y-3">
                       {result.state.map((state, index) => {
                         const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
-                 
+
                         return (
                           <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
                             <div className="flex items-center justify-between mb-3">
@@ -256,8 +289,7 @@ export default function OpenQASMPlayground() {
                 )}
 
                 {!result && !error && !isLoading && (
-                  <div className="text-center py-12 text-gray-400 min-h-[100px] flex flex-col justify-center">
-                  </div>
+                  <div className="text-center py-12 text-gray-400 min-h-[100px] flex flex-col justify-center"></div>
                 )}
               </CardContent>
             </Card>
@@ -341,7 +373,7 @@ qft(q);
                     <div
                       key={index}
                       className="border border-gray-600 rounded-lg p-4 cursor-pointer hover:bg-gray-700 transition-colors bg-gray-750"
-                      onClick={() => setCode(example.code)}
+                      onClick={() => loadExample(example.code)}
                     >
                       <h4 className="font-semibold mb-2 text-white">{example.name}</h4>
                       <p className="text-sm text-gray-300 mb-3">{example.description}</p>
