@@ -230,7 +230,7 @@ export default function OpenQASMPlayground() {
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
           {/* Code Editor */}
           <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col h-full">
-            <CardContent className="flex-1 flex flex-col p-6 h-full">
+            <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
                   Run
