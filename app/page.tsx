@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Play, Copy } from "lucide-react"
+import { Copy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface QuantumState {
@@ -110,7 +110,7 @@ export default function OpenQASMPlayground() {
   const calculateEditorHeight = (codeText: string) => {
     const lines = codeText.split("\n").length
     const minHeight = 400
-    const lineHeight = 20 // approximate line height in pixels
+    const lineHeight = 22.4 // Updated to match textarea line height (16px * 1.4)
     const padding = 16 // top and bottom padding
     const calculatedHeight = Math.max(minHeight, lines * lineHeight + padding)
     return calculatedHeight
@@ -231,11 +231,11 @@ export default function OpenQASMPlayground() {
           <h1 className="font-bold text-white text-left text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
           {/* Code Editor */}
-          <Card className="h-fit bg-gray-800 border-gray-700">
-            <CardContent>
-              <div className="flex justify-end items-center gap-3 mt-0">
+          <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col">
+            <CardContent className="flex-1 flex flex-col">
+              <div className="flex justify-end items-center gap-3 mt-0 mb-4">
                 <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
                   Run
                 </Button>
@@ -256,13 +256,14 @@ export default function OpenQASMPlayground() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="relative">
-                <div
-                  className="absolute left-0 top-0 bottom-0 w-12 bg-gray-900 border-r border-gray-600 flex flex-col text-xs text-gray-400 font-mono pt-2 pb-2 rounded-l-md"
-                  style={{ height: `${editorHeight}px` }}
-                >
+              <div className="relative flex-1">
+                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gray-900 border-r border-gray-600 flex flex-col text-xs text-gray-400 font-mono pt-2 pb-2 rounded-l-md overflow-hidden">
                   {code.split("\n").map((_, index) => (
-                    <div key={index} className="h-5 flex items-center justify-end pr-2 leading-5">
+                    <div
+                      key={index}
+                      className="flex items-center justify-end pr-2 flex-shrink-0"
+                      style={{ height: "22.4px", lineHeight: "22.4px" }}
+                    >
                       {index + 1}
                     </div>
                   ))}
@@ -271,11 +272,11 @@ export default function OpenQASMPlayground() {
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                   placeholder="Enter your OpenQASM code here..."
-                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 pl-14 resize-none"
+                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 pl-14 resize-none h-full"
                   style={{
-                    height: `${editorHeight}px`,
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
+                    fontSize: "14px", // Explicitly set font size to match line number calculation
                   }}
                 />
               </div>
@@ -283,8 +284,8 @@ export default function OpenQASMPlayground() {
           </Card>
 
           {/* Results */}
-          <Card className="h-fit min-h-[300px] bg-gray-800 border-gray-700">
-            <CardContent>
+          <Card className="lg:w-[30%] bg-gray-800 border-gray-700 flex flex-col">
+            <CardContent className="flex-1 overflow-auto">
               {error && (
                 <div className="bg-red-900/50 border border-red-700 rounded-lg p-4 mb-4">
                   <div className="flex items-center justify-between mb-2">
@@ -330,7 +331,7 @@ export default function OpenQASMPlayground() {
                             <h4 className="text-white font-medium">|{state.binaryString}⟩</h4>
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="grid grid-cols-1 gap-4">
                             {/* Probability Bar */}
                             <div className="space-y-2">
                               <div className="flex justify-between text-sm">
