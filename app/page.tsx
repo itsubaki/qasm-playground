@@ -231,7 +231,7 @@ export default function OpenQASMPlayground() {
           {/* Code Editor */}
           <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col h-full">
             <CardContent className="flex-1 flex flex-col p-6 h-full">
-              <div className="flex justify-end items-center gap-3 mt-0 mb-4">
+              <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
                   Run
                 </Button>
@@ -255,7 +255,7 @@ export default function OpenQASMPlayground() {
               <div className="relative flex-1 flex overflow-hidden min-h-0">
                 <div
                   ref={lineNumbersRef}
-                  className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide"
+                  className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide pt-2.5"
                   style={{
                     height: "100%",
                   }}
@@ -316,7 +316,7 @@ export default function OpenQASMPlayground() {
 
               {result && (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between pb-0">
                     <h3 className="text-lg font-semibold text-white">Quantum States</h3>
                     <Button
                       variant="outline"
@@ -334,7 +334,7 @@ export default function OpenQASMPlayground() {
                       const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
 
                       return (
-                        <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700">
+                        <div key={index} className="bg-gray-900 rounded-lg p-4 border border-gray-700 pb-4 pt-4">
                           <div className="flex items-center justify-between mb-3">
                             <h4 className="text-white font-medium">|{state.binaryString}⟩</h4>
                           </div>
