@@ -32,7 +32,8 @@ qubit[2] q;
 reset q;
 
 h q[0];
-cx q[0], q[1];`
+cx q[0], q[1];
+`
 
 const examples = [
   {
