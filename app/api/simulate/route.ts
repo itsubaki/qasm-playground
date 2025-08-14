@@ -14,6 +14,7 @@ if (!credentialsJson) {
 const credentials = JSON.parse(
   Buffer.from(credentialsJson, "base64").toString("utf-8")
 )
+credentials.private_key = credentials.private_key.replace(/\\n/g, "\n")
 
 const auth = new GoogleAuth({
   credentials,
