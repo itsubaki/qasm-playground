@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${TOKEN}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ code }),
