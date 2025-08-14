@@ -1,4 +1,22 @@
 import { type NextRequest, NextResponse } from "next/server"
+import { GoogleAuth } from "google-auth-library"
+
+const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
+if (!SERVICE_URL) {
+  throw new Error("Missing GOOGLE_CLOUD_SERVICE_URL environment variable.")
+}
+
+const credentialsJson = process.env.GOOGLE_CREDENTIALS_JSON
+if (!credentialsJson) {
+  throw new Error("Missing GOOGLE_CREDENTIALS_JSON environment variable.")
+}
+
+const credentials = JSON.parse(credentialsJson)
+
+const auth = new GoogleAuth({
+  credentials,
+  scopes: ["https://www.googleapis.com/auth/cloud-platform"],
+})
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,15 +25,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "code is required" }, { status: 400 })
     }
 
-    const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
-    if (!SERVICE_URL) {
-      return NextResponse.json(
-        { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
-        { status: 500 },
-      )
-    }
-
     const endpoint = `${SERVICE_URL}/quasar.v1.QuasarService/Simulate`
+    const client = await auth.getClient()
+    const token = await client.getAccessToken()
 
     console.log("Calling endpoint:", endpoint)
     console.log("Request payload:", { code })
@@ -24,6 +36,7 @@ export async function POST(request: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token.token}`,
       },
       body: JSON.stringify({ code }),
     })
