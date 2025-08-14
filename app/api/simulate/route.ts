@@ -14,7 +14,8 @@ if (!credentialsJson) {
 const credentials = JSON.parse(
   Buffer.from(credentialsJson, "base64").toString("utf-8")
 )
-credentials.private_key = credentials.private_key.replace(/\\n/g, "\n")
+console.log(credentialsJson)
+console.log(credentials)
 
 const auth = new GoogleAuth({
   credentials,
@@ -34,6 +35,7 @@ export async function POST(request: NextRequest) {
 
     console.log("Calling endpoint:", endpoint)
     console.log("Request payload:", { code })
+    console.log("token:", token.token)
 
     const response = await fetch(endpoint, {
       method: "POST",
