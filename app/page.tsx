@@ -254,9 +254,10 @@ export default function OpenQASMPlayground() {
               <div className="relative flex-1 flex overflow-hidden min-h-0 border border-gray-600 rounded-lg">
                 <div
                   ref={lineNumbersRef}
-                  className="flex-shrink-0 bg-gray-900 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide pt-2.5 rounded-tl-lg rounded-bl-lg"
+                  className="flex-shrink-0 bg-gray-900 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide rounded-tl-lg rounded-bl-lg"
                   style={{
                     height: "100%",
+                    paddingTop: "8px", // Match textarea's padding
                   }}
                 >
                   {lineNumbers.map((lineNum) => (
