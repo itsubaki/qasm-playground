@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Copy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 
 interface QuantumState {
@@ -304,7 +303,6 @@ export default function OpenQASMPlayground() {
                       onClick={() => copyToClipboard(error)}
                       className="text-red-300 border-red-600 hover:bg-red-800/50 bg-red-900/30"
                     >
-                      <Copy className="h-4 w-4 mr-2" />
                       Copy Error
                     </Button>
                   </div>
@@ -324,7 +322,6 @@ export default function OpenQASMPlayground() {
                       onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
                       className="border-gray-600 text-gray-300 hover:bg-gray-700 bg-gray-800"
                     >
-                      <Copy className="h-4 w-4 mr-2" />
                       Copy JSON
                     </Button>
                   </div>

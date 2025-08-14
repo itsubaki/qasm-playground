@@ -9,13 +9,12 @@ export async function POST(request: NextRequest) {
     }
 
     const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
-    const TOKEN = process.env.GOOGLE_CLOUD_TOKEN
 
-    if (!SERVICE_URL || !TOKEN) {
+    if (!SERVICE_URL) {
       return NextResponse.json(
         {
           error:
-            "Google Cloud configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL and GOOGLE_CLOUD_TOKEN environment variables.",
+            "Google Cloud configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables.",
         },
         { status: 500 },
       )
