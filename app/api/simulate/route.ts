@@ -3,26 +3,19 @@ import { type NextRequest, NextResponse } from "next/server"
 export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json()
-
     if (!code) {
-      return NextResponse.json({ error: "Code is required" }, { status: 400 })
+      return NextResponse.json({ error: "code is required" }, { status: 400 })
     }
 
     const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
-
     if (!SERVICE_URL) {
       return NextResponse.json(
-        {
-          error:
-            "Google Cloud configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables.",
-        },
+        { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
         { status: 500 },
       )
     }
 
-    const endpoint = SERVICE_URL.endsWith("/")
-      ? `${SERVICE_URL}quasar.v1.QuasarService/Simulate`
-      : `${SERVICE_URL}/quasar.v1.QuasarService/Simulate`
+    const endpoint = `${SERVICE_URL}/quasar.v1.QuasarService/Simulate`
 
     console.log("Calling endpoint:", endpoint)
     console.log("Request payload:", { code })
@@ -40,8 +33,8 @@ export async function POST(request: NextRequest) {
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error("Google Cloud Run error:", errorText)
-      throw new Error(`Google Cloud Run service error: ${response.status} - ${errorText}`)
+      console.error(errorText)
+      throw new Error(errorText)
     }
 
     const result = await response.json()
@@ -52,10 +45,7 @@ export async function POST(request: NextRequest) {
 
     if (error instanceof TypeError && error.message.includes("fetch")) {
       return NextResponse.json(
-        {
-          error:
-            "Failed to connect to Google Cloud Run service. Please check your service URL and network connectivity.",
-        },
+        { error: "Failed to connect to remote server. Please check your service URL and network connectivity." },
         { status: 503 },
       )
     }
