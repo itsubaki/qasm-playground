@@ -229,7 +229,7 @@ export default function OpenQASMPlayground() {
 
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
           {/* Code Editor */}
-          <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col h-full">
+          <Card className="lg:w-[70%] bg-gray-800 border-gray-700 flex flex-col h-full rounded-l-lg">
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button onClick={executeCode} disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
@@ -252,10 +252,10 @@ export default function OpenQASMPlayground() {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="relative flex-1 flex overflow-hidden min-h-0">
+              <div className="relative flex-1 flex overflow-hidden min-h-0 border border-gray-600 rounded-lg">
                 <div
                   ref={lineNumbersRef}
-                  className="flex-shrink-0 bg-gray-900 border-r border-gray-600 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide pt-2.5"
+                  className="flex-shrink-0 bg-gray-900 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide pt-2.5 rounded-tl-lg rounded-bl-lg"
                   style={{
                     height: "100%",
                   }}
@@ -280,7 +280,7 @@ export default function OpenQASMPlayground() {
                   onChange={(e) => setCode(e.target.value)}
                   onScroll={handleScroll}
                   placeholder="Enter your OpenQASM code here..."
-                  className="font-mono text-sm bg-gray-900 border-gray-600 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-gray-600 flex-1 border-l-0 rounded-l-none overflow-y-auto"
+                  className="font-mono text-sm bg-gray-900 border-0 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto"
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
