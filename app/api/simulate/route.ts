@@ -11,7 +11,9 @@ if (!credentialsJson) {
   throw new Error("Missing GOOGLE_CREDENTIALS_JSON environment variable.")
 }
 
-const credentials = JSON.parse(credentialsJson)
+const credentials = JSON.parse(
+  Buffer.from(credentialsJson, "base64").toString("utf-8")
+)
 
 const auth = new GoogleAuth({
   credentials,
