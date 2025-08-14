@@ -226,7 +226,7 @@ export default function OpenQASMPlayground() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-4">
           <div className="flex justify-between items-center">
-            <h1 className="font-bold text-white text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
+            <h1 className="font-bold text-white text-2xl leading-7 mb-0 mt-0 text-left">OpenQASM 3.0 Playground</h1>
             <a
               href="https://github.com/itsubaki/qasm-playground"
               target="_blank"
