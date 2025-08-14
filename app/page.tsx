@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
+import Image from "next/image"
 
 interface QuantumState {
   amplitude: {
@@ -224,7 +225,24 @@ export default function OpenQASMPlayground() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-4">
-          <h1 className="font-bold text-white text-left text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
+          <div className="flex justify-between items-center">
+            <h1 className="font-bold text-white text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
+            <a
+              href="https://github.com/itsubaki/qasm-playground"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-white transition-colors duration-200"
+              aria-label="View source on GitHub"
+            >
+              <Image
+                src="/github-mark.svg"
+                alt="GitHub"
+                width={24}
+                height={24}
+                className="w-6 h-6 filter invert opacity-75 hover:opacity-100 transition-opacity duration-200"
+              />
+            </a>
+          </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
