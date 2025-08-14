@@ -224,7 +224,7 @@ export default function OpenQASMPlayground() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 p-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-4">
-          <h1 className="font-bold text-white text-left text-2xl leading-7 mb-0 mt-0">OpenQASM 3.0 Playground</h1>
+          <h1 className="font-bold text-white text-left text-2xl leading-7 mb-0 mt-0">The OpenQASM 3.0 Playground</h1>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-120px)]">
@@ -255,7 +255,7 @@ export default function OpenQASMPlayground() {
               <div className="relative flex-1 flex overflow-hidden min-h-0 border border-gray-600 rounded-lg">
                 <div
                   ref={lineNumbersRef}
-                  className="flex-shrink-0 bg-gray-900 px-3 py-3 text-right select-none overflow-y-auto scrollbar-hide rounded-tl-lg rounded-bl-lg"
+                  className="flex-shrink-0 bg-gray-900 px-3 py-2 text-right select-none overflow-y-auto scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4]"
                   style={{
                     height: "100%",
                     paddingTop: "8px", // Match textarea's padding
@@ -268,7 +268,6 @@ export default function OpenQASMPlayground() {
                       style={{
                         lineHeight: "1.4",
                         fontSize: "14px",
-                        height: "19.6px", // 14px * 1.4 line-height
                       }}
                     >
                       {lineNum}
@@ -281,7 +280,7 @@ export default function OpenQASMPlayground() {
                   onChange={(e) => setCode(e.target.value)}
                   onScroll={handleScroll}
                   placeholder="Enter your OpenQASM code here..."
-                  className="font-mono text-sm bg-gray-900 border-0 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto"
+                  className="font-mono text-sm bg-gray-900 border-0 text-gray-100 placeholder-gray-400 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto py-2 leading-[1.4]"
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
