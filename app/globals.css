@@ -124,8 +124,8 @@
   }
   body {
     @apply text-foreground;
-    /* Added gradient background that extends with content */
-    background: linear-gradient(to bottom right, #dbeafe, #e0e7ff);
+    /* Removed gradient background, using solid background color */
+    background: hsl(var(--background));
     min-height: 100vh;
     margin: 0;
     padding: 0;

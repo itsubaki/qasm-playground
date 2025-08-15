@@ -239,21 +239,19 @@ export default function OpenQASMPlayground() {
   const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1)
 
   return (
-    <div
-      className={`min-h-screen p-4 ${isDarkMode ? "bg-gradient-to-br from-gray-900 via-purple-900 to-blue-900" : "bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500"}`}
-    >
+    <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-4">
           <div className="flex justify-between items-center">
             <h1
-              className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-white"}`}
+              className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}
             >
               OpenQASM 3.0 Playground
             </h1>
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleDarkMode}
-                className={`p-2 rounded-lg transition-colors ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white/20 text-white hover:bg-white/30"}`}
+                className={`p-2 rounded-lg transition-colors ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
                 aria-label="Toggle dark mode"
               >
                 {isDarkMode ? (
@@ -274,7 +272,7 @@ export default function OpenQASMPlayground() {
                 href="https://github.com/itsubaki/qasm-playground"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`transition-colors duration-200 ${isDarkMode ? "text-gray-300 hover:text-white" : "text-white hover:text-gray-200"}`}
+                className={`transition-colors duration-200 ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
                 aria-label="View source on GitHub"
               >
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
