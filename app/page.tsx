@@ -343,7 +343,7 @@ export default function OpenQASMPlayground() {
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
                     fontSize: "14px",
-                    whiteSpace: "nowrap",
+                    whiteSpace: "pre",
                     overflowX: "auto",
                   }}
                 />
