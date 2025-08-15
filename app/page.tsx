@@ -114,18 +114,8 @@ export default function OpenQASMPlayground() {
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode
     setIsDarkMode(newDarkMode)
-    localStorage.setItem("darkMode", JSON.stringify(newDarkMode))
     document.documentElement.classList.toggle("dark", newDarkMode)
   }
-
-  useState(() => {
-    const savedDarkMode = localStorage.getItem("darkMode")
-    if (savedDarkMode) {
-      const darkMode = JSON.parse(savedDarkMode)
-      setIsDarkMode(darkMode)
-      document.documentElement.classList.toggle("dark", darkMode)
-    }
-  })
 
   const handleScroll = () => {
     if (textareaRef.current && lineNumbersRef.current) {
