@@ -105,7 +105,7 @@ export default function OpenQASMPlayground() {
   const [result, setResult] = useState<SimulationResult | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(true)
   const { toast } = useToast()
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
