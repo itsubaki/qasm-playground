@@ -119,8 +119,16 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    height: 100%;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    /* Added gradient background that extends with content */
+    background: linear-gradient(to bottom right, #dbeafe, #e0e7ff);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
   }
 }
 
