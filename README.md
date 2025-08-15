@@ -1,3 +1,4 @@
 # OpenQASM 3.0 playground
 
- - playground with [v0](https://v0.app/)
+ - A playground that lets you write and execute OpenQASM 3.0 quantum programs directly in your web browser.
+
