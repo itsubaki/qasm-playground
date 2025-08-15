@@ -33,40 +33,55 @@ reset q;
 
 h q[0];
 cx q[0], q[1];
+
+measure q;
 `
 
 const examples = [
   {
     name: "Bell State",
-    description: "Creates an entangled Bell state.",
     code: defaultCode,
   },
   {
-    name: "Standard Gates",
-    description: "Defines standard quantum gates using unitary operations.",
-    code: `// Standard Gates
+    name: "Grover's algorithm",
+    code: `// Grover's algorithm
 
 OPENQASM 3.0;
 
-gate i q { U(0, 0, 0) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
 gate x q { U(pi, 0, pi) q; }
-gate y q { U(pi, pi/2.0, pi/2.0) q; }
-gate z q { U(0, pi, 0) q; }
-gate t q { U(0, 0, pi/4) q; }
-gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1;}
+gate h q { U(pi/2.0, 0, pi) q; }
+gate cccx c0, c1, c2, t { ctrl @ ctrl @ ctrl @ U(pi, 0, pi) c0, c1, c2, t; }
 
-qubit[2] q;
+def oracle(qubit[4] q) {
+    x q[2], q[3];
+    h q[3];
+    cccx q[0], q[1], q[2], q[3];
+    h q[3];
+    x q[2], q[3];
+}
+
+def diffuser(qubit[4] q) {
+    h q;
+    x q;
+    h q[3];
+    cccx q[0], q[1], q[2], q[3];
+    h q[3];
+    x q;
+    h q;
+}
+
+qubit[4] q;
 reset q;
+h q;
 
-h q[0];
-cx q[0], q[1];
+for int i in [0:3] {
+    oracle(q);
+    diffuser(q);
+}
 `,
   },
   {
     name: "Quantum Fourier Transform",
-    description:
-      "Implements the Quantum Fourier Transform on a 3-qubit register, including controlled phase rotations and qubit swaps to reverse order.",
     code: `// Quantum Fourier Transform
 
 OPENQASM 3.0;
@@ -85,7 +100,9 @@ def qft(qubit[3] q) {
     crz(pi/2) q[1], q[2];
 
     h q[2];
+}
 
+def swap(qubit[3] q) {
     cx q[0], q[2];
     cx q[2], q[0];
     cx q[0], q[2];
@@ -96,6 +113,7 @@ reset q;
 
 x q[2];
 qft(q);
+swap(q);
 `,
   },
 ]

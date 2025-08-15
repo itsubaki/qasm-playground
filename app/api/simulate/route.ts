@@ -17,9 +17,6 @@ export async function POST(request: NextRequest) {
 
     const endpoint = `${SERVICE_URL}/quasar.v1.QuasarService/Simulate`
 
-    console.log("Calling endpoint:", endpoint)
-    console.log("Request payload:", { code })
-
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
@@ -27,10 +24,7 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({ code }),
     })
-
-    console.log("Response status:", response.status)
-    console.log("Response headers:", Object.fromEntries(response.headers.entries()))
-
+    
     if (!response.ok) {
       const errorText = await response.text()
       console.error(errorText)
@@ -38,7 +32,6 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await response.json()
-    console.log("Success result:", result)
     return NextResponse.json(result)
   } catch (error) {
     console.error("Simulation error:", error)
