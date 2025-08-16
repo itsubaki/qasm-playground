@@ -494,9 +494,17 @@ export default function OpenQASMPlayground() {
                         >
                           <div className="flex items-center justify-between mb-3">
                             <h4 className={`font-medium ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                              {Array.isArray(state.binaryString)
-                                ? state.binaryString.map((str) => `|${str}⟩`).join("")
-                                : `|${state.binaryString}⟩`}
+                              {Array.isArray(state.binaryString) ? (
+                                state.binaryString.map((str, i) => (
+                                  <span key={i}>
+                                    |<span className="font-mono">{str}</span>⟩
+                                  </span>
+                                ))
+                              ) : (
+                                <span>
+                                  |<span className="font-mono">{state.binaryString}</span>⟩
+                                </span>
+                              )}
                             </h4>
                           </div>
 
