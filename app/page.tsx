@@ -181,9 +181,6 @@ for int i in [0:R] {
     oracle(r, s, a);
     diffuser(r);
 }
-
-measure s;
-measure a;
 `,
   },
 ]
