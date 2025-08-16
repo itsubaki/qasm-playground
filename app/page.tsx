@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useToast } from "@/hooks/use-toast"
 
 interface QuantumState {
   amplitude: {
@@ -75,7 +74,7 @@ measure phi;
 measure a;
 `,
   },
-    {
+  {
     name: "Quantum Fourier Transform",
     code: `// Quantum Fourier Transform
 
@@ -224,7 +223,6 @@ export default function OpenQASMPlayground() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isDarkMode, setIsDarkMode] = useState(true)
-  const { toast } = useToast()
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
@@ -243,11 +241,6 @@ export default function OpenQASMPlayground() {
 
   const executeCode = async () => {
     if (!code.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter some OpenQASM code to run",
-        variant: "destructive",
-      })
       return
     }
 
@@ -289,20 +282,10 @@ export default function OpenQASMPlayground() {
 
       const data: SimulationResult = await response.json()
       setResult(data)
-
-      toast({
-        title: "Success",
-        description: "OpenQASM code executed successfully!",
-      })
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred"
       setError(errorMessage)
       console.error("Detailed error:", err) // Added console logging for debugging
-      toast({
-        title: "Execution Error",
-        description: errorMessage.split("\n")[0], // Show only first line in toast
-        variant: "destructive",
-      })
     } finally {
       setIsLoading(false)
     }
@@ -311,16 +294,8 @@ export default function OpenQASMPlayground() {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
-      toast({
-        title: "Copied",
-        description: "Code copied to clipboard",
-      })
     } catch (err) {
-      toast({
-        title: "Error",
-        description: "Failed to copy to clipboard",
-        variant: "destructive",
-      })
+      console.error("Failed to copy to clipboard:", err)
     }
   }
 
@@ -366,7 +341,7 @@ export default function OpenQASMPlayground() {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z”
                       clipRule="evenodd"
                     />
                   </svg>
@@ -524,13 +499,11 @@ export default function OpenQASMPlayground() {
                         >
                           <div className="flex items-center justify-between mb-3">
                             <h4 className={`font-mono ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                              {
-                                state.binaryString.map((str, i) => (
-                                  <span key={i} className="font-mono">
-                                    |{str}⟩
-                                  </span>
-                                ))
-                              }
+                              {state.binaryString.map((str, i) => (
+                                <span key={i} className="font-mono">
+                                  |{str}⟩
+                                </span>
+                              ))}
                             </h4>
                           </div>
 
