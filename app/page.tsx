@@ -113,8 +113,8 @@ reset q;
 h q;
 
 int N = 2**n;
-int r = int(pi/4 * sqrt(float(N)));
-for int i in [0:r] {
+int R = int(pi/4 * sqrt(float(N)));
+for int i in [0:R] {
     oracle(q);
     diffuser(q);
 }
