@@ -240,14 +240,14 @@ export default function OpenQASMPlayground() {
         try {
           const errorData = await response.json()
           if (errorData.error) {
-            errorMessage = `${errorMessage}\n\nDetails: ${errorData.error}`
+            errorMessage = `${errorMessage}\n${errorData.error}`
           }
         } catch {
           // If response is not JSON, try to get text
           try {
             const errorText = await response.text()
             if (errorText) {
-              errorMessage = `${errorMessage}\n\nResponse: ${errorText}`
+              errorMessage = `${errorMessage}\n${errorText}`
             }
           } catch {
             // Ignore if we can't read the response

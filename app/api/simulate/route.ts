@@ -24,10 +24,20 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({ code }),
     })
-    
+
     if (!response.ok) {
       const errorText = await response.text()
       console.error(errorText)
+
+      try {
+        const errorData = JSON.parse(errorText)
+        if (errorData.code === "invalid_argument" && errorData.message) {
+          return NextResponse.json({ error: errorData.message }, { status: 403 })
+        }
+      } catch {
+        // If parsing fails, fall through to original error handling
+      }
+
       throw new Error(errorText)
     }
 
