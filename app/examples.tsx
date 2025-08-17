@@ -87,8 +87,8 @@ swap(q);
 `,
   },
   {
-    name: "Grover's algorithm",
-    code: `// Grover's algorithm
+    name: "Grover's Algorithm",
+    code: `// Grover's Algorithm
 
 OPENQASM 3.0;
 
