@@ -190,7 +190,8 @@ for int i in [0:R] {
   },
   {
     name: "Shor's Algorithm (N=15, a=7)",
-    code: `
+    code: `// Shor's Algorithm (N=15, a=7)
+
 OPENQASM 3.0;
 
 gate x q { U(pi, 0, pi) q; }
