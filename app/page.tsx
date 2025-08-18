@@ -170,11 +170,11 @@ export default function OpenQASMPlayground() {
                 >
                   Run
                 </Button>
-                <Select onValueChange={handleExampleSelect}>
+                <Select onValueChange={handleExampleSelect} defaultValue={examples[0]?.name}>
                   <SelectTrigger
                     className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}
                   >
-                    <SelectValue placeholder="Examples" />
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent
                     className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}
