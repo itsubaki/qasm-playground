@@ -10,6 +10,6 @@
 
 ## Related projects
 
- - [itsubaki/q](https://github.com/itsubaki/q): Quantum computation simulator for Go
- - [itsubaki/qasm](https://github.com/itsubaki/qasm): Quantum computation simulator with OpenQASM 3.0
- - [itsubaki/quasar](https://github.com/itsubaki/quasar): Quantum computation simulator as a Service
+ - [itsubaki/q](https://github.com/itsubaki/q) Quantum computation simulator for Go
+ - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computation simulator with OpenQASM 3.0
+ - [itsubaki/quasar](https://github.com/itsubaki/quasar) Quantum computation simulator as a Service
