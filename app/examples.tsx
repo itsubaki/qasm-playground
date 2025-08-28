@@ -93,37 +93,41 @@ gate h q { U(pi/2.0, 0, pi) q; }
 gate cccx c0, c1, c2, t { ctrl(3) @ U(pi, 0, pi) c0, c1, c2, t; }
 
 // oracle for |110>|x>
-def oracle(qubit[4] q) {
-    x q[2], q[3];
-    h q[3];
-    cccx q[0], q[1], q[2], q[3];
-    h q[3];
-    x q[2], q[3];
+def oracle(qubit[3] q, qubit a) {
+    x q[2]; x a;
+    h a;
+    cccx q[0], q[1], q[2], a;
+    h a;
+    x q[2]; x a;
 }
 
-def diffuser(qubit[4] q) {
-    h q;
-    x q;
-    h q[3];
-    cccx q[0], q[1], q[2], q[3];
-    h q[3];
-    x q;
-    h q;
+def diffuser(qubit[3] q, qubit a) {
+    h q; h a;
+    x q; x a;
+    h a;
+    cccx q[0], q[1], q[2], a;
+    h a;
+    x q; x a;
+    h q; h a;
 }
 
-const int n = 4;
+const int n = 3;
 qubit[n] q;
+qubit a;
 reset q;
-h q;
+reset a;
 
-int N = 2**n;
+h q;
+h a;
+
+int N = 2**(n+1);
 int R = int(pi/4 * sqrt(float(N)));
 for int i in [0:R] {
-    oracle(q);
-    diffuser(q);
+    oracle(q, a);
+    diffuser(q, a);
 }
 
-measure q[3];
+measure a;
 `,
   },
   {
