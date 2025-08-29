@@ -31,7 +31,9 @@ export default function RootLayout({
       </body>
       <Analytics />
       <SpeedInsights />
-      <GoogleAnalytics gaId="G-08LPLWLLR3" />
+      {process.env.NEXT_PUBLIC_GA_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+      )}
     </html>
   )
 }
