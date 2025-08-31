@@ -348,7 +348,7 @@ export default function OpenQASMPlayground() {
                         Show Raw JSON
                       </summary>
                       <div
-                        className={`rounded-lg p-4 mt-2 overflow-auto max-h-60 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
+                        className={`rounded-lg p-4 mt-2 overflow-auto ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
                       >
                         <pre
                           className={`text-sm font-mono whitespace-pre-wrap ${isDarkMode ? "text-green-400" : "text-green-700"}`}
