@@ -275,7 +275,7 @@ export default function OpenQASMPlayground() {
                       variant="outline"
                       size="sm"
                       onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                      className={`border ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                      className={`border h-6 text-xs ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                     >
                       Copy JSON
                     </Button>
