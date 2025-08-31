@@ -270,7 +270,16 @@ export default function OpenQASMPlayground() {
                   <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     Quantum States
                   </h3>
-           
+                  {result && (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
+                      className={`border ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                    >
+                      Copy JSON
+                    </Button>
+                  )}
                 </div>
 
                 {result ? (
