@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "./examples"
-import { QuantumState, SimulationResult } from "./quantum"
+import type { SimulationResult } from "./quantum"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState(examples[0].code)
@@ -357,6 +357,13 @@ export default function OpenQASMPlayground() {
               )}
             </CardContent>
           </Card>
+        </div>
+
+        <div className="mt-6 text-left">
+          <ul className={`text-sm space-y-1 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+            <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
+            <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host.</li>
+          </ul>
         </div>
       </div>
     </div>
