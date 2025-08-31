@@ -270,16 +270,7 @@ export default function OpenQASMPlayground() {
                   <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     Quantum States
                   </h3>
-                  {result && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                      className={`border ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
-                    >
-                      Copy JSON
-                    </Button>
-                  )}
+           
                 </div>
 
                 {result ? (
@@ -358,13 +349,19 @@ export default function OpenQASMPlayground() {
                       </div>
                     </details>
                   </>
-                ) : !error && !isLoading ? (
+                ) : isLoading ? (
+                  <div
+                    className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                  >
+                    <p>Waiting for remote server...</p>
+                  </div>
+                ) : (
                   <div
                     className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                   >
                     <p>Run your OpenQASM code to see quantum states here</p>
                   </div>
-                ) : null}
+                )}
               </div>
             </CardContent>
           </Card>
