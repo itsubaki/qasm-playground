@@ -351,7 +351,7 @@ export default function OpenQASMPlayground() {
                         className={`rounded-lg p-4 mt-2 overflow-auto ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
                       >
                         <pre
-                          className={`text-sm font-mono whitespace-pre-wrap ${isDarkMode ? "text-green-400" : "text-green-700"}`}
+                          className={`text-sm font-mono whitespace-pre ${isDarkMode ? "text-green-400" : "text-green-700"}`}
                         >
                           {JSON.stringify(result, null, 2)}
                         </pre>
