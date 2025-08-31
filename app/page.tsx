@@ -265,12 +265,12 @@ export default function OpenQASMPlayground() {
                 </div>
               )}
 
-              {result && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between pb-0">
-                    <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                      Quantum States
-                    </h3>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between pb-0">
+                  <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                    Quantum States
+                  </h3>
+                  {result && (
                     <Button
                       variant="outline"
                       size="sm"
@@ -279,85 +279,93 @@ export default function OpenQASMPlayground() {
                     >
                       Copy JSON
                     </Button>
-                  </div>
-
-                  <div className="space-y-3">
-                    {result.state.map((state, index) => {
-                      const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
-
-                      return (
-                        <div
-                          key={index}
-                          className={`rounded-lg p-4 border pb-4 pt-4 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
-                        >
-                          <div className="flex items-center justify-between mb-3">
-                            <h4 className={`font-mono ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                              {state.binaryString.map((str, i) => (
-                                <span key={i} className="font-mono">
-                                  |{str}⟩
-                                </span>
-                              ))}
-                            </h4>
-                          </div>
-
-                          <div className="grid grid-cols-1 gap-4">
-                            {/* Probability Bar */}
-                            <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className={`${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>Probability</span>
-                                <span className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                  {state.probability?.toFixed(6) || "0.000000"}
-                                </span>
-                              </div>
-                              <div className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                                <div
-                                  className={`h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
-                                  style={{ width: `${(state.probability || 0) * 100}%` }}
-                                />
-                              </div>
-                            </div>
-
-                            {/* Amplitude */}
-                            <div className="space-y-2">
-                              <span className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                                Amplitude
-                              </span>
-                              <div className={`font-mono text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
-                                {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-
-                  {/* Collapsible JSON view */}
-                  <details className="mt-4">
-                    <summary
-                      className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                    >
-                      Show Raw JSON
-                    </summary>
-                    <div
-                      className={`rounded-lg p-4 mt-2 overflow-auto max-h-60 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
-                    >
-                      <pre
-                        className={`text-sm font-mono whitespace-pre-wrap ${isDarkMode ? "text-green-400" : "text-green-700"}`}
-                      >
-                        {JSON.stringify(result, null, 2)}
-                      </pre>
-                    </div>
-                  </details>
+                  )}
                 </div>
-              )}
 
-              {!result && !error && !isLoading && (
-                <div
-                  className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
-                ></div>
-              )}
+                {result ? (
+                  <>
+                    <div className="space-y-3">
+                      {result.state.map((state, index) => {
+                        const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
+
+                        return (
+                          <div
+                            key={index}
+                            className={`rounded-lg p-4 border pb-4 pt-4 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
+                          >
+                            <div className="flex items-center justify-between mb-3">
+                              <h4 className={`font-mono ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                {state.binaryString.map((str, i) => (
+                                  <span key={i} className="font-mono">
+                                    |{str}⟩
+                                  </span>
+                                ))}
+                              </h4>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-4">
+                              {/* Probability Bar */}
+                              <div className="space-y-2">
+                                <div className="flex justify-between text-sm">
+                                  <span className={`${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                    Probability
+                                  </span>
+                                  <span className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                    {state.probability?.toFixed(6) || "0.000000"}
+                                  </span>
+                                </div>
+                                <div
+                                  className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}
+                                >
+                                  <div
+                                    className={`h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
+                                    style={{ width: `${(state.probability || 0) * 100}%` }}
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Amplitude */}
+                              <div className="space-y-2">
+                                <span className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                  Amplitude
+                                </span>
+                                <div className={`font-mono text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                  {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
+                                  {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )
+                      })}
+                    </div>
+
+                    {/* Collapsible JSON view */}
+                    <details className="mt-4">
+                      <summary
+                        className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
+                      >
+                        Show Raw JSON
+                      </summary>
+                      <div
+                        className={`rounded-lg p-4 mt-2 overflow-auto max-h-60 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
+                      >
+                        <pre
+                          className={`text-sm font-mono whitespace-pre-wrap ${isDarkMode ? "text-green-400" : "text-green-700"}`}
+                        >
+                          {JSON.stringify(result, null, 2)}
+                        </pre>
+                      </div>
+                    </details>
+                  </>
+                ) : !error && !isLoading ? (
+                  <div
+                    className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                  >
+                    <p>Run your OpenQASM code to see quantum states here</p>
+                  </div>
+                ) : null}
+              </div>
             </CardContent>
           </Card>
         </div>
