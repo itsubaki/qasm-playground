@@ -23,8 +23,6 @@ export async function POST(request: NextRequest) {
       body: JSON.stringify({ id }),
     })
 
-    console.log("[v0] External service response status:", response.status)
-
     if (!response.ok) {
       const errorText = await response.text()
       console.error("[v0] External service error:", errorText)
