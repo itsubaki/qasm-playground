@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -17,6 +17,42 @@ export default function OpenQASMPlayground() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const loadCodeFromUrl = async () => {
+      const path = window.location.pathname
+      const match = path.match(/\/p\/(.+)/)
+
+      if (match && match[1]) {
+        const id = match[1]
+
+        try {
+          const response = await fetch("/api/load", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id }),
+          })
+
+          if (response.ok) {
+            const result = await response.json()
+            if (result.code) {
+              setCode(result.code)
+              setResult(null)
+              setError(null)
+            }
+          } else {
+            console.error("Failed to load code:", response.status, response.statusText)
+          }
+        } catch (err) {
+          console.error("Error loading code:", err)
+        }
+      }
+    }
+
+    loadCodeFromUrl()
+  }, [])
 
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode

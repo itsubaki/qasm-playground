@@ -7,14 +7,12 @@ export async function POST(request: Request) {
     const { id } = await request.json()
 
     if (!id) {
-      return Response.json({ error: "id is required" }, { status: 400 })
+      return Response.json({ error: "ID is required" }, { status: 400 })
     }
 
     if (!SERVICE_URL) {
-      return NextResponse.json(
-        { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
-        { status: 500 },
-      )
+      console.error("[v0] GOOGLE_CLOUD_SERVICE_URL not configured")
+      return Response.json({ error: "Service URL not configured" }, { status: 500 })
     }
 
     const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Load`, {
@@ -24,6 +22,8 @@ export async function POST(request: Request) {
       },
       body: JSON.stringify({ id }),
     })
+
+    console.log("[v0] External service response status:", response.status)
 
     if (!response.ok) {
       const errorText = await response.text()
