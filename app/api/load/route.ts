@@ -1,6 +1,6 @@
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const { id } = await request.json()
 
