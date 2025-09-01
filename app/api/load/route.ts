@@ -2,25 +2,19 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
-const inMemoryStorage = new Map<string, string>()
-
 export async function POST(request: NextRequest) {
   try {
     const { id } = await request.json()
 
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 })
+      return NextResponse.json({ error: "id is required" }, { status: 400 })
     }
 
     if (!SERVICE_URL) {
-      console.log("[v0] Using fallback in-memory storage to load ID:", id)
-      const code = inMemoryStorage.get(id)
-      if (!code) {
-        console.log("[v0] Code not found for ID:", id)
-        return NextResponse.json({ error: "Code not found" }, { status: 404 })
-      }
-      console.log("[v0] Code loaded successfully")
-      return NextResponse.json({ code })
+      return NextResponse.json(
+        { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
+        { status: 500 },
+      )
     }
 
     const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Load`, {
@@ -30,8 +24,6 @@ export async function POST(request: NextRequest) {
       },
       body: JSON.stringify({ id }),
     })
-
-    console.log("[v0] External service response status:", response.status)
 
     if (!response.ok) {
       const errorText = await response.text()
