@@ -2,37 +2,41 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
-    const { code } = await request.json()
+    const { id } = await request.json()
 
-    if (!code) {
-      return NextResponse.json({ error: "Code is required" }, { status: 400 })
+    if (!id) {
+      return Response.json({ error: "ID is required" }, { status: 400 })
     }
 
     if (!SERVICE_URL) {
-      return NextResponse.json({ error: "Service URL not configured" }, { status: 500 })
+      console.error("[v0] GOOGLE_CLOUD_SERVICE_URL not configured")
+      return Response.json({ error: "Service URL not configured" }, { status: 500 })
     }
 
-    // Call the external quasar service
-    const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Save`, {
+    const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Load`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ code }),
+      body: JSON.stringify({ id }),
     })
+
+    console.log("[v0] External service response status:", response.status)
 
     if (!response.ok) {
       const errorText = await response.text()
-      console.error("External service error:", errorText)
-      return NextResponse.json({ error: "Failed to save code to external service" }, { status: response.status })
+      console.error("[v0] External service error:", errorText)
+      return Response.json({ error: "Failed to load code" }, { status: response.status })
     }
 
     const result = await response.json()
-    return NextResponse.json(result)
+    console.log("[v0] Load successful:", result)
+
+    return Response.json(result)
   } catch (error) {
-    console.error("Save API error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    console.error("[v0] Load API error:", error)
+    return Response.json({ error: "Failed to load code" }, { status: 500 })
   }
 }
