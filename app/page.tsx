@@ -23,8 +23,12 @@ export default function OpenQASMPlayground() {
       const path = window.location.pathname
       const match = path.match(/\/p\/(.+)/)
 
+      console.log("[v0] Current path:", path)
+      console.log("[v0] URL match result:", match)
+
       if (match && match[1]) {
         const id = match[1]
+        console.log("[v0] Loading code for ID:", id)
 
         try {
           const response = await fetch("/api/load", {
@@ -35,12 +39,16 @@ export default function OpenQASMPlayground() {
             body: JSON.stringify({ id }),
           })
 
+          console.log("[v0] Load response status:", response.status)
+
           if (response.ok) {
             const result = await response.json()
+            console.log("[v0] Load result:", result)
             if (result.code) {
               setCode(result.code)
               setResult(null)
               setError(null)
+              console.log("[v0] Code loaded successfully into editor")
             }
           } else {
             console.error("Failed to load code:", response.status, response.statusText)
