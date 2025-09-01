@@ -2,12 +2,12 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const { id } = await request.json()
+    const { code } = await request.json()
 
-    if (!id) {
-      return Response.json({ error: "ID is required" }, { status: 400 })
+    if (!code) {
+      return NextResponse.json({ error: "Code is required" }, { status: 400 })
     }
 
     if (!SERVICE_URL) {
@@ -17,12 +17,12 @@ export async function POST(request: Request) {
       )
     }
 
-    const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Load`, {
+    const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Save`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id }),
+      body: JSON.stringify({ code }),
     })
 
     console.log("[v0] External service response status:", response.status)
@@ -30,15 +30,15 @@ export async function POST(request: Request) {
     if (!response.ok) {
       const errorText = await response.text()
       console.error("[v0] External service error:", errorText)
-      return Response.json({ error: "Failed to load code" }, { status: response.status })
+      return NextResponse.json({ error: "Failed to save code" }, { status: response.status })
     }
 
     const result = await response.json()
-    console.log("[v0] Load successful:", result)
+    console.log("[v0] Save successful:", result)
 
-    return Response.json(result)
+    return NextResponse.json(result)
   } catch (error) {
-    console.error("[v0] Load API error:", error)
-    return Response.json({ error: "Failed to load code" }, { status: 500 })
+    console.error("[v0] Save API error:", error)
+    return NextResponse.json({ error: "Failed to save code" }, { status: 500 })
   }
 }
