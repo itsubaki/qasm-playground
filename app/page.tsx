@@ -81,6 +81,46 @@ export default function OpenQASMPlayground() {
     }
   }
 
+  const shareCode = async () => {
+    if (!code.trim()) {
+      return
+    }
+
+    try {
+      const response = await fetch("/api/save", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to share code: ${response.status} ${response.statusText}`)
+      }
+
+      const result = await response.json()
+
+      if (result.id) {
+        const shareUrl = `${window.location.origin}/p/${result.id}`
+        window.history.pushState(null, "", `/p/${result.id}`)
+        console.log("Code shared successfully. Share URL:", shareUrl)
+
+        try {
+          await navigator.clipboard.writeText(shareUrl)
+          console.log("Share URL copied to clipboard")
+        } catch (clipboardErr) {
+          console.error("Failed to copy to clipboard:", clipboardErr)
+        }
+      } else {
+        console.log("Code shared successfully:", result)
+      }
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred"
+      console.error("Failed to share code:", errorMessage)
+    }
+  }
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
@@ -166,6 +206,13 @@ export default function OpenQASMPlayground() {
                   className={`text-white ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
                 >
                   Run
+                </Button>
+                <Button
+                  onClick={shareCode}
+                  variant="outline"
+                  className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                >
+                  Share
                 </Button>
                 <Select onValueChange={handleExampleSelect} defaultValue={examples[0]?.name}>
                   <SelectTrigger
