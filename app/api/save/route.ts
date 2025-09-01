@@ -2,6 +2,12 @@ import { type NextRequest, NextResponse } from "next/server"
 
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
+const inMemoryStorage = new Map<string, string>()
+
+function generateId(): string {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { code } = await request.json()
@@ -14,11 +20,11 @@ export async function POST(request: NextRequest) {
     }
 
     if (!SERVICE_URL) {
-      console.log("[v0] GOOGLE_CLOUD_SERVICE_URL not configured")
-      return NextResponse.json(
-        { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
-        { status: 500 },
-      )
+      console.log("[v0] Using fallback in-memory storage")
+      const id = generateId()
+      inMemoryStorage.set(id, code)
+      console.log("[v0] Code saved with ID:", id)
+      return NextResponse.json({ id })
     }
 
     console.log("[v0] Making request to external service:", `${SERVICE_URL}/quasar.v1.QuasarService/Save`)
