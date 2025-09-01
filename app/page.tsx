@@ -6,11 +6,11 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "./examples"
-import type { SimulationResult } from "./quantum"
+import type { States } from "./quantum"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState(examples[0].code)
-  const [result, setResult] = useState<SimulationResult | null>(null)
+  const [result, setResult] = useState<States | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [isDarkMode, setIsDarkMode] = useState(true)
@@ -70,7 +70,7 @@ export default function OpenQASMPlayground() {
         throw new Error(errorMessage)
       }
 
-      const data: SimulationResult = await response.json()
+      const data: States = await response.json()
       setResult(data)
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred"
@@ -87,12 +87,6 @@ export default function OpenQASMPlayground() {
     } catch (err) {
       console.error("Failed to copy to clipboard:", err)
     }
-  }
-
-  const resetCode = () => {
-    setCode(examples[0].code)
-    setResult(null)
-    setError(null)
   }
 
   const loadExample = (exampleCode: string) => {
@@ -285,8 +279,8 @@ export default function OpenQASMPlayground() {
                 {result ? (
                   <>
                     <div className="space-y-3">
-                      {result.state.map((state, index) => {
-                        const numQubits = Math.ceil(Math.log2(result.state.length)) || 1
+                      {result.states.map((state, index) => {
+                        const numQubits = Math.ceil(Math.log2(result.states.length)) || 1
 
                         return (
                           <div

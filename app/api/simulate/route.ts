@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
+const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,7 +8,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "code is required" }, { status: 400 })
     }
 
-    const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
+    // endpoint
     if (!SERVICE_URL) {
       return NextResponse.json(
         { error: "Configuration missing. Please set GOOGLE_CLOUD_SERVICE_URL environment variables." },
@@ -15,9 +16,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const endpoint = `${SERVICE_URL}/quasar.v1.QuasarService/Simulate`
-
-    const response = await fetch(endpoint, {
+    // simulate
+    const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Simulate`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

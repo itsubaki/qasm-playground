@@ -1,4 +1,4 @@
-export interface QuantumState {
+export interface State {
   amplitude: {
     real: number
     imag: number
@@ -8,6 +8,6 @@ export interface QuantumState {
   binaryString: string[]
 }
 
-export interface SimulationResult {
-  state: QuantumState[]
+export interface States {
+  states: State[]
 }
