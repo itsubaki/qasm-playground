@@ -13,9 +13,6 @@ export async function POST(request: Request) {
       return Response.json({ error: "Service URL not configured" }, { status: 500 })
     }
 
-    console.log("[v0] Loading code with ID:", id)
-    console.log("[v0] Service URL:", SERVICE_URL)
-
     const response = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/Load`, {
       method: "POST",
       headers: {
