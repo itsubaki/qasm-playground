@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const { id } = await request.json()
 
     if (!id) {
-      return Response.json({ error: " is required" }, { status: 400 })
+      return Response.json({ error: "id is required" }, { status: 400 })
     }
 
     if (!SERVICE_URL) {
