@@ -311,7 +311,7 @@ export default function OpenQASMPlayground() {
                                     Probability
                                   </span>
                                   <span className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                    {state.probability?.toFixed(6) || "0.000000"}
+                                    {state.probability || "0.000000"}
                                   </span>
                                 </div>
                                 <div
@@ -330,8 +330,8 @@ export default function OpenQASMPlayground() {
                                   Amplitude
                                 </span>
                                 <div className={`font-mono text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                  {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
-                                  {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
+                                  {state.amplitude?.real || "0.000000"} +{" "}
+                                  {state.amplitude?.imag || "0.000000"}i
                                 </div>
                               </div>
                             </div>
