@@ -312,8 +312,10 @@ export default function OpenQASMPlayground() {
                                   className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}
                                 >
                                   <div
-                                    className={`h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
-                                    style={{ width: `${(state.probability || 0) * 100}%` }}
+                                    className={`min-w-[6px] h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
+                                    style={{
+                                      width: `${(state.probability || 0) * 100}%`,
+                                    }}
                                   />
                                 </div>
                               </div>
