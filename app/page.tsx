@@ -193,7 +193,7 @@ export default function OpenQASMPlayground() {
               >
                 <div
                   ref={lineNumbersRef}
-                  className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-y-auto scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
+                  className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
                   style={{
                     height: "100%",
                     paddingTop: "8px",
