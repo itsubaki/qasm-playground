@@ -10,7 +10,7 @@ import type { States } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
 
 export default function OpenQASMPlayground() {
-  const [code, setCode] = useState(examples[0].code)
+  const [code, setCode] = useState("// Loading...")
   const [result, setResult] = useState<States | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -25,6 +25,7 @@ export default function OpenQASMPlayground() {
       const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
 
       if (!match) {
+        setCode(examples[0].code)
         return
       }
 
