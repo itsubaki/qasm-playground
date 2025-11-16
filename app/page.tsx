@@ -140,8 +140,12 @@ export default function OpenQASMPlayground() {
       setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
 
-    if (url) {
-      await copyToClipboard(url)
+    try {
+      await navigator.clipboard.writeText(url);
+      toast.success("Copied");
+    } catch (err) {
+      console.error("Copy to clipboard:", err);
+      alert(err instanceof Error ? err.message : JSON.stringify(err));
     }
   }
 
