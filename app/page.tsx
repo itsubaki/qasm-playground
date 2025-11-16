@@ -20,7 +20,7 @@ export default function OpenQASMPlayground() {
   const lineNumbersRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const loadSharedCode = async () => {
+    const editCode = async () => {
       const path = window.location.pathname
       const match = path.match(/^\/p\/([^\/]+)$/)
 
@@ -57,7 +57,7 @@ export default function OpenQASMPlayground() {
       }
     }
 
-    loadSharedCode()
+    editCode()
   }, [])
 
   const toggleDarkMode = () => {
