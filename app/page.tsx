@@ -61,22 +61,28 @@ export default function OpenQASMPlayground() {
         if (data.error) {
           message = `${message}\n${data.error}`
         }
+
+        throw new Error(message)
       } catch {
-        try {
-          const text = await resp.text()
-          if (text) {
-            message = `${message}\n${text}`
-          }
-        } catch {
-          // ignore
+        // ignore
+      }
+
+      try {
+        const text = await resp.text()
+        if (text) {
+          message = `${message}\n${text}`
         }
+
+        throw new Error(message)
+      } catch {
+        // ignore
       }
 
       throw new Error(message)
     } catch (err) {
+      console.error("Detailed error:", err)
       const message = err instanceof Error ? err.message : "An unknown error occurred"
       setError(message)
-      console.error("Detailed error:", err)
     } finally {
       setIsLoading(false)
     }
