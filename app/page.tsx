@@ -23,13 +23,13 @@ export default function OpenQASMPlayground() {
     const loadSharedCode = async () => {
       const path = window.location.pathname
       const match = path.match(/^\/p\/([^\/]+)$/)
-      
+
       if (!match) {
         return
       }
 
       const id = match[1]
-      
+
       try {
         const resp = await fetch("/api/edit", {
           method: "POST",
@@ -46,14 +46,14 @@ export default function OpenQASMPlayground() {
             return
           }
 
-          console.error("Load shared code: invalid response", result)
+          console.error("Edit code:", result)
           return
         }
 
         await throwError(resp)
       } catch (err) {
-        console.error("Load shared code:", err)
-        setError(err instanceof Error ? err.message : "Failed to load shared code")
+        console.error("Edit code:", err)
+        setError(err instanceof Error ? err.message : "An unknown error occurred")
       }
     }
 
@@ -134,7 +134,7 @@ export default function OpenQASMPlayground() {
           return
         }
 
-        console.error("Share code: invalid response", result)
+        console.error("Share code:", result)
         return
       }
 
