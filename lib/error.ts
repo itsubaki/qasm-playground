@@ -15,7 +15,7 @@ export async function throwError(resp: Response) {
             }
         }
     } catch (parseErr) {
-        // ignore
+        // Silently ignore parsing errors and fall back to basic HTTP error message
     }
 
     throw new Error(message);
