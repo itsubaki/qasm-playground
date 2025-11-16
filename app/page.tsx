@@ -1,5 +1,6 @@
 "use client"
 
+import toast from 'react-hot-toast';
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -128,6 +129,7 @@ export default function OpenQASMPlayground() {
 
           try {
             await navigator.clipboard.writeText(shareUrl)
+            toast.success("Copied")
           } catch (err) {
             console.error("Copy to clipboard:", err)
           }
@@ -149,6 +151,7 @@ export default function OpenQASMPlayground() {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
+      toast.success("Copied")
     } catch (err) {
       console.error("Failed to copy to clipboard:", err)
     }
@@ -339,7 +342,7 @@ export default function OpenQASMPlayground() {
                   {result && (
                     <Button
                       variant="outline"
-                      size="sm"
+                      size="lg"
                       onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
                       className={`border h-6 text-xs ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                     >
