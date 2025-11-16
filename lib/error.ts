@@ -1,24 +1,21 @@
 export async function throwError(resp: Response) {
     let message = `HTTP ${resp.status}: ${resp.statusText}`;
+    const contentType = resp.headers.get("content-type");
 
     try {
-        const data = await resp.json();
-        if (data.error) {
-            message += `\n${data.error}`;
+        if (contentType?.includes("application/json")) {
+            const data = await resp.json();
+            if (data.error) {
+                message += `\n${data.error}`;
+            }
+        } else {
+            const text = await resp.text();
+            if (text) {
+                message += `\n${text}`;
+            }
         }
-        throw new Error(message);
-    } catch {
-        // JSONでパースできなければ無視
-    }
-
-    try {
-        const text = await resp.text();
-        if (text) {
-            message += `\n${text}`;
-        }
-        throw new Error(message);
-    } catch {
-        // テキストで取得できなければ無視
+    } catch (parseErr) {
+        // ignore
     }
 
     throw new Error(message);
