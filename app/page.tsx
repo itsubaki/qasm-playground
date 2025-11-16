@@ -124,16 +124,9 @@ export default function OpenQASMPlayground() {
       if (resp.ok) {
         const result = await resp.json()
         if (result.id) {
-          const shareUrl = `${window.location.origin}/p/${result.id}`
+          const url = `${window.location.origin}/p/${result.id}`
           window.history.pushState(null, "", `/p/${result.id}`)
-
-          try {
-            await navigator.clipboard.writeText(shareUrl)
-            toast.success("Copied")
-          } catch (err) {
-            console.error("Copy to clipboard:", err)
-          }
-
+          await copyToClipboard(url)
           return
         }
 
@@ -149,11 +142,12 @@ export default function OpenQASMPlayground() {
   }
 
   const copyToClipboard = async (text: string) => {
+    toast.success("Copied")
+
     try {
       await navigator.clipboard.writeText(text)
-      toast.success("Copied")
     } catch (err) {
-      console.error("Failed to copy to clipboard:", err)
+      console.error("Copy to clipboard:", err)
     }
   }
 
