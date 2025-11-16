@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
@@ -18,6 +18,47 @@ export default function OpenQASMPlayground() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const loadSharedCode = async () => {
+      const path = window.location.pathname
+      const match = path.match(/^\/p\/([^\/]+)$/)
+      
+      if (!match) {
+        return
+      }
+
+      const id = match[1]
+      
+      try {
+        const resp = await fetch("/api/edit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        })
+
+        if (resp.ok) {
+          const result = await resp.json()
+          if (result.code) {
+            setCode(result.code)
+            return
+          }
+
+          console.error("Load shared code: invalid response", result)
+          return
+        }
+
+        await throwError(resp)
+      } catch (err) {
+        console.error("Load shared code:", err)
+        setError(err instanceof Error ? err.message : "Failed to load shared code")
+      }
+    }
+
+    loadSharedCode()
+  }, [])
 
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode
