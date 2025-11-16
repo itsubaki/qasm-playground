@@ -140,12 +140,8 @@ export default function OpenQASMPlayground() {
       setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
 
-    try {
-      await navigator.clipboard.writeText(url);
-      toast.success("Copied");
-    } catch (err) {
-      console.error("Copy to clipboard:", err);
-      alert(err instanceof Error ? err.message : JSON.stringify(err));
+    if (url) {
+      await copyToClipboard(url)
     }
   }
 
@@ -238,7 +234,7 @@ export default function OpenQASMPlayground() {
                   Run
                 </Button>
                 <Button
-                  onClick={shareCode}
+                  onClick={async () => await shareCode()}
                   variant="outline"
                   className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                 >
