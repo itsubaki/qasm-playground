@@ -22,7 +22,7 @@ export default function OpenQASMPlayground() {
   useEffect(() => {
     const editCode = async () => {
       const path = window.location.pathname
-      const match = path.match(/^\/p\/([^\/]+)$/)
+      const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
 
       if (!match) {
         return
