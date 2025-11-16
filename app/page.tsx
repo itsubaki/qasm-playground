@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "./examples"
-import type { States } from "./quantum"
+import type { States } from "../lib/quantum"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState(examples[0].code)
