@@ -142,12 +142,12 @@ export default function OpenQASMPlayground() {
   }
 
   const copyToClipboard = async (text: string) => {
-    toast.success("Copied")
-
     try {
       await navigator.clipboard.writeText(text)
+      toast.success("Copied")
     } catch (err) {
       console.error("Copy to clipboard:", err)
+      alert(err instanceof Error ? err.message : JSON.stringify(err))
     }
   }
 
