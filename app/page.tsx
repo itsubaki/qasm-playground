@@ -50,7 +50,7 @@ export default function OpenQASMPlayground() {
           return
         }
 
-        await throwError(resp)
+        await throwError(resp);
       } catch (err) {
         console.error("Edit code:", err)
         setError(err instanceof Error ? err.message : "An unknown error occurred")
