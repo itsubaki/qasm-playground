@@ -31,7 +31,6 @@ export default function OpenQASMPlayground() {
       }
 
       const id = match[1]
-
       try {
         const resp = await fetch("/api/edit", {
           method: "POST",
@@ -41,18 +40,17 @@ export default function OpenQASMPlayground() {
           body: JSON.stringify({ id }),
         })
 
-        if (resp.ok) {
-          const result = await resp.json()
-          if (result.code) {
-            setCode(result.code)
-            return
-          }
+        if (!resp.ok) {
+          await throwError(resp);
+        }
 
-          console.error("Edit code:", result)
+        const result = await resp.json()
+        if (result.code) {
+          setCode(result.code)
           return
         }
 
-        await throwError(resp);
+        console.error("Edit code:", result)
       } catch (err) {
         console.error("Edit code:", err)
         setError(err instanceof Error ? err.message : "An unknown error occurred")
@@ -92,13 +90,12 @@ export default function OpenQASMPlayground() {
         body: JSON.stringify({ code }),
       })
 
-      if (resp.ok) {
-        const data: States = await resp.json()
-        setResult(data)
-        return
+      if (!resp.ok) {
+        await throwError(resp);
       }
 
-      await throwError(resp);
+      const data: States = await resp.json()
+      setResult(data)
     } catch (err) {
       console.error("Execute code:", err)
       setError(err instanceof Error ? err.message : "An unknown error occurred")
@@ -125,7 +122,6 @@ export default function OpenQASMPlayground() {
       if (!resp.ok) {
         await throwError(resp);
       }
-
 
       const result = await resp.json()
       if (!result.id) {
@@ -234,7 +230,7 @@ export default function OpenQASMPlayground() {
                   Run
                 </Button>
                 <Button
-                  onClick={async () => await shareCode()}
+                  onClick={shareCode}
                   variant="outline"
                   className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                 >

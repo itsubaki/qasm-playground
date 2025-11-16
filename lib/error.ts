@@ -14,7 +14,7 @@ export async function throwError(resp: Response) {
                 message += `\n${text}`;
             }
         }
-    } catch (parseErr) {
+    } catch (err) {
         // Silently ignore parsing errors and fall back to basic HTTP error message
     }
 
