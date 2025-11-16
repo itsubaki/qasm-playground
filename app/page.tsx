@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "./examples"
 import type { States } from "@/lib/quantum"
+import { throwError } from "@/lib/error"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState(examples[0].code)
@@ -54,35 +55,10 @@ export default function OpenQASMPlayground() {
         return
       }
 
-      // create error message
-      let message = `HTTP ${resp.status}: ${resp.statusText}`
-      try {
-        const data = await resp.json()
-        if (data.error) {
-          message = `${message}\n${data.error}`
-        }
-
-        throw new Error(message)
-      } catch {
-        // ignore
-      }
-
-      try {
-        const text = await resp.text()
-        if (text) {
-          message = `${message}\n${text}`
-        }
-
-        throw new Error(message)
-      } catch {
-        // ignore
-      }
-
-      throw new Error(message)
+      await throwError(resp);
     } catch (err) {
-      console.error("Detailed error:", err)
-      const message = err instanceof Error ? err.message : "An unknown error occurred"
-      setError(message)
+      console.error("Execute code:", err)
+      setError(err instanceof Error ? err.message : "An unknown error occurred")
     } finally {
       setIsLoading(false)
     }
@@ -102,26 +78,29 @@ export default function OpenQASMPlayground() {
         body: JSON.stringify({ code }),
       })
 
-      if (!resp.ok) {
-        throw new Error(`Failed to share code: ${resp.status} ${resp.statusText}`)
-      }
+      if (resp.ok) {
+        const result = await resp.json()
+        if (result.id) {
+          const shareUrl = `${window.location.origin}/p/${result.id}`
+          window.history.pushState(null, "", `/p/${result.id}`)
 
-      const result = await resp.json()
-      if (result.id) {
-        const shareUrl = `${window.location.origin}/p/${result.id}`
-        window.history.pushState(null, "", `/p/${result.id}`)
+          try {
+            await navigator.clipboard.writeText(shareUrl)
+          } catch (err) {
+            console.error("Copy to clipboard:", err)
+          }
 
-        try {
-          await navigator.clipboard.writeText(shareUrl)
-        } catch (clipboardErr) {
+          return
         }
 
-      } else {
-        console.log("Code shared successfully:", result)
+        console.error("Share code: invalid response", result)
+        return
       }
+
+      await throwError(resp);
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "Unknown error occurred"
-      console.error("Failed to share code:", errorMessage)
+      console.error("Share code:", err)
+      setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
   }
 
