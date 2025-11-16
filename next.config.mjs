@@ -1,8 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  allowedDevOrigins: [
+    "http://192.168.1.7:3000",
+    "http://localhost:3000",
+  ],
   typescript: {
     ignoreBuildErrors: true,
   },
