@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "./examples"
 import type { States } from "@/lib/quantum"
+import { throwError } from "@/lib/error"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState(examples[0].code)
@@ -17,6 +18,47 @@ export default function OpenQASMPlayground() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const editCode = async () => {
+      const path = window.location.pathname
+      const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
+
+      if (!match) {
+        return
+      }
+
+      const id = match[1]
+
+      try {
+        const resp = await fetch("/api/edit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id }),
+        })
+
+        if (resp.ok) {
+          const result = await resp.json()
+          if (result.code) {
+            setCode(result.code)
+            return
+          }
+
+          console.error("Edit code:", result)
+          return
+        }
+
+        await throwError(resp);
+      } catch (err) {
+        console.error("Edit code:", err)
+        setError(err instanceof Error ? err.message : "An unknown error occurred")
+      }
+    }
+
+    editCode()
+  }, [])
 
   const toggleDarkMode = () => {
     const newDarkMode = !isDarkMode
@@ -54,37 +96,52 @@ export default function OpenQASMPlayground() {
         return
       }
 
-      // create error message
-      let message = `HTTP ${resp.status}: ${resp.statusText}`
-      try {
-        const data = await resp.json()
-        if (data.error) {
-          message = `${message}\n${data.error}`
-        }
-
-        throw new Error(message)
-      } catch {
-        // ignore
-      }
-
-      try {
-        const text = await resp.text()
-        if (text) {
-          message = `${message}\n${text}`
-        }
-
-        throw new Error(message)
-      } catch {
-        // ignore
-      }
-
-      throw new Error(message)
+      await throwError(resp);
     } catch (err) {
-      console.error("Detailed error:", err)
-      const message = err instanceof Error ? err.message : "An unknown error occurred"
-      setError(message)
+      console.error("Execute code:", err)
+      setError(err instanceof Error ? err.message : "An unknown error occurred")
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const shareCode = async () => {
+    if (!code.trim()) {
+      return
+    }
+
+    try {
+      const resp = await fetch("/api/share", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code }),
+      })
+
+      if (resp.ok) {
+        const result = await resp.json()
+        if (result.id) {
+          const shareUrl = `${window.location.origin}/p/${result.id}`
+          window.history.pushState(null, "", `/p/${result.id}`)
+
+          try {
+            await navigator.clipboard.writeText(shareUrl)
+          } catch (err) {
+            console.error("Copy to clipboard:", err)
+          }
+
+          return
+        }
+
+        console.error("Share code:", result)
+        return
+      }
+
+      await throwError(resp);
+    } catch (err) {
+      console.error("Share code:", err)
+      setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
   }
 
@@ -173,6 +230,13 @@ export default function OpenQASMPlayground() {
                   className={`text-white ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
                 >
                   Run
+                </Button>
+                <Button
+                  onClick={shareCode}
+                  variant="outline"
+                  className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                >
+                  Share
                 </Button>
                 <Select onValueChange={handleExampleSelect} defaultValue={examples[0]?.name}>
                   <SelectTrigger
