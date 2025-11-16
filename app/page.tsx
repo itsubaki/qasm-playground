@@ -112,6 +112,7 @@ export default function OpenQASMPlayground() {
       return
     }
 
+    let url = "";
     try {
       const resp = await fetch("/api/share", {
         method: "POST",
@@ -121,23 +122,26 @@ export default function OpenQASMPlayground() {
         body: JSON.stringify({ code }),
       })
 
-      if (resp.ok) {
-        const result = await resp.json()
-        if (result.id) {
-          const url = `${window.location.origin}/p/${result.id}`
-          window.history.pushState(null, "", `/p/${result.id}`)
-          await copyToClipboard(url)
-          return
-        }
+      if (!resp.ok) {
+        await throwError(resp);
+      }
 
+
+      const result = await resp.json()
+      if (!result.id) {
         console.error("Share code:", result)
         return
       }
 
-      await throwError(resp);
+      window.history.pushState(null, "", `/p/${result.id}`)
+      url = `${window.location.origin}/p/${result.id}`
     } catch (err) {
       console.error("Share code:", err)
       setError(err instanceof Error ? err.message : "An unknown error occurred")
+    }
+
+    if (url) {
+      await copyToClipboard(url)
     }
   }
 
