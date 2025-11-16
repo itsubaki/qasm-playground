@@ -40,7 +40,7 @@ export default function OpenQASMPlayground() {
     setResult(null)
 
     try {
-      const response = await fetch("/api/simulate", {
+      const resp = await fetch("/api/simulate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,33 +48,34 @@ export default function OpenQASMPlayground() {
         body: JSON.stringify({ code }),
       })
 
-      if (!response.ok) {
-        let errorMessage = `HTTP ${response.status}: ${response.statusText}`
-
-        try {
-          const errorData = await response.json()
-          if (errorData.error) {
-            errorMessage = `${errorMessage}\n${errorData.error}`
-          }
-        } catch {
-          try {
-            const errorText = await response.text()
-            if (errorText) {
-              errorMessage = `${errorMessage}\n${errorText}`
-            }
-          } catch {
-            // Ignore if we can't read the response
-          }
-        }
-
-        throw new Error(errorMessage)
+      if (resp.ok) {
+        const data: States = await resp.json()
+        setResult(data)
+        return
       }
 
-      const data: States = await response.json()
-      setResult(data)
+      // create error message
+      let message = `HTTP ${resp.status}: ${resp.statusText}`
+      try {
+        const data = await resp.json()
+        if (data.error) {
+          message = `${message}\n${data.error}`
+        }
+      } catch {
+        try {
+          const text = await resp.text()
+          if (text) {
+            message = `${message}\n${text}`
+          }
+        } catch {
+          // ignore
+        }
+      }
+
+      throw new Error(message)
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred"
-      setError(errorMessage)
+      const message = err instanceof Error ? err.message : "An unknown error occurred"
+      setError(message)
       console.error("Detailed error:", err)
     } finally {
       setIsLoading(false)

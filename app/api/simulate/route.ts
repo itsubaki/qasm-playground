@@ -54,10 +54,10 @@ export async function POST(request: NextRequest) {
       { error: "Internal server error" },
       { status: 500 },
     )
-  } catch (error) {
-    console.error("Simulate:", error)
+  } catch (err) {
+    console.error("Simulate:", err)
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Internal server error" },
+      { error: err instanceof Error ? err.message : "Internal server error" },
       { status: 500 },
     )
   }
