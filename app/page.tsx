@@ -167,9 +167,7 @@ export default function OpenQASMPlayground() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-4">
           <div className="flex justify-between items-center">
-            <h1
-              className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}
-            >
+            <h1 className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}>
               OpenQASM 3.0 Playground
             </h1>
             <div className="flex items-center gap-3">
@@ -213,7 +211,8 @@ export default function OpenQASMPlayground() {
         <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
           {/* Code Editor */}
           <Card
-            className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}
+            className={
+              `lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}
           >
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
@@ -232,14 +231,10 @@ export default function OpenQASMPlayground() {
                   Share
                 </Button>
                 <Select onValueChange={handleExampleSelect} defaultValue={examples[0]?.name}>
-                  <SelectTrigger
-                    className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}
-                  >
+                  <SelectTrigger className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent
-                    className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}
-                  >
+                  <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
                     {examples.map((example) => (
                       <SelectItem
                         key={example.name}
@@ -252,9 +247,7 @@ export default function OpenQASMPlayground() {
                   </SelectContent>
                 </Select>
               </div>
-              <div
-                className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}
-              >
+              <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
                 <div
                   ref={lineNumbersRef}
                   className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
@@ -296,16 +289,14 @@ export default function OpenQASMPlayground() {
           </Card>
 
           {/* Results */}
-          <Card
-            className={`lg:w-[30%] border flex flex-col h-full shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}
-          >
+          <Card className={`lg:w-[30%] border flex flex-col h-full shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 overflow-auto p-6">
               {error && (
-                <div
-                  className={`border rounded-lg p-4 mb-4 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}
-                >
+                <div className={`border rounded-lg p-4 mb-4 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className={`font-semibold ${isDarkMode ? "text-red-300" : "text-red-800"}`}>Error Details</h3>
+                    <h3 className={`font-semibold ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                      Error Details
+                    </h3>
                     <Button
                       variant="outline"
                       size="sm"
@@ -315,9 +306,7 @@ export default function OpenQASMPlayground() {
                       Copy Error
                     </Button>
                   </div>
-                  <pre
-                    className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}
-                  >
+                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
                     {error}
                   </pre>
                 </div>
@@ -372,9 +361,7 @@ export default function OpenQASMPlayground() {
                                     {state.probability?.toFixed(6) || "0.000000"}
                                   </span>
                                 </div>
-                                <div
-                                  className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}
-                                >
+                                <div className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
                                   <div
                                     className={`min-w-[6px] h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
                                     style={{
@@ -402,32 +389,22 @@ export default function OpenQASMPlayground() {
 
                     {/* Collapsible JSON view */}
                     <details className="mt-4">
-                      <summary
-                        className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                      >
+                      <summary className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
                         Show Raw JSON
                       </summary>
-                      <div
-                        className={`rounded-lg p-4 mt-2 overflow-auto ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}
-                      >
-                        <pre
-                          className={`text-sm font-mono whitespace-pre ${isDarkMode ? "text-green-400" : "text-green-700"}`}
-                        >
+                      <div className={`rounded-lg p-4 mt-2 overflow-auto ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
+                        <pre className={`text-sm font-mono whitespace-pre ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
                           {JSON.stringify(result, null, 2)}
                         </pre>
                       </div>
                     </details>
                   </>
                 ) : isLoading ? (
-                  <div
-                    className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
-                  >
+                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                     <p>Waiting for remote server...</p>
                   </div>
                 ) : (
-                  <div
-                    className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
-                  >
+                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                     <p>Run your OpenQASM code to see quantum states here</p>
                   </div>
                 )}
@@ -454,6 +431,6 @@ export default function OpenQASMPlayground() {
           </ul>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
