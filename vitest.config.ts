@@ -1,13 +1,16 @@
 /// <reference types="vitest" />
 import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 import path from 'path'
 
 export default defineConfig({
+  plugins: [react()],
   test: {
-    environment: 'node',
+    environment: 'jsdom',
     env: {
       GOOGLE_CLOUD_SERVICE_URL: 'https://example.com',
     },
+    setupFiles: ['./vitest.setup.ts'],
   },
   resolve: {
     alias: {
