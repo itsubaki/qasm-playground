@@ -210,10 +210,7 @@ export default function OpenQASMPlayground() {
 
         <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
           {/* Code Editor */}
-          <Card
-            className={
-              `lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}
-          >
+          <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button
