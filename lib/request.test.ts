@@ -10,6 +10,8 @@ describe("request", () => {
 
   afterEach(() => {
     vi.restoreAllMocks()
+    // Mock console.error to suppress stack traces
+    vi.spyOn(console, "error").mockImplementation(() => { })
   })
 
   it("returns error when required key is missing", async () => {
