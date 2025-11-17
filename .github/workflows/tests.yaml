@@ -25,9 +25,13 @@ jobs:
         with:
           node-version: "22"
 
-      - name: Install dependencies
+      - name: Install
         run: |
           make install
+
+      - name: Build
+        run: |
+          make build
 
       - name: Tests
         run: |

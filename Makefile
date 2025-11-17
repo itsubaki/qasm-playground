@@ -1,11 +1,14 @@
 SHELL := /bin/bash
 
 run:
-	pnpm dev
+	pnpm run dev
 
 install:
 	npm install -g pnpm
 	pnpm install
+
+build:
+	pnpm run build
 
 test:
 	pnpm run test
