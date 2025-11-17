@@ -85,7 +85,6 @@ export default function OpenQASMPlayground() {
       url = `${window.location.origin}/p/${result.id}`
     } catch (err) {
       console.error("Share code:", err)
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
 
     if (url) {
@@ -125,7 +124,6 @@ export default function OpenQASMPlayground() {
       console.error("Edit code:", result)
     } catch (err) {
       console.error("Edit code:", err)
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
     }
   }
 
