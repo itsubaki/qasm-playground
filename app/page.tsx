@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { examples } from "./examples"
-import type { States } from "@/lib/quantum"
+import { type States, examples } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
 
 export default function OpenQASMPlayground() {
@@ -20,57 +19,10 @@ export default function OpenQASMPlayground() {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const editCode = async () => {
-      const path = window.location.pathname
-      const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
+  const lineCount = code.split("\n").length
+  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1)
 
-      if (!match) {
-        setCode(examples[0].code)
-        return
-      }
-
-      const id = match[1]
-      try {
-        const resp = await fetch("/api/edit", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id }),
-        })
-
-        if (!resp.ok) {
-          await throwError(resp);
-        }
-
-        const result = await resp.json()
-        if (result.code) {
-          setCode(result.code)
-          return
-        }
-
-        console.error("Edit code:", result)
-      } catch (err) {
-        console.error("Edit code:", err)
-        setError(err instanceof Error ? err.message : "An unknown error occurred")
-      }
-    }
-
-    editCode()
-  }, [])
-
-  const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode
-    setIsDarkMode(newDarkMode)
-    document.documentElement.classList.toggle("dark", newDarkMode)
-  }
-
-  const handleScroll = () => {
-    if (textareaRef.current && lineNumbersRef.current) {
-      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
-    }
-  }
+  useEffect(() => { editCode() }, [])
 
   const executeCode = async () => {
     if (!code.trim()) {
@@ -141,6 +93,42 @@ export default function OpenQASMPlayground() {
     }
   }
 
+  const editCode = async () => {
+    const path = window.location.pathname
+    const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
+
+    if (!match) {
+      setCode(examples[0].code)
+      return
+    }
+
+    const id = match[1]
+    try {
+      const resp = await fetch("/api/edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      })
+
+      if (!resp.ok) {
+        await throwError(resp);
+      }
+
+      const result = await resp.json()
+      if (result.code) {
+        setCode(result.code)
+        return
+      }
+
+      console.error("Edit code:", result)
+    } catch (err) {
+      console.error("Edit code:", err)
+      setError(err instanceof Error ? err.message : "An unknown error occurred")
+    }
+  }
+
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
@@ -151,8 +139,20 @@ export default function OpenQASMPlayground() {
     }
   }
 
-  const loadExample = (exampleCode: string) => {
-    setCode(exampleCode)
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    document.documentElement.classList.toggle("dark", newDarkMode)
+  }
+
+  const handleScroll = () => {
+    if (textareaRef.current && lineNumbersRef.current) {
+      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
+    }
+  }
+
+  const loadExample = (code: string) => {
+    setCode(code)
     setResult(null)
     setError(null)
   }
@@ -163,9 +163,6 @@ export default function OpenQASMPlayground() {
       loadExample(example.code)
     }
   }
-
-  const lineCount = code.split("\n").length
-  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1)
 
   return (
     <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
