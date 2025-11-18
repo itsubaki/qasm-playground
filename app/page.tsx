@@ -23,21 +23,6 @@ export default function Playground() {
   const lineNumbersRef = useRef<HTMLDivElement>(null)
   const lineNumbers = Array.from({ length: code.split("\n").length }, (_, i) => i + 1)
 
-  useEffect(() => { editCode() }, [])
-
-  useEffect(() => {
-    setIsMounted(true);
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDarkMode(prefersDark);
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const listener = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
-
-    mediaQuery.addEventListener("change", listener);
-
-    return () => mediaQuery.removeEventListener("change", listener);
-  }, []);
-
   const executeCode = async () => {
     if (!code.trim()) {
       return
@@ -175,6 +160,23 @@ export default function Playground() {
       loadExample(example.code)
     }
   }
+
+  useEffect(() => { editCode() }, [])
+
+  useEffect(() => {
+    setIsMounted(true);
+
+    // Detect system dark mode preference
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+    setIsDarkMode(media.matches);
+
+    // Listen for changes in system dark mode preference
+    const listener = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
+    media.addEventListener("change", listener);
+
+    // Cleanup listener on unmount
+    return () => media.removeEventListener("change", listener);
+  }, []);
 
   if (!isMounted) return null;
 
