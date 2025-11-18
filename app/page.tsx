@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type States, examples } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
+import { Notes } from "@/components/notes"
 
 export default function OpenQASMPlayground() {
   const [code, setCode] = useState("// Loading...")
@@ -410,23 +411,7 @@ export default function OpenQASMPlayground() {
           </Card>
         </div>
 
-        <div className="mt-6 text-left">
-          <ul className={`text-sm space-y-1 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-            <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
-            <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host.</li>
-            <li>There are several other limitations. For more details, please refer to{" "}
-              <a
-                href="https://github.com/itsubaki/qasm/issues"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={isDarkMode ? "text-blue-400 underline" : "text-blue-600 underline"}
-              >
-                the issues
-              </a>
-              {" "}on GitHub.
-            </li>
-          </ul>
-        </div>
+        <Notes isDarkMode={isDarkMode} />
       </div>
     </div >
   )
