@@ -19,9 +19,7 @@ export default function OpenQASMPlayground() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
-
-  const lineCount = code.split("\n").length
-  const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1)
+  const lineNumbers = Array.from({ length: code.split("\n").length }, (_, i) => i + 1)
 
   useEffect(() => { editCode() }, [])
 
@@ -166,6 +164,7 @@ export default function OpenQASMPlayground() {
   return (
     <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <div className="text-center mb-4">
           <div className="flex justify-between items-center">
             <h1 className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}>
@@ -331,8 +330,6 @@ export default function OpenQASMPlayground() {
                   <>
                     <div className="space-y-3">
                       {result.states.map((state, index) => {
-                        const numQubits = Math.ceil(Math.log2(result.states.length)) || 1
-
                         return (
                           <div
                             key={index}

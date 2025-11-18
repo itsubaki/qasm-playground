@@ -1,5 +1,8 @@
-export function Notes({ isDarkMode, }: { isDarkMode: boolean, }
-) {
+export function Notes({
+    isDarkMode,
+}: {
+    isDarkMode: boolean,
+}) {
     return (
         <div className="mt-6 text-left">
             <ul className={`text-sm space-y-1 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
