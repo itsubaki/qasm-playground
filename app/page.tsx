@@ -15,6 +15,8 @@ export default function Playground() {
   const [result, setResult] = useState<States | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const [isMounted, setIsMounted] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -22,6 +24,19 @@ export default function Playground() {
   const lineNumbers = Array.from({ length: code.split("\n").length }, (_, i) => i + 1)
 
   useEffect(() => { editCode() }, [])
+
+  useEffect(() => {
+    setIsMounted(true);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    setIsDarkMode(prefersDark);
+
+    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+    const listener = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
+
+    mediaQuery.addEventListener("change", listener);
+
+    return () => mediaQuery.removeEventListener("change", listener);
+  }, []);
 
   const executeCode = async () => {
     if (!code.trim()) {
@@ -160,6 +175,8 @@ export default function Playground() {
       loadExample(example.code)
     }
   }
+
+  if (!isMounted) return null;
 
   return (
     <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
