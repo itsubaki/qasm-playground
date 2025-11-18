@@ -1,9 +1,8 @@
+import "./globals.css"
 import { Toaster } from 'react-hot-toast';
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
-import "./globals.css"
-
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'

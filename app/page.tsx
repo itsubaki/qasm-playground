@@ -10,7 +10,7 @@ import { type States, examples } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
 import { Notes } from "@/components/notes"
 
-export default function OpenQASMPlayground() {
+export default function Playground() {
   const [code, setCode] = useState("// Loading...")
   const [result, setResult] = useState<States | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -142,7 +142,7 @@ export default function OpenQASMPlayground() {
     document.documentElement.classList.toggle("dark", newDarkMode)
   }
 
-  const handleScroll = () => {
+  const scroll = () => {
     if (textareaRef.current && lineNumbersRef.current) {
       lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
     }
@@ -154,7 +154,7 @@ export default function OpenQASMPlayground() {
     setError(null)
   }
 
-  const handleExampleSelect = (exampleName: string) => {
+  const selectExample = (exampleName: string) => {
     const example = examples.find((ex) => ex.name === exampleName)
     if (example) {
       loadExample(example.code)
@@ -227,7 +227,7 @@ export default function OpenQASMPlayground() {
                 >
                   Share
                 </Button>
-                <Select onValueChange={handleExampleSelect} defaultValue={examples[0]?.name}>
+                <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
                   <SelectTrigger className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
                     <SelectValue />
                   </SelectTrigger>
@@ -270,7 +270,7 @@ export default function OpenQASMPlayground() {
                   ref={textareaRef}
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  onScroll={handleScroll}
+                  onScroll={scroll}
                   placeholder="Enter your OpenQASM code here..."
                   className={`font-mono text-sm border-0 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto py-2 leading-[1.4] ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
                   style={{

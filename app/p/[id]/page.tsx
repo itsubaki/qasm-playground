@@ -1,5 +1,5 @@
-import OpenQASMPlayground from "@/app/page"
+import Playground from "@/app/page"
 
 export default function EditPage() {
-  return <OpenQASMPlayground />
+  return <Playground />
 }
