@@ -1,13 +1,14 @@
 "use client"
 
 import toast from 'react-hot-toast';
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type States, examples } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
+import { post } from "@/lib/request"
 import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
 
@@ -22,7 +23,7 @@ export default function Playground() {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const lineNumbersRef = useRef<HTMLDivElement>(null)
-  const lineNumbers = Array.from({ length: code.split("\n").length }, (_, i) => i + 1)
+  const lineNumbers = useMemo(() => Array.from({ length: code.split("\n").length }, (_, i) => i + 1), [code])
 
   const run = async () => {
     if (!code.trim()) {
@@ -34,18 +35,7 @@ export default function Playground() {
     setResult(null)
 
     try {
-      const resp = await fetch("/api/simulate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      })
-
-      if (!resp.ok) {
-        await throwError(resp);
-      }
-
+      const resp = await post("/api/simulate", { code })
       const data: States = await resp.json()
       setResult(data)
     } catch (err) {
@@ -61,20 +51,8 @@ export default function Playground() {
       return
     }
 
-    let url = "";
     try {
-      const resp = await fetch("/api/share", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      })
-
-      if (!resp.ok) {
-        await throwError(resp);
-      }
-
+      const resp = await post("/api/share", { code })
       const result = await resp.json()
       if (!result.id) {
         console.error("Share code:", result)
@@ -82,13 +60,10 @@ export default function Playground() {
       }
 
       window.history.pushState(null, "", `/p/${result.id}`)
-      url = `${window.location.origin}/p/${result.id}`
+      const url = `${window.location.origin}/p/${result.id}`
+      await copyToClipboard(url)
     } catch (err) {
       console.error("Share code:", err)
-    }
-
-    if (url) {
-      await copyToClipboard(url)
     }
   }
 
@@ -101,27 +76,16 @@ export default function Playground() {
       return
     }
 
-    const id = match[1]
     try {
-      const resp = await fetch("/api/edit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      })
-
-      if (!resp.ok) {
-        await throwError(resp);
-      }
-
+      const id = match[1]
+      const resp = await post("/api/edit", { id })
       const result = await resp.json()
-      if (result.code) {
-        setCode(result.code)
+      if (!result.code) {
+        console.error("Edit code:", result)
         return
       }
 
-      console.error("Edit code:", result)
+      setCode(result.code)
     } catch (err) {
       console.error("Edit code:", err)
     }
@@ -133,7 +97,7 @@ export default function Playground() {
       toast.success("Copied")
     } catch (err) {
       console.error("Copy to clipboard:", err)
-      alert(err instanceof Error ? err.message : JSON.stringify(err))
+      toast.error(err instanceof Error ? err.message : JSON.stringify(err))
     }
   }
 
@@ -152,7 +116,7 @@ export default function Playground() {
     }
   }
 
-  useEffect(() => { edit() }, [])
+  useEffect(() => { edit() }, [examples])
 
   useEffect(() => {
     setIsMounted(true);
