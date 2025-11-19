@@ -24,7 +24,7 @@ export default function Playground() {
   const lineNumbersRef = useRef<HTMLDivElement>(null)
   const lineNumbers = Array.from({ length: code.split("\n").length }, (_, i) => i + 1)
 
-  const executeCode = async () => {
+  const run = async () => {
     if (!code.trim()) {
       return
     }
@@ -56,7 +56,7 @@ export default function Playground() {
     }
   }
 
-  const shareCode = async () => {
+  const share = async () => {
     if (!code.trim()) {
       return
     }
@@ -92,7 +92,7 @@ export default function Playground() {
     }
   }
 
-  const editCode = async () => {
+  const edit = async () => {
     const path = window.location.pathname
     const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
 
@@ -143,20 +143,16 @@ export default function Playground() {
     }
   }
 
-  const loadExample = (code: string) => {
-    setCode(code)
-    setResult(null)
-    setError(null)
-  }
-
-  const selectExample = (exampleName: string) => {
-    const example = examples.find((ex) => ex.name === exampleName)
+  const selectExample = (name: string) => {
+    const example = examples.find((ex) => ex.name === name)
     if (example) {
-      loadExample(example.code)
+      setCode(example.code)
+      setResult(null)
+      setError(null)
     }
   }
 
-  useEffect(() => { editCode() }, [])
+  useEffect(() => { edit() }, [])
 
   useEffect(() => {
     setIsMounted(true);
@@ -187,14 +183,14 @@ export default function Playground() {
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button
-                  onClick={executeCode}
+                  onClick={run}
                   disabled={isLoading}
                   className={`text-white ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
                 >
                   Run
                 </Button>
                 <Button
-                  onClick={shareCode}
+                  onClick={share}
                   variant="outline"
                   className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                 >
