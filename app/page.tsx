@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { type States, examples } from "@/lib/quantum"
 import { throwError } from "@/lib/error"
 import { Notes } from "@/components/notes"
+import { Header } from '@/components/header';
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
@@ -136,12 +137,6 @@ export default function Playground() {
     }
   }
 
-  const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode
-    setIsDarkMode(newDarkMode)
-    document.documentElement.classList.toggle("dark", newDarkMode)
-  }
-
   const scroll = () => {
     if (textareaRef.current && lineNumbersRef.current) {
       lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
@@ -183,50 +178,9 @@ export default function Playground() {
   return (
     <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-4">
-          <div className="flex justify-between items-center">
-            <h1 className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-              OpenQASM 3.0 Playground
-            </h1>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={toggleDarkMode}
-                className={`p-2 rounded-lg transition-colors ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
-                aria-label="Toggle dark mode"
-              >
-                {isDarkMode ? (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                      fillRule="evenodd"
-                      d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-                  </svg>
-                )}
-              </button>
-              <a
-                href="https://github.com/itsubaki/qasm-playground"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`transition-colors duration-200 ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
-                aria-label="View source on GitHub"
-              >
-                <img
-                  src="/github-mark.svg"
-                  alt="GitHub"
-                  className="w-6 h-6"
-                  style={{ filter: isDarkMode ? "invert(1)" : "none" }}
-                />
-              </a>
-            </div>
-          </div>
-        </div>
+        <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
+        {/* Main */}
         <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
@@ -309,10 +263,12 @@ export default function Playground() {
             <CardContent className="flex-1 overflow-auto p-6">
               {error && (
                 <div className={`border rounded-lg p-4 mb-4 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                  {/* Error */}
                   <div className="flex items-center justify-between mb-2">
                     <h3 className={`font-semibold ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
                       Error Details
                     </h3>
+
                     <Button
                       variant="outline"
                       size="sm"
@@ -322,6 +278,7 @@ export default function Playground() {
                       Copy Error
                     </Button>
                   </div>
+
                   <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
                     {error}
                   </pre>
@@ -401,7 +358,7 @@ export default function Playground() {
                       })}
                     </div>
 
-                    {/* Collapsible JSON view */}
+                    {/* JSON view */}
                     <details className="mt-4">
                       <summary className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
                         Show Raw JSON
