@@ -14,11 +14,11 @@ import { Header } from '@/components/header';
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
-  const [result, setResult] = useState<States | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [result, setResult] = useState<States | null>(null)
 
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
