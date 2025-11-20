@@ -5,12 +5,11 @@ import { useState, useRef, useEffect, useMemo } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type States, examples } from "@/lib/quantum"
-import { throwError } from "@/lib/error"
-import { post } from "@/lib/request"
 import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { type States, examples } from "@/lib/quantum"
+import { post } from "@/lib/request"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
