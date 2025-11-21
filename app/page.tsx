@@ -96,7 +96,6 @@ export default function Playground() {
       toast.success("Copied")
     } catch (err) {
       console.error("Copy to clipboard:", err)
-      toast.error(err instanceof Error ? err.message : JSON.stringify(err))
     }
   }
 
