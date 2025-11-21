@@ -85,7 +85,7 @@ export async function post(url: string, body: object) {
     })
 
     if (!resp.ok) {
-        throwError(resp)
+        await throwError(resp)
     }
 
     return resp

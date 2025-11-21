@@ -15,6 +15,7 @@ export default function Playground() {
   const [code, setCode] = useState("// Loading...")
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<States | null>(null)
+  const [sharedURL, setSharedURL] = useState<string | null>(null)
 
   const [isMounted, setIsMounted] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
@@ -38,7 +39,7 @@ export default function Playground() {
       const data: States = await resp.json()
       setResult(data)
     } catch (err) {
-      console.error("Execute code:", err)
+      console.error("Run code:", err)
       setError(err instanceof Error ? err.message : "An unknown error occurred")
     } finally {
       setIsLoading(false)
@@ -60,6 +61,7 @@ export default function Playground() {
 
       window.history.pushState(null, "", `/p/${result.id}`)
       const url = `${window.location.origin}/p/${result.id}`
+      setSharedURL(url)
       await copyToClipboard(url)
     } catch (err) {
       console.error("Share code:", err)
@@ -96,7 +98,6 @@ export default function Playground() {
       toast.success("Copied")
     } catch (err) {
       console.error("Copy to clipboard:", err)
-      toast.error(err instanceof Error ? err.message : JSON.stringify(err))
     }
   }
 
@@ -159,22 +160,35 @@ export default function Playground() {
                 >
                   Share
                 </Button>
-                <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
-                  <SelectTrigger className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
-                    {examples.map((example) => (
-                      <SelectItem
-                        key={example.name}
-                        value={example.name}
-                        className={`${isDarkMode ? "text-white focus:bg-gray-800 focus:text-white" : "text-gray-900 focus:bg-gray-100 focus:text-gray-900"}`}
-                      >
-                        {example.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+
+                {sharedURL ? (
+                  <input
+                    type="text"
+                    value={sharedURL}
+                    readOnly
+                    className={`h-9 px-4 py-2 rounded-md border w-48 text-sm transition-all outline-none focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
+                    style={{ pointerEvents: "auto" }}
+                    onClick={(e) => (e.target as HTMLInputElement).select()}
+                    tabIndex={0}
+                  />
+                ) : (
+                  <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
+                    <SelectTrigger className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
+                      {examples.map((example) => (
+                        <SelectItem
+                          key={example.name}
+                          value={example.name}
+                          className={`${isDarkMode ? "text-white focus:bg-gray-800 focus:text-white" : "text-gray-900 focus:bg-gray-100 focus:text-gray-900"}`}
+                        >
+                          {example.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               </div>
               <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
                 <div
