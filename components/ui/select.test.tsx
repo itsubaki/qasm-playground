@@ -50,11 +50,11 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     const trigger = screen.getByRole('combobox')
     expect(trigger).toBeInTheDocument()
     expect(trigger.className).toContain('flex')
-    expect(trigger.className).toContain('h-10')
+    expect(trigger.className).toContain('h-9')
     expect(trigger.className).toContain('items-center')
     expect(trigger.className).toContain('rounded-md')
   })
@@ -70,7 +70,7 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     const trigger = screen.getByRole('combobox')
     expect(trigger).toBeDisabled()
     expect(trigger.className).toContain('disabled:cursor-not-allowed')
@@ -88,7 +88,7 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     // Just verify the component renders without errors
     expect(container).toBeInTheDocument()
   })
@@ -106,7 +106,7 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     // Verify the component renders
     expect(container).toBeInTheDocument()
   })
@@ -124,7 +124,7 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     expect(container).toBeInTheDocument()
     expect(screen.getByRole('combobox')).toBeInTheDocument()
   })
@@ -140,7 +140,7 @@ describe('Select', () => {
         </SelectContent>
       </Select>
     )
-    
+
     const trigger = screen.getByTestId('select-trigger')
     expect(trigger).toHaveAttribute('aria-label', 'Test select')
   })
