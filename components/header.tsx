@@ -14,13 +14,13 @@ export function Header({
     return (
         <div className="text-center mb-4">
             <div className="flex justify-between items-center">
-                <h1 className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                <h1 className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     OpenQASM 3.0 Playground
                 </h1>
                 <div className="flex items-center gap-3">
                     <button
                         onClick={toggleDarkMode}
-                        className={`p-2 rounded-lg transition-colors ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
+                        className={`p-2 rounded-lg transition-colors transition-colors duration-500 ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
                         aria-label="Toggle dark mode"
                     >
                         {isDarkMode ? (
@@ -41,7 +41,7 @@ export function Header({
                         href="https://github.com/itsubaki/qasm-playground"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`transition-colors duration-200 ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
+                        className={`transition-colors duration-200 transition-colors duration-500 ${isDarkMode ? "text-gray-300 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}
                         aria-label="View source on GitHub"
                     >
                         <img

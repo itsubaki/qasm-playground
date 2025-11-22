@@ -144,27 +144,27 @@ export default function Playground() {
   if (!isMounted) return null;
 
   return (
-    <div className={`min-h-screen p-4 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
+    <div className={`min-h-screen p-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
         <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
 
         {/* Main */}
         <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
           {/* Code Editor */}
-          <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
+          <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-end items-center mt-0 mb-2 gap-3">
                 <Button
                   onClick={run}
                   disabled={isLoading}
-                  className={`text-white ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
+                  className={`text-white transition-colors duration-500 ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
                 >
                   Run
                 </Button>
                 <Button
                   onClick={share}
                   variant="outline"
-                  className={`${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                  className={`transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                 >
                   Share
                 </Button>
@@ -175,17 +175,17 @@ export default function Playground() {
                     ref={sharedURLRef}
                     value={sharedURL}
                     readOnly
-                    className={`h-9 px-4 py-2 rounded-md border w-48 text-sm transition-all outline-none focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
+                    className={`h-9 px-4 py-2 rounded-md border w-48 text-sm transition-all outline-none focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
                     style={{ pointerEvents: "auto" }}
                     onClick={(e) => (e.target as HTMLInputElement).select()}
                     tabIndex={0}
                   />
                 ) : (
                   <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
-                    <SelectTrigger className={`w-48 border ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
+                    <SelectTrigger className={`w-48 border transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
                       <SelectValue />
                     </SelectTrigger>
-                    <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
+                    <SelectContent className={`border transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
                       {examples.map((example) => (
                         <SelectItem
                           key={example.name}
@@ -199,10 +199,10 @@ export default function Playground() {
                   </Select>
                 )}
               </div>
-              <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
+              <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg transition-colors duration-500 ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
                 <div
                   ref={lineNumbersRef}
-                  className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
+                  className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] transition-colors duration-500 ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
                   style={{
                     height: "100%",
                     paddingTop: "8px",
@@ -211,7 +211,7 @@ export default function Playground() {
                   {lineNumbers.map((lineNum) => (
                     <div
                       key={lineNum}
-                      className={`font-mono text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                      className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                       style={{
                         lineHeight: "1.4",
                         fontSize: "0.83rem",
@@ -228,7 +228,7 @@ export default function Playground() {
                   onChange={(e) => setCode(e.target.value)}
                   onScroll={scroll}
                   placeholder="Enter your OpenQASM code here..."
-                  className={`font-mono text-sm border-0 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto py-2 leading-[1.4] ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
+                  className={`font-mono text-sm border-0 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto py-2 leading-[1.4] transition-colors duration-500 ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
@@ -242,13 +242,13 @@ export default function Playground() {
           </Card>
 
           {/* Results */}
-          <Card className={`lg:w-[30%] border flex flex-col h-full shadow-lg backdrop-blur-sm ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
+          <Card className={`lg:w-[30%] border flex flex-col h-full shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 overflow-auto p-6">
               {error && (
-                <div className={`border rounded-lg p-4 mb-4 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   {/* Error */}
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className={`font-semibold ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                    <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
                       Error Details
                     </h3>
 
@@ -256,13 +256,13 @@ export default function Playground() {
                       variant="outline"
                       size="sm"
                       onClick={() => copyToClipboard(error)}
-                      className={`${isDarkMode ? "text-red-300 border-red-700 hover:bg-red-900/30 bg-red-900/20" : "text-red-700 border-red-300 hover:bg-red-100 bg-red-50"}`}
+                      className={`transition-colors duration-500 ${isDarkMode ? "text-red-300 border-red-700 hover:bg-red-900/30 bg-red-900/20" : "text-red-700 border-red-300 hover:bg-red-100 bg-red-50"}`}
                     >
                       Copy Error
                     </Button>
                   </div>
 
-                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
+                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
                     {error}
                   </pre>
                 </div>
@@ -270,7 +270,7 @@ export default function Playground() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between pb-0">
-                  <h3 className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                  <h3 className={`text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     Quantum States
                   </h3>
                   {result && (
@@ -278,7 +278,7 @@ export default function Playground() {
                       variant="outline"
                       size="lg"
                       onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                      className={`border h-6 text-xs ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                      className={`border h-6 text-xs transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
                     >
                       Copy JSON
                     </Button>
@@ -292,10 +292,10 @@ export default function Playground() {
                         return (
                           <div
                             key={index}
-                            className={`rounded-lg p-4 border pb-4 pt-4 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
+                            className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
                           >
                             <div className="flex items-center justify-between mb-3">
-                              <h4 className={`font-mono ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                              <h4 className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                 {state.binaryString.map((str, i) => (
                                   <span key={i} className="font-mono">
                                     |{str}⟩
@@ -308,16 +308,16 @@ export default function Playground() {
                               {/* Probability Bar */}
                               <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                  <span className={`${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                  <span className={`transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                                     Probability
                                   </span>
-                                  <span className={`${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                  <span className={`transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                     {state.probability?.toFixed(6) || "0.000000"}
                                   </span>
                                 </div>
-                                <div className={`w-full rounded-full h-2 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                                <div className={`w-full rounded-full h-2 transition-colors duration-500 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
                                   <div
-                                    className={`min-w-[6px] h-2 rounded-full transition-all duration-300 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
+                                    className={`min-w-[6px] h-2 rounded-full transition-all duration-300 transition-colors duration-500 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
                                     style={{
                                       width: `${(state.probability || 0) * 100}%`,
                                     }}
@@ -327,10 +327,10 @@ export default function Playground() {
 
                               {/* Amplitude */}
                               <div className="space-y-2">
-                                <span className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                <span className={`text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                                   Amplitude
                                 </span>
-                                <div className={`font-mono text-sm ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                <div className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                   {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
                                   {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
                                 </div>
@@ -343,22 +343,22 @@ export default function Playground() {
 
                     {/* JSON view */}
                     <details className="mt-4">
-                      <summary className={`cursor-pointer transition-colors ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
+                      <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
                         Show Raw JSON
                       </summary>
-                      <div className={`rounded-lg p-4 mt-2 overflow-auto ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
-                        <pre className={`text-sm font-mono whitespace-pre ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
+                      <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
+                        <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
                           {JSON.stringify(result, null, 2)}
                         </pre>
                       </div>
                     </details>
                   </>
                 ) : isLoading ? (
-                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                     <p>Waiting for remote server...</p>
                   </div>
                 ) : (
-                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                     <p>Run your OpenQASM code to see quantum states here</p>
                   </div>
                 )}
