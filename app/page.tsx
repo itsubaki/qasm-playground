@@ -272,16 +272,18 @@ export default function Playground() {
               </div>
 
               {error && (
-                <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
-                      Error Details
-                    </h3>
-                  </div>
+                <div className={`space-y-3 max-h-[800px] overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
+                  <div className={`rounded-lg p-4 border transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                        Error Details
+                      </h3>
+                    </div>
 
-                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
-                    {error}
-                  </pre>
+                    <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
+                      {error}
+                    </pre>
+                  </div>
                 </div>
               )}
 
@@ -292,7 +294,7 @@ export default function Playground() {
                       return (
                         <div
                           key={index}
-                          className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
+                          className={`rounded-lg p-4 border transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
                         >
                           <div className="flex items-center justify-between mb-3">
                             <h4 className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
