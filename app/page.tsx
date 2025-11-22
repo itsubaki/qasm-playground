@@ -171,6 +171,7 @@ export default function Playground() {
 
                 {sharedURL ? (
                   <input
+                    name="sharedURL"
                     type="text"
                     ref={sharedURLRef}
                     value={sharedURL}
