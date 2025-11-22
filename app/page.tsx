@@ -286,7 +286,7 @@ export default function Playground() {
 
               {result ? (
                 <>
-                  <div className="space-y-3">
+                  <div className={`space-y-3 max-h-[800px] overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
                     {result.states.map((state, index) => {
                       return (
                         <div
