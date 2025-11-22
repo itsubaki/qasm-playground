@@ -279,7 +279,7 @@ export default function Playground() {
                     </h3>
                   </div>
 
-                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
+                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 w-full break-all transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
                     {error}
                   </pre>
                 </div>
