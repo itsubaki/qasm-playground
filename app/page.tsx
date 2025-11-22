@@ -285,7 +285,7 @@ export default function Playground() {
                 </div>
               )}
 
-              {result ? (
+              {result && (
                 <>
                   <div className={`space-y-3 max-h-[800px] overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
                     {result.states.map((state, index) => {
@@ -353,11 +353,15 @@ export default function Playground() {
                     </div>
                   </details>
                 </>
-              ) : isLoading ? (
+              )}
+
+              {isLoading && (
                 <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Waiting for remote server...</p>
                 </div>
-              ) : (
+              )}
+
+              {!result && !isLoading && !error && (
                 <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Run your OpenQASM code to see quantum states here</p>
                 </div>
