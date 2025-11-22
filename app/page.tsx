@@ -17,7 +17,7 @@ export default function Playground() {
   const [result, setResult] = useState<States | null>(null)
   const [sharedURL, setSharedURL] = useState<string | null>(null)
 
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
