@@ -245,34 +245,11 @@ export default function Playground() {
           {/* Results */}
           <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
-              {error && (
-                <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
-                  {/* Error */}
-                  <div className="flex items-center justify-between mb-2">
-                    <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
-                      Error Details
-                    </h3>
-
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => copyToClipboard(error)}
-                      className={`transition-colors duration-500 ${isDarkMode ? "text-red-300 border-red-700 hover:bg-red-900/30 bg-red-900/20" : "text-red-700 border-red-300 hover:bg-red-100 bg-red-50"}`}
-                    >
-                      Copy Error
-                    </Button>
-                  </div>
-
-                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
-                    {error}
-                  </pre>
-                </div>
-              )}
-
               <div className="flex justify-between items-center mt-0 mb-2 gap-3">
                 <h3 className={`py-1 text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                   Quantum States
                 </h3>
+
                 {result && (
                   <Button
                     variant="outline"
@@ -282,7 +259,31 @@ export default function Playground() {
                     Copy JSON
                   </Button>
                 )}
+
+                {error && (
+                  <Button
+                    variant="outline"
+                    onClick={() => copyToClipboard(error)}
+                    className={`text-white transition-colors duration-500 ${isDarkMode ? "text-red-300 border-red-700 hover:bg-red-900/30 bg-red-900/20" : "text-red-700 border-red-300 hover:bg-red-100 bg-red-50"}`}
+                  >
+                    Copy Error
+                  </Button>
+                )}
               </div>
+
+              {error && (
+                <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                      Error Details
+                    </h3>
+                  </div>
+
+                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
+                    {error}
+                  </pre>
+                </div>
+              )}
 
               {result ? (
                 <>
