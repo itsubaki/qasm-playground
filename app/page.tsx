@@ -240,8 +240,8 @@ export default function Playground() {
           </Card>
 
           {/* Results */}
-          <Card className={`lg:w-[30%] border flex flex-col h-full shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
-            <CardContent className="flex-1 overflow-auto p-6">
+          <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
+            <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               {error && (
                 <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   {/* Error */}
@@ -266,101 +266,98 @@ export default function Playground() {
                 </div>
               )}
 
-              <div className="space-y-4">
-                <div className="flex items-center justify-between pb-0">
-                  <h3 className={`text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                    Quantum States
-                  </h3>
-                  {result && (
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                      className={`border h-6 text-xs transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
-                    >
-                      Copy JSON
-                    </Button>
-                  )}
-                </div>
+              <div className="flex justify-between items-center mt-0 mb-2 gap-3">
+                <h3 className={`text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                  Quantum States
+                </h3>
+                {result && (
+                  <Button
+                    variant="outline"
+                    onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
+                    className={`text-white transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                  >
+                    Copy JSON
+                  </Button>
+                )}
+              </div>
 
-                {result ? (
-                  <>
-                    <div className="space-y-3">
-                      {result.states.map((state, index) => {
-                        return (
-                          <div
-                            key={index}
-                            className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
-                          >
-                            <div className="flex items-center justify-between mb-3">
-                              <h4 className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                {state.binaryString.map((str, i) => (
-                                  <span key={i} className="font-mono">
-                                    |{str}⟩
-                                  </span>
-                                ))}
-                              </h4>
+              {result ? (
+                <>
+                  <div className="space-y-3">
+                    {result.states.map((state, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
+                        >
+                          <div className="flex items-center justify-between mb-3">
+                            <h4 className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                              {state.binaryString.map((str, i) => (
+                                <span key={i} className="font-mono">
+                                  |{str}⟩
+                                </span>
+                              ))}
+                            </h4>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-4">
+                            {/* Probability Bar */}
+                            <div className="space-y-2">
+                              <div className="flex justify-between text-sm">
+                                <span className={`transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                  Probability
+                                </span>
+                                <span className={`transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                  {state.probability?.toFixed(6) || "0.000000"}
+                                </span>
+                              </div>
+                              <div className={`w-full rounded-full h-2 transition-colors duration-500 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                                <div
+                                  className={`min-w-[6px] h-2 rounded-full transition-all duration-300 transition-colors duration-500 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
+                                  style={{
+                                    width: `${(state.probability || 0) * 100}%`,
+                                  }}
+                                />
+                              </div>
                             </div>
 
-                            <div className="grid grid-cols-1 gap-4">
-                              {/* Probability Bar */}
-                              <div className="space-y-2">
-                                <div className="flex justify-between text-sm">
-                                  <span className={`transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                                    Probability
-                                  </span>
-                                  <span className={`transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                    {state.probability?.toFixed(6) || "0.000000"}
-                                  </span>
-                                </div>
-                                <div className={`w-full rounded-full h-2 transition-colors duration-500 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                                  <div
-                                    className={`min-w-[6px] h-2 rounded-full transition-all duration-300 transition-colors duration-500 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
-                                    style={{
-                                      width: `${(state.probability || 0) * 100}%`,
-                                    }}
-                                  />
-                                </div>
-                              </div>
-
-                              {/* Amplitude */}
-                              <div className="space-y-2">
-                                <span className={`text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                                  Amplitude
-                                </span>
-                                <div className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                  {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
-                                  {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
-                                </div>
+                            {/* Amplitude */}
+                            <div className="space-y-2">
+                              <span className={`text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                                Amplitude
+                              </span>
+                              <div className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                                {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
+                                {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
                               </div>
                             </div>
                           </div>
-                        )
-                      })}
-                    </div>
+                        </div>
+                      )
+                    })}
+                  </div>
 
-                    {/* JSON view */}
-                    <details className="mt-4">
-                      <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
-                        Show Raw JSON
-                      </summary>
-                      <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
-                        <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
-                          {JSON.stringify(result, null, 2)}
-                        </pre>
-                      </div>
-                    </details>
-                  </>
-                ) : isLoading ? (
-                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
-                    <p>Waiting for remote server...</p>
-                  </div>
-                ) : (
-                  <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
-                    <p>Run your OpenQASM code to see quantum states here</p>
-                  </div>
-                )}
-              </div>
+                  {/* JSON view */}
+                  <details className="mt-4">
+                    <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
+                      Show Raw JSON
+                    </summary>
+                    <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
+                      <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
+                        {JSON.stringify(result, null, 2)}
+                      </pre>
+                    </div>
+                  </details>
+                </>
+              ) : isLoading ? (
+                <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  <p>Waiting for remote server...</p>
+                </div>
+              ) : (
+                <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                  <p>Run your OpenQASM code to see quantum states here</p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
