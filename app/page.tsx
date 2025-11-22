@@ -205,7 +205,7 @@ export default function Playground() {
                       className={`font-mono text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
                       style={{
                         lineHeight: "1.4",
-                        fontSize: "14px",
+                        fontSize: "0.83rem",
                       }}
                     >
                       {lineNum}
@@ -213,6 +213,7 @@ export default function Playground() {
                   ))}
                 </div>
                 <Textarea
+                  id="code-editor"
                   ref={textareaRef}
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
@@ -222,7 +223,7 @@ export default function Playground() {
                   style={{
                     fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
                     lineHeight: "1.4",
-                    fontSize: "14px",
+                    fontSize: "0.83rem",
                     whiteSpace: "pre",
                     overflowX: "auto",
                   }}
