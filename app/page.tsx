@@ -267,7 +267,7 @@ export default function Playground() {
               )}
 
               <div className="flex justify-between items-center mt-0 mb-2 gap-3">
-                <h3 className={`text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                <h3 className={`py-1 text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                   Quantum States
                 </h3>
                 {result && (
