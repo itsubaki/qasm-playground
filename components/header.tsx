@@ -11,16 +11,18 @@ export function Header({
         document.documentElement.classList.toggle("dark", newDarkMode)
     }
 
+    const transition = "transition-colors duration-500"
+
     return (
         <div className="text-center">
             <div className="flex justify-between items-center">
-                <div className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                <div className={`font-bold text-2xl leading-7 text-left ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     OpenQASM 3.0 Playground
                 </div>
                 <div className="flex items-center gap-3">
                     <button
                         onClick={toggleDarkMode}
-                        className={`flex items-center justify-center w-8 h-8 rounded transition-colors duration-500 ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
+                        className={`flex items-center justify-center w-8 h-8 rounded ${transition} ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
                         aria-label="Toggle dark mode"
                     >
                         {isDarkMode ? (
@@ -41,7 +43,7 @@ export function Header({
                         href="https://github.com/itsubaki/qasm-playground"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`flex items-center justify-center w-8 h-8 rounded transition-colors duration-500 ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background border-border hover:bg-accent"}`}
+                        className={`flex items-center justify-center w-8 h-8 rounded ${transition} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
                         aria-label="View source on GitHub"
                     >
                         <img
