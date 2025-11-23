@@ -18,7 +18,7 @@ export interface Snippet {
     createdAt: string
 }
 
-export async function post(url: string, body: object) {
+export async function post<T>(url: string, body: object) {
     const resp = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,7 +29,7 @@ export async function post(url: string, body: object) {
         await throwError(resp)
     }
 
-    return resp
+    return resp.json() as Promise<T>
 }
 
 export async function throwError(resp: Response) {

@@ -36,8 +36,7 @@ export default function Playground() {
     setResult(null)
 
     try {
-      const resp = await post("/api/simulate", { code })
-      const states: States = await resp.json()
+      const states = await post<States>("/api/simulate", { code })
       setResult(states)
     } catch (err) {
       console.error("Run code:", err)
@@ -53,8 +52,7 @@ export default function Playground() {
     }
 
     try {
-      const resp = await post("/api/share", { code })
-      const snippet: Snippet = await resp.json()
+      const snippet = await post<Snippet>("/api/share", { code })
       if (!snippet.id) {
         console.error("Share code:", result)
         return
@@ -80,8 +78,7 @@ export default function Playground() {
 
     try {
       const id = match[1]
-      const resp = await post("/api/edit", { id })
-      const snippet: Snippet = await resp.json()
+      const snippet = await post<Snippet>("/api/edit", { id })
       if (!snippet.code) {
         console.error("Edit code:", snippet)
         return
