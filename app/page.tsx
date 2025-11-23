@@ -264,7 +264,7 @@ export default function Playground() {
           </Card>
         </div>
 
-        <div className="mt-6 ">
+        <div className="mt-6">
           <Notes isDarkMode={isDarkMode} />
         </div>
       </div>
