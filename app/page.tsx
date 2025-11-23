@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from "react"
 import toast from 'react-hot-toast';
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Textarea } from "@/components/ui/textarea"
+import { Editor } from "@/components/editor"
+import { Result } from "@/components/result"
 import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -21,10 +22,7 @@ export default function Playground() {
   const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
   const sharedURLRef = useRef<HTMLInputElement>(null)
-  const lineNumbersRef = useRef<HTMLDivElement>(null)
-  const lineNumbers = useMemo(() => Array.from({ length: code.split("\n").length }, (_, i) => i + 1), [code])
 
   const run = async () => {
     if (!code.trim()) {
@@ -99,12 +97,6 @@ export default function Playground() {
     }
   }
 
-  const scroll = () => {
-    if (textareaRef.current && lineNumbersRef.current) {
-      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
-    }
-  }
-
   const selectExample = (name: string) => {
     const example = examples.find((ex) => ex.name === name)
     if (example) {
@@ -164,7 +156,7 @@ export default function Playground() {
                 <Button
                   onClick={share}
                   variant="outline"
-                  className={`transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                  className={`transition-colors duration-500 ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-white-50 bg-white"}`}
                 >
                   Share
                 </Button>
@@ -203,45 +195,7 @@ export default function Playground() {
                 )}
               </div>
 
-              <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg transition-colors duration-500 ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
-                <div
-                  ref={lineNumbersRef}
-                  className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide rounded-tl-lg rounded-bl-lg leading-[1.4] transition-colors duration-500 ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}
-                  style={{
-                    height: "100%",
-                    paddingTop: "8px",
-                  }}
-                >
-                  {lineNumbers.map((lineNum) => (
-                    <div
-                      key={lineNum}
-                      className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
-                      style={{
-                        lineHeight: "1.4",
-                        fontSize: "0.83rem",
-                      }}
-                    >
-                      {lineNum}
-                    </div>
-                  ))}
-                </div>
-                <Textarea
-                  id="code-editor"
-                  ref={textareaRef}
-                  value={code}
-                  onChange={(e) => setCode(e.target.value)}
-                  onScroll={scroll}
-                  placeholder="Enter your OpenQASM code here..."
-                  className={`font-mono text-sm border-0 resize-none h-full focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 flex-1 rounded-l-none rounded-r-lg overflow-y-auto py-2 leading-[1.4] transition-colors duration-500 ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
-                  style={{
-                    fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace',
-                    lineHeight: "1.4",
-                    fontSize: "0.83rem",
-                    whiteSpace: "pre",
-                    overflowX: "auto",
-                  }}
-                />
-              </div>
+              <Editor code={code} isDarkMode={isDarkMode} setCode={setCode} />
             </CardContent>
           </Card>
 
@@ -274,6 +228,12 @@ export default function Playground() {
                 )}
               </div>
 
+              {result && (
+                <div className={`space-y-3 overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
+                  <Result result={result} isDarkMode={isDarkMode} />
+                </div>
+              )}
+
               {error && (
                 <div className={`p-4 border rounded-lg ransition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   <div className="flex items-center justify-between mb-2">
@@ -288,71 +248,13 @@ export default function Playground() {
                 </div>
               )}
 
-              {result && (
-                <>
-                  <div className={`space-y-3 max-h-[800px] overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
-                    {result.states.map((state, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className={`p-4 pb-4 pt-4 border rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
-                        >
-                          <div className="flex items-center justify-between mb-3">
-                            <div className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                              {state.binaryString.map((str, i) => (
-                                <span key={i} className="font-mono">
-                                  |{str}⟩
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-
-                          <div className="grid grid-cols-1 gap-3">
-                            {/* Probability Bar */}
-                            <div className="space-y-2">
-                              <div className="flex justify-between text-sm">
-                                <span className={`transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                                  Probability
-                                </span>
-                                <span className={`transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                  {state.probability?.toFixed(6) || "0.000000"}
-                                </span>
-                              </div>
-                              <div className={`w-full rounded-full h-2 transition-colors duration-500 ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
-                                <div
-                                  className={`min-w-[6px] h-2 rounded-full transition-all duration-300 transition-colors duration-500 ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
-                                  style={{
-                                    width: `${(state.probability || 0) * 100}%`,
-                                  }}
-                                />
-                              </div>
-                            </div>
-
-                            {/* Amplitude */}
-                            <div className="space-y-2">
-                              <span className={`text-sm transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                                Amplitude
-                              </span>
-                              <div className={`font-mono text-sm transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
-                                {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
-                                {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-                </>
-              )}
-
               {isLoading && (
                 <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Waiting for remote server...</p>
                 </div>
               )}
 
-              {!result && !isLoading && !error && (
+              {!result && !error && !isLoading && (
                 <div className={`text-center py-12 min-h-[100px] flex flex-col justify-center transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Run your OpenQASM code to see quantum states here</p>
                 </div>
