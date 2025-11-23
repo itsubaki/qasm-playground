@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { throwError } from "./error"
+import { throwError } from "./http"
 
 describe("throwError", () => {
   it("throws error with basic HTTP status message", async () => {

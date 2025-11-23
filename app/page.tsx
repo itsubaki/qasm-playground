@@ -8,8 +8,8 @@ import { Textarea } from "@/components/ui/textarea"
 import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type States, examples } from "@/lib/quantum"
-import { post } from "@/lib/request"
+import { examples } from "@/lib/examples"
+import { States, Snippet, post } from "@/lib/http"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
@@ -54,7 +54,7 @@ export default function Playground() {
 
     try {
       const resp = await post("/api/share", { code })
-      const result = await resp.json()
+      const result: Snippet = await resp.json()
       if (!result.id) {
         console.error("Share code:", result)
         return
@@ -81,7 +81,7 @@ export default function Playground() {
     try {
       const id = match[1]
       const resp = await post("/api/edit", { id })
-      const result = await resp.json()
+      const result: Snippet = await resp.json()
       if (!result.code) {
         console.error("Edit code:", result)
         return

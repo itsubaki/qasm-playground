@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { examples, State, States } from "./quantum";
+import { examples } from "./examples";
 
 describe("quantum.ts", () => {
     test("examples should be defined", () => {

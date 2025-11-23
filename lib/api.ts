@@ -1,5 +1,4 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { throwError } from "@/lib/error"
 
 const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
 
@@ -75,18 +74,4 @@ export async function request(
             { status: 500 },
         )
     }
-}
-
-export async function post(url: string, body: object) {
-    const resp = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body)
-    })
-
-    if (!resp.ok) {
-        await throwError(resp)
-    }
-
-    return resp
 }
