@@ -151,7 +151,7 @@ export default function Playground() {
         </div>
 
         {/* Main */}
-        <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
+        <div className="flex flex-col lg:flex-row gap-3 h-[800px]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
@@ -310,7 +310,7 @@ export default function Playground() {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 gap-4">
+                          <div className="grid grid-cols-1 gap-3">
                             {/* Probability Bar */}
                             <div className="space-y-2">
                               <div className="flex justify-between text-sm">
@@ -345,20 +345,6 @@ export default function Playground() {
                         </div>
                       )
                     })}
-                  </div>
-
-                  {/* JSON view */}
-                  <div className="mt-4">
-                    <details>
-                      <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
-                        Show Raw JSON
-                      </summary>
-                      <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
-                        <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
-                          {JSON.stringify(result, null, 2)}
-                        </pre>
-                      </div>
-                    </details>
                   </div>
                 </>
               )}
