@@ -200,4 +200,18 @@ describe("request", () => {
             }
         )
     })
+
+    it('should return 500 if SERVICE_URL is not set', async () => {
+        delete process.env.GOOGLE_CLOUD_SERVICE_URL
+
+        const req = {
+            json: async () => ({ id: '123' }),
+        } as unknown as NextRequest
+
+        const res = await request(req, Path.Edit, Key.Id)
+        const data = await res.json()
+
+        expect(res.status).toBe(500)
+        expect(data).toEqual({ error: 'GOOGLE_CLOUD_SERVICE_URL is not set' })
+    })
 })

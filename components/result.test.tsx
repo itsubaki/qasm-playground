@@ -9,14 +9,14 @@ describe("Result", () => {
             {
                 amplitude: { real: 0.5, imag: -0.5 },
                 probability: 0.25,
-                int: [0, 1, 0],
-                binaryString: ["010"]
+                binaryString: ["010"],
+                int: [2],
             },
             {
                 amplitude: { real: 0.866, imag: 0 },
                 probability: 0.75,
-                int: [1, 1, 1],
-                binaryString: ["111"]
+                binaryString: ["111"],
+                int: [7],
             }
         ]
     }

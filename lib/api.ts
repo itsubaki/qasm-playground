@@ -1,7 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
 
-const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
-
 export enum Path {
     Edit = "Edit",
     Share = "Share",
@@ -18,6 +16,7 @@ export async function request(
     path: Path,
     key: Key,
 ) {
+    const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
     if (!SERVICE_URL) {
         return NextResponse.json(
             { error: "GOOGLE_CLOUD_SERVICE_URL is not set" },

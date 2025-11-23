@@ -1,5 +1,28 @@
-import { describe, it, expect } from "vitest"
-import { throwError } from "./http"
+import { describe, it, expect, vi, beforeEach } from "vitest"
+import { post, throwError } from "./http"
+
+describe('post', () => {
+  beforeEach(() => {
+    vi.resetAllMocks()
+  })
+
+  it('should return JSON when response is ok', async () => {
+    const mockData = { success: true }
+
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: vi.fn().mockResolvedValue(mockData),
+    } as any)
+
+    const result = await post('/test', { foo: 'bar' })
+    expect(result).toEqual(mockData)
+    expect(global.fetch).toHaveBeenCalledWith('/test', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ foo: 'bar' }),
+    })
+  })
+})
 
 describe("throwError", () => {
   it("throws error with basic HTTP status message", async () => {
