@@ -7,7 +7,7 @@ export function Notes({
         <div className="text-left">
             <ul className={`text-sm space-y-1 transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                 <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
-                <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host.</li>
+                <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host it.</li>
                 <li>There are several other limitations. For more details, please refer to{" "}
                     <a
                         href="https://github.com/itsubaki/qasm/issues"
