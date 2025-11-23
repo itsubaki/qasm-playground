@@ -9,7 +9,7 @@ import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { examples } from "@/lib/examples"
-import { States, Snippet, post } from "@/lib/http"
+import { type States, type Snippet, post } from "@/lib/http"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
@@ -37,8 +37,8 @@ export default function Playground() {
 
     try {
       const resp = await post("/api/simulate", { code })
-      const data: States = await resp.json()
-      setResult(data)
+      const states: States = await resp.json()
+      setResult(states)
     } catch (err) {
       console.error("Run code:", err)
       setError(err instanceof Error ? err.message : "An unknown error occurred")
@@ -54,14 +54,14 @@ export default function Playground() {
 
     try {
       const resp = await post("/api/share", { code })
-      const result: Snippet = await resp.json()
-      if (!result.id) {
+      const snippet: Snippet = await resp.json()
+      if (!snippet.id) {
         console.error("Share code:", result)
         return
       }
 
-      window.history.pushState(null, "", `/p/${result.id}`)
-      const url = `${window.location.origin}/p/${result.id}`
+      window.history.pushState(null, "", `/p/${snippet.id}`)
+      const url = `${window.location.origin}/p/${snippet.id}`
       setSharedURL(url)
       await copyToClipboard(url)
     } catch (err) {
@@ -81,13 +81,13 @@ export default function Playground() {
     try {
       const id = match[1]
       const resp = await post("/api/edit", { id })
-      const result: Snippet = await resp.json()
-      if (!result.code) {
-        console.error("Edit code:", result)
+      const snippet: Snippet = await resp.json()
+      if (!snippet.code) {
+        console.error("Edit code:", snippet)
         return
       }
 
-      setCode(result.code)
+      setCode(snippet.code)
     } catch (err) {
       console.error("Edit code:", err)
     }
