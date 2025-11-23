@@ -11,4 +11,4 @@ build:
 	pnpm run build
 
 test:
-	pnpm run test
+	pnpm run test:coverage
