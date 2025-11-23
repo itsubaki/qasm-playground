@@ -146,7 +146,9 @@ export default function Playground() {
   return (
     <div className={`min-h-screen p-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
-        <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        <div className=" mb-6">
+          <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
+        </div>
 
         {/* Main */}
         <div className="flex flex-col lg:flex-row gap-6 h-[800px]">
@@ -178,8 +180,7 @@ export default function Playground() {
                     ref={sharedURLRef}
                     value={sharedURL}
                     readOnly
-                    className={`h-9 px-4 py-2 rounded-md border w-48 text-sm transition-all outline-none focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
-                    style={{ pointerEvents: "auto" }}
+                    className={`h-9 px-4 py-2 rounded-md border w-48 text-sm transition-all outline-none pointer-events-auto focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
                     onClick={(e) => (e.target as HTMLInputElement).select()}
                     tabIndex={0}
                   />
@@ -277,7 +278,7 @@ export default function Playground() {
               </div>
 
               {error && (
-                <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                <div className={`p-4 border rounded-lg ransition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   <div className="flex items-center justify-between mb-2">
                     <div className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
                       Error Details
@@ -297,7 +298,7 @@ export default function Playground() {
                       return (
                         <div
                           key={index}
-                          className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
+                          className={`p-4 pb-4 pt-4 border rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
                         >
                           <div className="flex items-center justify-between mb-3">
                             <div className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
@@ -347,16 +348,18 @@ export default function Playground() {
                   </div>
 
                   {/* JSON view */}
-                  <details className="mt-4">
-                    <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
-                      Show Raw JSON
-                    </summary>
-                    <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
-                      <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
-                        {JSON.stringify(result, null, 2)}
-                      </pre>
-                    </div>
-                  </details>
+                  <div className="mt-4">
+                    <details>
+                      <summary className={`cursor-pointer transition-colors transition-colors duration-500 ${isDarkMode ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-gray-900"}`}>
+                        Show Raw JSON
+                      </summary>
+                      <div className={`rounded-lg p-4 mt-2 overflow-auto transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50" : "bg-gray-50"}`}>
+                        <pre className={`text-sm font-mono whitespace-pre transition-colors duration-500 ${isDarkMode ? "text-green-400" : "text-green-700"}`}>
+                          {JSON.stringify(result, null, 2)}
+                        </pre>
+                      </div>
+                    </details>
+                  </div>
                 </>
               )}
 
@@ -375,7 +378,9 @@ export default function Playground() {
           </Card>
         </div>
 
-        <Notes isDarkMode={isDarkMode} />
+        <div className="mt-6 ">
+          <Notes isDarkMode={isDarkMode} />
+        </div>
       </div>
     </div >
   )

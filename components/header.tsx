@@ -12,7 +12,7 @@ export function Header({
     }
 
     return (
-        <div className="text-center mb-4">
+        <div className="text-center">
             <div className="flex justify-between items-center">
                 <div className={`font-bold text-2xl leading-7 mb-0 mt-0 text-left transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                     OpenQASM 3.0 Playground

@@ -4,7 +4,7 @@ export function Notes({
     isDarkMode: boolean,
 }) {
     return (
-        <div className="mt-6 text-left">
+        <div className="text-left">
             <ul className={`text-sm space-y-1 transition-colors duration-500 ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                 <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
                 <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host.</li>
