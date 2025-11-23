@@ -5,13 +5,11 @@ export function Header({
     isDarkMode: boolean,
     setIsDarkMode: (isDarkMode: boolean) => void,
 }) {
-    const toggleDarkMode = () => {
-        const newDarkMode = !isDarkMode
-        setIsDarkMode(newDarkMode)
-        document.documentElement.classList.toggle("dark", newDarkMode)
-    }
-
     const transition = "transition-colors duration-500"
+
+    const toggleDarkMode = () => {
+        setIsDarkMode(!isDarkMode)
+    }
 
     return (
         <div className="text-center">
