@@ -246,9 +246,9 @@ export default function Playground() {
           <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm transition-colors duration-500 ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex-1 flex flex-col p-6 pt-2 h-full">
               <div className="flex justify-between items-center mt-0 mb-2 gap-3">
-                <h3 className={`py-1 text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                <div className={`py-1 text-lg font-semibold transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                   Quantum States
-                </h3>
+                </div>
 
                 {result && (
                   <Button
@@ -274,9 +274,9 @@ export default function Playground() {
               {error && (
                 <div className={`border rounded-lg p-4 mb-4 transition-colors duration-500 ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                    <div className={`font-semibold transition-colors duration-500 ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
                       Error Details
-                    </h3>
+                    </div>
                   </div>
 
                   <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto max-h-40 w-full break-all transition-colors duration-500 ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
@@ -295,13 +295,13 @@ export default function Playground() {
                           className={`rounded-lg p-4 border pb-4 pt-4 transition-colors duration-500 ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}
                         >
                           <div className="flex items-center justify-between mb-3">
-                            <h4 className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                            <div className={`font-mono transition-colors duration-500 ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                               {state.binaryString.map((str, i) => (
                                 <span key={i} className="font-mono">
                                   |{str}⟩
                                 </span>
                               ))}
-                            </h4>
+                            </div>
                           </div>
 
                           <div className="grid grid-cols-1 gap-4">
