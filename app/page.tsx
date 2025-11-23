@@ -229,7 +229,7 @@ export default function Playground() {
               </div>
 
               {result && (
-                <div className={`space-y-3 overflow-y-auto rounded-lg transition-colors duration-500 ${isDarkMode ? "bg-gray-900/30" : "bg-gray-50"}`}>
+                <div className={`space-y-3 overflow-y-auto rounded-lg`}>
                   <Result result={result} isDarkMode={isDarkMode} />
                 </div>
               )}
