@@ -75,7 +75,7 @@ describe('Button', () => {
   })
 
   it('passes through other button props', () => {
-    const handleClick = () => {}
+    const handleClick = () => { /* noop */ }
     render(
       <Button onClick={handleClick} type="submit" aria-label="Submit button">
         Submit
