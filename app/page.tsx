@@ -161,6 +161,7 @@ export default function Playground() {
                 >
                   Run
                 </Button>
+
                 <Button
                   onClick={share}
                   variant="outline"
@@ -169,7 +170,7 @@ export default function Playground() {
                   Share
                 </Button>
 
-                {sharedURL ? (
+                {sharedURL && (
                   <input
                     name="sharedURL"
                     type="text"
@@ -181,7 +182,9 @@ export default function Playground() {
                     onClick={(e) => (e.target as HTMLInputElement).select()}
                     tabIndex={0}
                   />
-                ) : (
+                )}
+
+                {!sharedURL && (
                   <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
                     <SelectTrigger className={`w-48 border transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
                       <SelectValue />
@@ -200,6 +203,7 @@ export default function Playground() {
                   </Select>
                 )}
               </div>
+
               <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg transition-colors duration-500 ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
                 <div
                   ref={lineNumbersRef}
