@@ -173,6 +173,7 @@ export default function Playground() {
                 {sharedURL && (
                   <input
                     name="sharedURL"
+                    aria-label="Shared URL"
                     type="text"
                     ref={sharedURLRef}
                     value={sharedURL}
@@ -185,7 +186,7 @@ export default function Playground() {
                 )}
 
                 {!sharedURL && (
-                  <Select onValueChange={selectExample} defaultValue={examples[0]?.name}>
+                  <Select onValueChange={selectExample} defaultValue={examples[0]?.name} aria-label="Choose an example">
                     <SelectTrigger className={`w-48 border transition-colors duration-500 ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
                       <SelectValue />
                     </SelectTrigger>
