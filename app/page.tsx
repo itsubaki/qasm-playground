@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useRef, useEffect, useMemo } from "react"
 import toast from 'react-hot-toast';
+import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Editor } from "@/components/editor"
 import { Result } from "@/components/result"
-import { Notes } from "@/components/notes"
 import { Header } from '@/components/header';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Notes } from "@/components/notes"
 import { examples } from "@/lib/examples"
 import { type States, type Snippet, post } from "@/lib/http"
 
