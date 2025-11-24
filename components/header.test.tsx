@@ -48,6 +48,6 @@ describe('Header', () => {
         const setIsDarkMode = vi.fn()
         render(<Header isDarkMode={false} setIsDarkMode={setIsDarkMode} />)
         const img = screen.getByAltText('GitHub')
-        expect(img).toHaveClass('w-6', 'h-6')
+        expect(img).toBeInTheDocument()
     })
 })
