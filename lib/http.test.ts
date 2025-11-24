@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { httpPost, throwError } from "./http"
 
-describe('post', () => {
+describe('httpPost', () => {
   beforeEach(() => {
     vi.resetAllMocks()
   })
