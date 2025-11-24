@@ -195,8 +195,8 @@ export default function Playground() {
               )}
 
               {error && (
-                <div className={`p-4 border rounded-lg ${transition} ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
-                  <div className={`mb-2 font-semibold ${transition} ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                <div className={`p-3 border rounded-lg ${transition} ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
+                  <div className={`pb-3 font-semibold ${transition} ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
                     Error Details
                   </div>
 
