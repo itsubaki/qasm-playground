@@ -12,3 +12,6 @@ build:
 
 test:
 	pnpm run test:coverage
+
+lint:
+	pnpm exec eslint .

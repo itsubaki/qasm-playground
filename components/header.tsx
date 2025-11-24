@@ -1,3 +1,4 @@
+import Image from "next/image"
 import { transition } from "@/lib/utils"
 
 export function Header({
@@ -45,10 +46,11 @@ export function Header({
                     className={`w-8 h-8 flex items-center justify-center rounded ${transition} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
                     aria-label="View source on GitHub"
                 >
-                    <img
+                    <Image
                         src="/github-mark.svg"
                         alt="GitHub"
-                        className="w-6 h-6"
+                        width={24}
+                        height={24}
                         style={{ filter: isDarkMode ? "invert(1)" : "none" }}
                     />
                 </a>

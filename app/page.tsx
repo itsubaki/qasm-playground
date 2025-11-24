@@ -96,7 +96,7 @@ export default function Playground() {
         console.error("Edit code:", err)
       }
     })()
-  }, [examples])
+  }, [])
 
   useEffect(() => {
     setIsMounted(true);
