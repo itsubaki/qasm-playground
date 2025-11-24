@@ -23,9 +23,9 @@ export function Editor({
 
     return (
         <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${transition} ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
-            <div ref={lineNumbersRef} className={`flex-shrink-0 px-3 py-2 text-right select-none overflow-hidden scrollbar-hide ${transition} ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+            <div ref={lineNumbersRef} className={`px-3 py-2 flex-shrink-0 text-right select-none overflow-hidden scrollbar-hide ${transition} ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
                 {lineNumbers.map((num) => (
-                    <div key={num} className={`font-mono text-[0.83rem] leading-[1.4] ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                    <div key={num} className={`font-mono min-w-[3ch] text-[0.83rem] leading-[1.4] ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                         {num}
                     </div>
                 ))}

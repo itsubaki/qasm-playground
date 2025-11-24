@@ -144,8 +144,8 @@ export default function Playground() {
         <div className="flex flex-col lg:flex-row gap-3 h-[800px]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
-            <CardContent className="flex flex-col h-full p-6 pt-2">
-              <div className="flex justify-end items-center mb-2 gap-3">
+            <CardContent className="flex flex-col h-full p-3">
+              <div className="flex justify-end items-center mb-3 gap-3">
                 <Button
                   onClick={run}
                   disabled={isLoading}
@@ -202,8 +202,8 @@ export default function Playground() {
 
           {/* Results */}
           <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
-            <CardContent className="p-6 pt-2 flex flex-col h-full">
-              <div className="flex justify-between items-center mt-0 mb-2 gap-3">
+            <CardContent className="p-3 flex flex-col h-full">
+              <div className="flex justify-between items-center mb-3 gap-3">
                 <div className={`py-1 text-lg font-semibold ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                   Quantum States
                 </div>
@@ -262,7 +262,7 @@ export default function Playground() {
           </Card>
         </div>
 
-        <div className="mt-6">
+        <div className="m-3">
           <Notes isDarkMode={isDarkMode} />
         </div>
       </div>
