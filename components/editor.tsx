@@ -38,7 +38,7 @@ export function Editor({
                 onChange={(e) => setCode(e.target.value)}
                 onScroll={scroll}
                 placeholder="Enter your OpenQASM code here..."
-                className={`font-mono text-[0.83rem] leading-[1.4] py-2 border-0 whitespace-pre overflow-x-auto resize-none h-full flex-1 overflow-y-auto focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 ${transition} ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
+                className={`font-mono text-[0.83rem] leading-[1.4] py-2 flex-1 border-0 h-full whitespace-pre overflow-x-auto overflow-y-auto resize-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 ${transition} ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
             />
         </div>
