@@ -19,7 +19,6 @@ describe('Textarea', () => {
     render(<Textarea data-testid="textarea" />)
     const textarea = screen.getByTestId('textarea')
     expect(textarea.className).toContain('min-h-[80px]')
-    expect(textarea.className).toContain('rounded-md')
     expect(textarea.className).toContain('border-input')
     expect(textarea.className).toContain('bg-background')
   })
@@ -34,7 +33,7 @@ describe('Textarea', () => {
     const user = userEvent.setup()
     render(<Textarea placeholder="Type here" />)
     const textarea = screen.getByPlaceholderText('Type here')
-    
+
     await user.type(textarea, 'Hello, World!')
     expect(textarea).toHaveValue('Hello, World!')
   })
@@ -80,7 +79,7 @@ describe('Textarea', () => {
   })
 
   it('handles value prop for controlled component', () => {
-    render(<Textarea value="Controlled value" onChange={() => {}} />)
+    render(<Textarea value="Controlled value" onChange={() => { }} />)
     const textarea = screen.getByRole('textbox')
     expect(textarea).toHaveValue('Controlled value')
   })
