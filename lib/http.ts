@@ -18,7 +18,7 @@ export interface Snippet {
     createdAt: string
 }
 
-export async function post<T>(url: string, body: object) {
+export async function httpPost<T>(url: string, body: object) {
     const resp = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

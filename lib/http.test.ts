@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { post, throwError } from "./http"
+import { httpPost, throwError } from "./http"
 
 describe('post', () => {
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('post', () => {
       json: vi.fn().mockResolvedValue(mockData),
     } as any)
 
-    const result = await post('/test', { foo: 'bar' })
+    const result = await httpPost('/test', { foo: 'bar' })
     expect(result).toEqual(mockData)
     expect(global.fetch).toHaveBeenCalledWith('/test', {
       method: 'POST',

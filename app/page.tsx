@@ -10,7 +10,7 @@ import { Result } from "@/components/result"
 import { Header } from '@/components/header';
 import { Notes } from "@/components/notes"
 import { examples } from "@/lib/examples"
-import { type States, type Snippet, post } from "@/lib/http"
+import { type States, type Snippet, httpPost } from "@/lib/http"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
@@ -35,7 +35,7 @@ export default function Playground() {
     setResult(null)
 
     try {
-      const states = await post<States>("/api/simulate", { code })
+      const states = await httpPost<States>("/api/simulate", { code })
       setResult(states)
     } catch (err) {
       console.error("Run code:", err)
@@ -51,7 +51,7 @@ export default function Playground() {
     }
 
     try {
-      const snippet = await post<Snippet>("/api/share", { code })
+      const snippet = await httpPost<Snippet>("/api/share", { code })
       if (!snippet.id) {
         console.error("Share code:", result)
         return
@@ -77,7 +77,7 @@ export default function Playground() {
 
     try {
       const id = match[1]
-      const snippet = await post<Snippet>("/api/edit", { id })
+      const snippet = await httpPost<Snippet>("/api/edit", { id })
       if (!snippet.code) {
         console.error("Edit code:", snippet)
         return
