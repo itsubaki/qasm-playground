@@ -1,5 +1,8 @@
 # OpenQASM 3.0 playground
 
+[![tests](https://github.com/itsubaki/qasm-playground/workflows/tests/badge.svg)](https://github.com/itsubaki/qasm-playground/actions)
+[![codecov](https://codecov.io/gh/itsubaki/qasm-playground/branch/main/graph/badge.svg?token=iNccCs1Tez)](https://codecov.io/gh/itsubaki/qasm-playground)
+
  - A playground that lets you write and execute OpenQASM 3.0 quantum programs directly in your web browser.
 
 ## Deployment and Configuration
