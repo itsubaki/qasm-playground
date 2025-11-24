@@ -136,7 +136,7 @@ export default function Playground() {
   return (
     <div className={`min-h-screen p-4 ${transition} ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
-        <div className=" mb-6">
+        <div className="mb-6">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         </div>
 
@@ -237,10 +237,8 @@ export default function Playground() {
 
               {error && (
                 <div className={`p-4 border rounded-lg ${transition} ${isDarkMode ? "bg-red-900/20 border-red-800" : "bg-red-50 border-red-200"}`}>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className={`font-semibold ${transition} ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
-                      Error Details
-                    </div>
+                  <div className={`mb-2 font-semibold ${transition} ${isDarkMode ? "text-red-300" : "text-red-800"}`}>
+                    Error Details
                   </div>
 
                   <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto w-full break-all ${transition} ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
