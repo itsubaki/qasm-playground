@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { NextRequest } from "next/server"
-import { request, Path, Key } from "./api"
+import { apiCall, Path, Key } from "./api"
 
-describe("request", () => {
+describe("apiCall", () => {
     beforeEach(() => {
         // Mock fetch
         global.fetch = vi.fn()
@@ -20,7 +20,7 @@ describe("request", () => {
             body: JSON.stringify({}),
         })
 
-        const response = await request(req, Path.Simulate, Key.Code)
+        const response = await apiCall(req, Path.Simulate, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(400)
@@ -41,7 +41,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await request(req, Path.Simulate, Key.Code)
+        const response = await apiCall(req, Path.Simulate, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -68,7 +68,7 @@ describe("request", () => {
             body: JSON.stringify({ id: "test-id" }),
         })
 
-        const response = await request(req, Path.Edit, Key.Id)
+        const response = await apiCall(req, Path.Edit, Key.Id)
         const data = await response.json()
 
         expect(response.status).toBe(400)
@@ -87,7 +87,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await request(req, Path.Share, Key.Code)
+        const response = await apiCall(req, Path.Share, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(503)
@@ -106,7 +106,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await request(req, Path.Simulate, Key.Code)
+        const response = await apiCall(req, Path.Simulate, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -121,7 +121,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await request(req, Path.Simulate, Key.Code)
+        const response = await apiCall(req, Path.Simulate, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -136,7 +136,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await request(req, Path.Simulate, Key.Code)
+        const response = await apiCall(req, Path.Simulate, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -157,7 +157,7 @@ describe("request", () => {
             body: JSON.stringify({ id: "abc123" }),
         })
 
-        const response = await request(req, Path.Edit, Key.Id)
+        const response = await apiCall(req, Path.Edit, Key.Id)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -186,7 +186,7 @@ describe("request", () => {
             body: JSON.stringify({ code: "shared code" }),
         })
 
-        const response = await request(req, Path.Share, Key.Code)
+        const response = await apiCall(req, Path.Share, Key.Code)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -208,7 +208,7 @@ describe("request", () => {
             json: async () => ({ id: '123' }),
         } as unknown as NextRequest
 
-        const res = await request(req, Path.Edit, Key.Id)
+        const res = await apiCall(req, Path.Edit, Key.Id)
         const data = await res.json()
 
         expect(res.status).toBe(500)

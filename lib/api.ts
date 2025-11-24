@@ -11,7 +11,7 @@ export enum Key {
     Code = "code",
 }
 
-export async function request(
+export async function apiCall(
     request: NextRequest,
     path: Path,
     key: Key,
