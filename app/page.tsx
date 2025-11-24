@@ -266,6 +266,6 @@ export default function Playground() {
           <Notes isDarkMode={isDarkMode} />
         </div>
       </div>
-    </div >
+    </div>
   )
 }
