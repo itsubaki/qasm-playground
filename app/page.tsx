@@ -1,13 +1,14 @@
 "use client"
 
 import toast from 'react-hot-toast';
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Editor } from "@/components/editor"
 import { Result } from "@/components/result"
 import { Header } from '@/components/header';
 import { Notes } from "@/components/notes"
+import { SharedURL } from '@/components/sharedURL';
 import { Examples, examples } from "@/components/examples";
 import { type States, type Snippet, httpPost } from "@/lib/http"
 import { transition } from "@/lib/utils"
@@ -21,8 +22,6 @@ export default function Playground() {
   const [isMounted, setIsMounted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(false)
-
-  const sharedURLRef = useRef<HTMLInputElement>(null)
 
   const run = async () => {
     if (!code.trim()) {
@@ -65,29 +64,6 @@ export default function Playground() {
     }
   }
 
-  const edit = async () => {
-    const path = window.location.pathname
-    const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
-
-    if (!match) {
-      setCode(examples[0].code)
-      return
-    }
-
-    try {
-      const id = match[1]
-      const snippet = await httpPost<Snippet>("/api/edit", { id })
-      if (!snippet.code) {
-        console.error("Edit code:", snippet)
-        return
-      }
-
-      setCode(snippet.code)
-    } catch (err) {
-      console.error("Edit code:", err)
-    }
-  }
-
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text)
@@ -97,14 +73,30 @@ export default function Playground() {
     }
   }
 
-  useEffect(() => { edit() }, [examples])
-
   useEffect(() => {
-    if (sharedURL && sharedURLRef.current) {
-      sharedURLRef.current.focus()
-      sharedURLRef.current.select()
-    }
-  }, [sharedURL]);
+    (async () => {
+      const path = window.location.pathname
+      const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
+
+      if (!match) {
+        setCode(examples[0].code)
+        return
+      }
+
+      try {
+        const id = match[1]
+        const snippet = await httpPost<Snippet>("/api/edit", { id })
+        if (!snippet.code) {
+          console.error("Edit code:", snippet)
+          return
+        }
+
+        setCode(snippet.code)
+      } catch (err) {
+        console.error("Edit code:", err)
+      }
+    })()
+  }, [examples])
 
   useEffect(() => {
     setIsMounted(true);
@@ -135,6 +127,7 @@ export default function Playground() {
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex flex-col h-full p-3">
+              {/* Toolbar */}
               <div className="flex justify-end items-center mb-3 gap-3">
                 <Button
                   onClick={run}
@@ -153,17 +146,7 @@ export default function Playground() {
                 </Button>
 
                 {sharedURL && (
-                  <input
-                    name="sharedURL"
-                    aria-label="Shared URL"
-                    type="text"
-                    ref={sharedURLRef}
-                    value={sharedURL}
-                    readOnly
-                    className={`h-9 px-4 py-2 w-48 text-sm rounded-md border outline-none pointer-events-auto focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50 ${transition} ${isDarkMode ? "bg-gray-900 border-gray-600 text-gray-300 hover:bg-gray-800" : "bg-white border-gray-300 text-gray-900 hover:bg-gray-50"}`}
-                    onClick={(e) => (e.target as HTMLInputElement).select()}
-                    tabIndex={0}
-                  />
+                  <SharedURL isDarkMode={isDarkMode} sharedURL={sharedURL} />
                 )}
 
                 {!sharedURL && (
@@ -171,6 +154,7 @@ export default function Playground() {
                 )}
               </div>
 
+              {/* Editor */}
               <Editor isDarkMode={isDarkMode} code={code} setCode={setCode} />
             </CardContent>
           </Card>
