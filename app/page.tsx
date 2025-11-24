@@ -4,13 +4,13 @@ import toast from 'react-hot-toast';
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Editor } from "@/components/editor"
 import { Result } from "@/components/result"
 import { Header } from '@/components/header';
 import { Notes } from "@/components/notes"
-import { examples } from "@/lib/examples"
+import { Examples, examples } from "@/components/examples";
 import { type States, type Snippet, httpPost } from "@/lib/http"
+import { transition } from "@/lib/utils"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
@@ -23,7 +23,6 @@ export default function Playground() {
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   const sharedURLRef = useRef<HTMLInputElement>(null)
-  const transition = "transition-colors duration-500"
 
   const run = async () => {
     if (!code.trim()) {
@@ -98,15 +97,6 @@ export default function Playground() {
     }
   }
 
-  const selectExample = (name: string) => {
-    const example = examples.find((ex) => ex.name === name)
-    if (example) {
-      setCode(example.code)
-      setResult(null)
-      setError(null)
-    }
-  }
-
   useEffect(() => { edit() }, [examples])
 
   useEffect(() => {
@@ -177,26 +167,11 @@ export default function Playground() {
                 )}
 
                 {!sharedURL && (
-                  <Select onValueChange={selectExample} defaultValue={examples[0]?.name} aria-label="Choose an example">
-                    <SelectTrigger className={`w-48 border ${transition} ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
-                      {examples.map((example) => (
-                        <SelectItem
-                          key={example.name}
-                          value={example.name}
-                          className={`${isDarkMode ? "text-white focus:bg-gray-800 focus:text-white" : "text-gray-900 focus:bg-gray-100 focus:text-gray-900"}`}
-                        >
-                          {example.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Examples isDarkMode={isDarkMode} setCode={setCode} setResult={setResult} setError={setError} />
                 )}
               </div>
 
-              <Editor code={code} isDarkMode={isDarkMode} setCode={setCode} />
+              <Editor isDarkMode={isDarkMode} code={code} setCode={setCode} />
             </CardContent>
           </Card>
 

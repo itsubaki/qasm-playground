@@ -1,5 +1,6 @@
 import { Textarea } from "@/components/ui/textarea"
 import { useMemo, useRef } from "react"
+import { transition } from "@/lib/utils"
 
 export function Editor({
     code,
@@ -13,7 +14,6 @@ export function Editor({
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const lineNumbersRef = useRef<HTMLDivElement>(null)
     const lineNumbers = useMemo(() => Array.from({ length: code.split("\n").length }, (_, i) => i + 1), [code])
-    const transition = "transition-colors duration-500"
 
     const scroll = () => {
         if (textareaRef.current && lineNumbersRef.current) {

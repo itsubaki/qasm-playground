@@ -1,3 +1,5 @@
+import { transition } from "@/lib/utils"
+
 export function Header({
     isDarkMode,
     setIsDarkMode,
@@ -5,9 +7,7 @@ export function Header({
     isDarkMode: boolean,
     setIsDarkMode: (isDarkMode: boolean) => void,
 }) {
-    const transition = "transition-colors duration-500"
-
-    const toggleDarkMode = () => {
+    const toggle = () => {
         setIsDarkMode(!isDarkMode)
     }
 
@@ -19,7 +19,7 @@ export function Header({
 
             <div className="flex gap-1">
                 <button
-                    onClick={toggleDarkMode}
+                    onClick={toggle}
                     className={`w-8 h-8 flex items-center justify-center rounded ${transition} ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
                     aria-label="Toggle dark mode"
                 >

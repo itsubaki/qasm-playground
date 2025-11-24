@@ -1,12 +1,16 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { type States } from "@/lib/http"
+import { transition } from "@/lib/utils"
+
 export interface Example {
-  name: string
-  code: string
+    name: string
+    code: string
 }
 
 export const examples: Example[] = [
-  {
-    name: "Bell State",
-    code: `// Bell State
+    {
+        name: "Bell State",
+        code: `// Bell State
 
 OPENQASM 3.0;
 
@@ -21,10 +25,10 @@ cx q[0], q[1];
 
 measure q;
 `,
-  },
-  {
-    name: "Quantum Teleportation",
-    code: `// Quantum Teleportation
+    },
+    {
+        name: "Quantum Teleportation",
+        code: `// Quantum Teleportation
 
 OPENQASM 3.0;
 
@@ -55,10 +59,10 @@ cz phi, t;
 measure phi;
 measure a;
 `,
-  },
-  {
-    name: "Deutsch-Jozsa Algorithm",
-    code: `// Deutsch-Jozsa Algorithm
+    },
+    {
+        name: "Deutsch-Jozsa Algorithm",
+        code: `// Deutsch-Jozsa Algorithm
 
 OPENQASM 3.0;
 
@@ -88,10 +92,10 @@ balanced(q0, q1);
 h q0;
 measure q0;
 `
-  },
-  {
-    name: "Grover's Algorithm",
-    code: `// Grover's Algorithm
+    },
+    {
+        name: "Grover's Algorithm",
+        code: `// Grover's Algorithm
 
 OPENQASM 3.0;
 
@@ -136,10 +140,10 @@ for int i in [0:R] {
 
 measure a;
 `,
-  },
-  {
-    name: "Grover's Algorithm (Sudoku 2x2)",
-    code: `// Grover's Algorithm (Sudoku 2x2)
+    },
+    {
+        name: "Grover's Algorithm (Sudoku 2x2)",
+        code: `// Grover's Algorithm (Sudoku 2x2)
 
 OPENQASM 3.0;
 
@@ -197,10 +201,10 @@ for int i in [0:R] {
     diffuser(r);
 }
 `,
-  },
-  {
-    name: "Shor's Algorithm (N=15, a=7)",
-    code: `// Shor's Algorithm (N=15, a=7)
+    },
+    {
+        name: "Shor's Algorithm (N=15, a=7)",
+        code: `// Shor's Algorithm (N=15, a=7)
 
 OPENQASM 3.0;
 
@@ -263,5 +267,43 @@ measure a;
 // gcd(pow(a, r/2)-1, N) = 3.
 // gcd(pow(a, r/2)+1, N) = 5.
 `,
-  },
+    },
 ]
+
+export function Examples({
+    isDarkMode,
+    setCode,
+    setResult,
+    setError,
+}: {
+    isDarkMode: boolean,
+    setCode: (code: string) => void,
+    setResult: (result: States | null) => void,
+    setError: (error: string | null) => void,
+}) {
+    const select = (name: string) => {
+        const example = examples.find((ex) => ex.name === name)! // always found
+        setCode(example.code)
+        setResult(null)
+        setError(null)
+    }
+
+    return (
+        <Select onValueChange={select} defaultValue={examples[0]?.name} aria-label="Choose an example">
+            <SelectTrigger className={`w-48 border ${transition} ${isDarkMode ? "bg-gray-900 border-gray-600 text-white" : "bg-white border-gray-300 text-gray-900"}`}>
+                <SelectValue />
+            </SelectTrigger>
+            <SelectContent className={`border ${isDarkMode ? "bg-gray-900 border-gray-700" : "bg-white border-gray-200"}`}>
+                {examples.map((example) => (
+                    <SelectItem
+                        key={example.name}
+                        value={example.name}
+                        className={`${isDarkMode ? "text-white focus:bg-gray-800 focus:text-white" : "text-gray-900 focus:bg-gray-100 focus:text-gray-900"}`}
+                    >
+                        {example.name}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    )
+}

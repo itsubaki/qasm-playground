@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { cn } from "./utils"
+import { cn, transition } from "./utils"
 
 describe("cn", () => {
   it("combines multiple class names", () => {
@@ -47,5 +47,11 @@ describe("cn", () => {
   it("merges conflicting margin classes correctly", () => {
     expect(cn("m-2", "mx-4")).toBe("m-2 mx-4")
     expect(cn("mx-2", "m-4")).toBe("m-4")
+  })
+})
+
+describe("transition constant", () => {
+  it("should have the correct value", () => {
+    expect(transition).toBe("transition-colors duration-500")
   })
 })

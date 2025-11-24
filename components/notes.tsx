@@ -1,10 +1,10 @@
+import { transition } from "@/lib/utils"
+
 export function Notes({
     isDarkMode,
 }: {
     isDarkMode: boolean,
 }) {
-    const transition = "transition-colors duration-500"
-
     return (
         <div className="text-left">
             <ul className={`text-sm space-y-1 ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
