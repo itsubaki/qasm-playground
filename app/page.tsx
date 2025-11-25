@@ -118,12 +118,12 @@ export default function Playground() {
   return (
     <div className={`min-h-screen p-4 ${transition} ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="mb-6">
+        <div className="my-6">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         </div>
 
         {/* Main */}
-        <div className="flex flex-col lg:flex-row gap-3 h-[800px]">
+        <div className="flex flex-col lg:flex-row gap-3 h-[600px]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="flex flex-col h-full p-3">
