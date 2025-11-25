@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { transition } from "@/lib/utils"
+import { smooth } from "@/lib/utils"
 
 export function Header({
     isDarkMode,
@@ -14,14 +14,14 @@ export function Header({
 
     return (
         <div className="flex justify-between items-center text-center">
-            <div className={`font-bold text-2xl leading-7 text-left ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+            <div className={`font-bold text-2xl leading-7 text-left ${smooth} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                 OpenQASM 3.0 Playground
             </div>
 
             <div className="flex gap-1">
                 <button
                     onClick={toggle}
-                    className={`w-8 h-8 flex items-center justify-center rounded ${transition} ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
+                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
                     aria-label="Toggle dark mode"
                 >
                     {isDarkMode ? (
@@ -43,7 +43,7 @@ export function Header({
                     href="https://github.com/itsubaki/qasm-playground"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-8 h-8 flex items-center justify-center rounded ${transition} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
+                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
                     aria-label="View source on GitHub"
                 >
                     <Image

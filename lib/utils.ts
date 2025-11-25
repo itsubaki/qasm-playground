@@ -5,4 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const transition = "transition-colors duration-500"
+export const smooth = "transition-colors duration-150 ease-in-out"

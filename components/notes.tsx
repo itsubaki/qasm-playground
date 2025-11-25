@@ -1,4 +1,4 @@
-import { transition } from "@/lib/utils"
+import { smooth } from "@/lib/utils"
 
 export function Notes({
     isDarkMode,
@@ -7,7 +7,7 @@ export function Notes({
 }) {
     return (
         <div className="text-left">
-            <ul className={`text-sm space-y-1 ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+            <ul className={`text-sm space-y-1 ${smooth} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                 <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
                 <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host it.</li>
                 <li>There are several other limitations. For more details, please refer to{" "}
@@ -15,7 +15,7 @@ export function Notes({
                         href="https://github.com/itsubaki/qasm/issues"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${transition} ${isDarkMode ? "text-blue-400 underline" : "text-blue-600 underline"}`}
+                        className={`${smooth} ${isDarkMode ? "text-blue-400 underline" : "text-blue-600 underline"}`}
                     >
                         the issues
                     </a>

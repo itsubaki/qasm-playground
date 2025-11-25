@@ -1,5 +1,5 @@
 import { type States } from "@/lib/http"
-import { transition } from "@/lib/utils"
+import { smooth } from "@/lib/utils"
 
 export function Result({
     isDarkMode,
@@ -10,10 +10,10 @@ export function Result({
 }) {
     return (result.states.map((state, index) => {
         return (
-            <div key={index} className={`p-4 border rounded-lg ${transition} ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}>
+            <div key={index} className={`p-4 border rounded-lg ${smooth} ${isDarkMode ? "bg-gray-900/50 border-gray-700" : "bg-gray-50 border-gray-200"}`}>
                 <div className="flex items-center justify-between mb-3">
                     {/* Ket */}
-                    <div className={`font-mono ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                    <div className={`font-mono ${smooth} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                         {state.binaryString.map((str, i) => (
                             <span key={i}>
                                 |{str}⟩
@@ -26,16 +26,16 @@ export function Result({
                     {/* Probability Bar */}
                     <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                            <span className={`${transition} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                            <span className={`${smooth} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                                 Probability
                             </span>
-                            <span className={`${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                            <span className={`${smooth} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                                 {state.probability?.toFixed(6) || "0.000000"}
                             </span>
                         </div>
-                        <div className={`rounded-full h-2 w-full ${transition} ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
+                        <div className={`rounded-full h-2 w-full ${smooth} ${isDarkMode ? "bg-gray-700" : "bg-gray-200"}`}>
                             <div
-                                className={`rounded-full h-2 min-w-[6px] ${transition} ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
+                                className={`rounded-full h-2 min-w-[6px] ${smooth} ${isDarkMode ? "bg-blue-400" : "bg-blue-500"}`}
                                 style={{
                                     width: `${(state.probability || 0) * 100}%`,
                                 }}
@@ -45,10 +45,10 @@ export function Result({
 
                     {/* Amplitude */}
                     <div className="space-y-2">
-                        <span className={`text-sm ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
+                        <span className={`text-sm ${smooth} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
                             Amplitude
                         </span>
-                        <div className={`text-sm font-mono ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+                        <div className={`text-sm font-mono ${smooth} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                             {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
                             {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
                         </div>
