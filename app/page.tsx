@@ -44,7 +44,7 @@ export default function Playground({
         </div>
 
         {/* Main */}
-        <div className="flex flex-col lg:flex-row gap-3 h-screen lg:h-[80vh]">
+        <div className="flex flex-col lg:flex-row gap-3 lg:h-[80vh]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] flex flex-col backdrop-blur-sm ${smooth} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="p-3 flex flex-col h-full">
