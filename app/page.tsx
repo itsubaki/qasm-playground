@@ -1,7 +1,6 @@
 "use client"
 
-import toast from 'react-hot-toast';
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Editor } from "@/components/editor"
@@ -10,115 +9,31 @@ import { Header } from '@/components/header';
 import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
 import { Examples, examples } from "@/components/examples";
-import { type States, type Snippet, httpPost } from "@/lib/http"
+import { type States } from "@/lib/http"
 import { transition } from "@/lib/utils"
+import { copyToClipboard } from "@/lib/clipboard"
+import { useSimulator } from "@/hooks/useSimulator"
+import { useShareURL } from "@/hooks/useShareURL"
+import { useEdit } from "@/hooks/useEdit"
+import { useDarkMode } from "@/hooks/useDarkMode"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<States | null>(null)
-  const [sharedURL, setSharedURL] = useState<string | null>(null)
 
-  const [isMounted, setIsMounted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [isDarkMode, setIsDarkMode] = useState(false)
-
-  const run = async () => {
-    if (!code.trim()) {
-      return
-    }
-
-    setIsLoading(true)
-    setError(null)
-    setResult(null)
-
-    try {
-      const states = await httpPost<States>("/api/simulate", { code })
-      setResult(states)
-    } catch (err) {
-      console.error("Run code:", err)
-      setError(err instanceof Error ? err.message : "An unknown error occurred")
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const share = async () => {
-    if (!code.trim()) {
-      return
-    }
-
-    try {
-      const snippet = await httpPost<Snippet>("/api/share", { code })
-      if (!snippet.id) {
-        console.error("Share code:", result)
-        return
-      }
-
-      window.history.pushState(null, "", `/p/${snippet.id}`)
-      const url = `${window.location.origin}/p/${snippet.id}`
-      setSharedURL(url)
-      await copyToClipboard(url)
-    } catch (err) {
-      console.error("Share code:", err)
-    }
-  }
-
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text)
-      toast.success("Copied")
-    } catch (err) {
-      console.error("Copy to clipboard:", err)
-    }
-  }
-
-  useEffect(() => {
-    (async () => {
-      const path = window.location.pathname
-      const match = path.match(/^\/p\/([a-zA-Z0-9_-]+)$/)
-
-      if (!match) {
-        setCode(examples[0].code)
-        return
-      }
-
-      try {
-        const id = match[1]
-        const snippet = await httpPost<Snippet>("/api/edit", { id })
-        if (!snippet.code) {
-          console.error("Edit code:", snippet)
-          return
-        }
-
-        setCode(snippet.code)
-      } catch (err) {
-        console.error("Edit code:", err)
-      }
-    })()
-  }, [])
-
-  useEffect(() => {
-    setIsMounted(true);
-
-    // Detect system dark mode preference
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
-    setIsDarkMode(media.matches);
-
-    // Listen for changes in system dark mode preference
-    const listener = (e: MediaQueryListEvent) => setIsDarkMode(e.matches);
-    media.addEventListener("change", listener);
-
-    // Cleanup listener on unmount
-    return () => media.removeEventListener("change", listener);
-  }, []);
+  // custom hooks
+  const { share, sharedURL } = useShareURL()
+  const { simulate, isLoading } = useSimulator({ setError, setResult })
+  const { isMounted, isDarkMode, setIsDarkMode } = useDarkMode()
+  useEdit(setCode, examples);
 
   if (!isMounted) return null;
 
   return (
     <div className={`p-4 min-h-screen ${transition} ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
-        <div className="my-6">
+        <div className="mb-4">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         </div>
 
@@ -130,7 +45,7 @@ export default function Playground() {
               {/* Toolbar */}
               <div className="mb-3 flex justify-end items-center gap-3">
                 <Button
-                  onClick={run}
+                  onClick={() => simulate(code)}
                   disabled={isLoading}
                   className={`text-white ${transition} ${isDarkMode ? "bg-blue-500 hover:bg-blue-600" : "bg-blue-600 hover:bg-blue-700"}`}
                 >
@@ -138,7 +53,7 @@ export default function Playground() {
                 </Button>
 
                 <Button
-                  onClick={share}
+                  onClick={() => share(code)}
                   variant="outline"
                   className={`${transition} ${isDarkMode ? "border-gray-600 text-gray-300 hover:bg-gray-800 bg-gray-900" : "border-gray-300 text-gray-700 hover:bg-white-50 bg-white"}`}
                 >
