@@ -26,6 +26,8 @@ export default function Playground() {
   const { share, sharedURL } = useShareURL()
   const { simulate, isLoading } = useSimulator({ setError, setResult })
   const { isMounted, isDarkMode, setIsDarkMode } = useDarkMode()
+
+  // load shared code or example code
   useEdit(setCode, examples);
 
   if (!isMounted) return null;
