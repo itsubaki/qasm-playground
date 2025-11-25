@@ -48,19 +48,17 @@ export function Header({
                 >
                     {isDarkMode ? (
                         <Image
-                            src="/github-mark.svg"
-                            alt="GitHub"
-                            width={24}
-                            height={24}
-                            className="invert"
-                        />
-                    ) : (
-                        <Image
                             src="/github-mark-white.svg"
                             alt="GitHub"
                             width={24}
                             height={24}
-                            className="invert"
+                        />
+                    ) : (
+                        <Image
+                            src="/github-mark.svg"
+                            alt="GitHub"
+                            width={24}
+                            height={24}
                         />
                     )}
                 </a>
