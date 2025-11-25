@@ -30,7 +30,6 @@ describe("useSimulator", () => {
         expect(setResult).not.toHaveBeenCalled()
     })
 
-
     it("should call setResult when simulation succeeds", async () => {
         const states: States = {
             states: [
@@ -42,7 +41,7 @@ describe("useSimulator", () => {
                 },
             ],
         }
-        vi.mocked(httpPost).mockResolvedValue(states);
+        vi.mocked(httpPost).mockResolvedValue(states)
 
         const { result } = renderHook(() =>
             useSimulator({ setError, setResult })
@@ -88,7 +87,7 @@ describe("useSimulator", () => {
         }
         vi.mocked(httpPost).mockImplementation(
             () => new Promise((res) => setTimeout(() => res(states), 10))
-        );
+        )
 
         const { result } = renderHook(() =>
             useSimulator({ setError, setResult })
