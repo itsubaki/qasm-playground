@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea"
 import { useMemo, useRef } from "react"
-import { transition } from "@/lib/utils"
+import { transition, cn } from "@/lib/utils"
 
 export function Editor({
     isDarkMode,
@@ -38,8 +38,17 @@ export function Editor({
                 onChange={(e) => setCode(e.target.value)}
                 onScroll={scroll}
                 placeholder="Enter your OpenQASM code here..."
-                className={`font-mono text-[0.83rem] leading-[1.4] py-2 flex-1 border-0 h-full whitespace-pre overflow-x-auto overflow-y-auto resize-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 ${transition} ${isDarkMode ? "bg-gray-900 text-white placeholder-gray-400" : "bg-white text-gray-900 placeholder-gray-500"}`}
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
+                className={cn(
+                    "font-mono text-[0.83rem] leading-[1.4]",
+                    "flex-1 h-full py-2",
+                    "whitespace-pre overflow-x-auto overflow-y-auto resize-none",
+                    "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
+                    transition,
+                    isDarkMode
+                        ? "bg-gray-900 text-white placeholder-gray-400"
+                        : "bg-white text-gray-900 placeholder-gray-500"
+                )}
             />
         </div>
     )
