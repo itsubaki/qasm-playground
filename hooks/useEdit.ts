@@ -30,5 +30,5 @@ export function useEdit(
         }
 
         edit()
-    }, [setCode, examples])
+    }, [setCode])
 }
