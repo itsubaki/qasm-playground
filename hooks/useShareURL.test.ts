@@ -17,7 +17,6 @@ describe("useShareURL", () => {
 
     beforeEach(() => {
         vi.clearAllMocks()
-        // pushState をモック
         window.history.pushState = vi.fn()
     })
 
