@@ -1,11 +1,10 @@
-import { renderHook, act } from "@testing-library/react"
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { useEdit } from "./useEdit"
+import { renderHook, act } from "@testing-library/react"
+import { examples } from "@/lib/examples"
 import * as http from "@/lib/http"
+import { useEdit } from "./useEdit"
 
 describe("useEdit", () => {
-    const examples = [{ name: "Example 1", code: "console.log('hi')" }]
-
     let setCode: (code: string) => void
     beforeEach(() => {
         setCode = vi.fn()
@@ -19,7 +18,7 @@ describe("useEdit", () => {
         } as any)
 
         await act(async () => {
-            renderHook(() => useEdit(setCode, examples))
+            renderHook(() => useEdit(setCode))
         })
 
         expect(setCode).toHaveBeenCalledWith(examples[0].code)
@@ -35,7 +34,7 @@ describe("useEdit", () => {
         vi.spyOn(http, "httpPost").mockResolvedValue(snippet)
 
         await act(async () => {
-            renderHook(() => useEdit(setCode, examples))
+            renderHook(() => useEdit(setCode))
         })
 
         expect(http.httpPost).toHaveBeenCalledWith("/api/edit", { id: "abc123" })
@@ -53,7 +52,7 @@ describe("useEdit", () => {
         const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
 
         await act(async () => {
-            renderHook(() => useEdit(setCode, examples))
+            renderHook(() => useEdit(setCode))
         })
 
         expect(setCode).not.toHaveBeenCalled()
@@ -70,7 +69,7 @@ describe("useEdit", () => {
         vi.spyOn(http, "httpPost").mockRejectedValue(new Error("Network error"))
 
         await act(async () => {
-            renderHook(() => useEdit(setCode, examples))
+            renderHook(() => useEdit(setCode))
         })
 
         expect(setCode).not.toHaveBeenCalled()

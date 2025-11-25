@@ -6,9 +6,9 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Editor } from "@/components/editor"
 import { Result } from "@/components/result"
 import { Header } from '@/components/header';
+import { Examples } from "@/components/examples"
 import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
-import { Examples, examples } from "@/components/examples";
 import { useSimulator } from "@/hooks/useSimulator"
 import { useShareURL } from "@/hooks/useShareURL"
 import { useEdit } from "@/hooks/useEdit"
@@ -23,12 +23,12 @@ export default function Playground() {
   const [result, setResult] = useState<States | null>(null)
 
   // custom hooks
-  const { share, sharedURL } = useShareURL()
-  const { simulate, isLoading } = useSimulator({ setError, setResult })
+  const { sharedURL, share } = useShareURL()
+  const { isLoading, simulate } = useSimulator({ setError, setResult })
   const { isMounted, isDarkMode, setIsDarkMode } = useDarkMode()
 
   // load shared code or example code
-  useEdit(setCode, examples);
+  useEdit(setCode);
 
   if (!isMounted) return null;
 

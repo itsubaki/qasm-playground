@@ -1,9 +1,9 @@
 import { useEffect } from "react"
 import { type Snippet, httpPost } from "@/lib/http"
+import { examples } from "@/lib/examples"
 
 export function useEdit(
     setCode: (code: string) => void,
-    examples: { name: string; code: string }[]
 ) {
     useEffect(() => {
         const edit = async () => {
