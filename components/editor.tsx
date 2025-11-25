@@ -3,12 +3,12 @@ import { useMemo, useRef } from "react"
 import { transition } from "@/lib/utils"
 
 export function Editor({
-    code,
     isDarkMode,
+    code,
     setCode,
 }: {
-    code: string,
     isDarkMode: boolean,
+    code: string,
     setCode: (code: string) => void,
 }) {
     const textareaRef = useRef<HTMLTextAreaElement>(null)

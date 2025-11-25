@@ -2,11 +2,11 @@ import { type States } from "@/lib/http"
 import { transition } from "@/lib/utils"
 
 export function Result({
-    result,
     isDarkMode,
+    result,
 }: {
-    result: States,
     isDarkMode: boolean,
+    result: States,
 }) {
     return (result.states.map((state, index) => {
         return (

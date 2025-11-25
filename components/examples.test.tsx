@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from "vitest"
 import { render, screen, fireEvent } from "@testing-library/react"
-import { Examples, examples } from "./examples";
+import { Examples } from "./examples";
+import { examples } from "@/lib/examples";
 
 describe("Examples component", () => {
     it("renders the select dropdown with the default value", () => {
