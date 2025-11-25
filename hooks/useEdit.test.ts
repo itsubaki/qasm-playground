@@ -18,7 +18,7 @@ describe("useEdit", () => {
         } as any)
 
         await act(async () => {
-            renderHook(() => useEdit(setCode))
+            renderHook(() => useEdit(undefined, setCode))
         })
 
         expect(setCode).toHaveBeenCalledWith(examples[0].code)
@@ -34,7 +34,7 @@ describe("useEdit", () => {
         vi.spyOn(http, "httpPost").mockResolvedValue(snippet)
 
         await act(async () => {
-            renderHook(() => useEdit(setCode))
+            renderHook(() => useEdit("abc123", setCode))
         })
 
         expect(http.httpPost).toHaveBeenCalledWith("/api/edit", { id: "abc123" })
@@ -52,7 +52,7 @@ describe("useEdit", () => {
         const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
 
         await act(async () => {
-            renderHook(() => useEdit(setCode))
+            renderHook(() => useEdit("abc123", setCode))
         })
 
         expect(setCode).not.toHaveBeenCalled()
@@ -69,7 +69,7 @@ describe("useEdit", () => {
         vi.spyOn(http, "httpPost").mockRejectedValue(new Error("Network error"))
 
         await act(async () => {
-            renderHook(() => useEdit(setCode))
+            renderHook(() => useEdit("abc123", setCode))
         })
 
         expect(setCode).not.toHaveBeenCalled()

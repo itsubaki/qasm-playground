@@ -17,7 +17,11 @@ import { type States } from "@/lib/http"
 import { transition } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
 
-export default function Playground() {
+export default function Playground({
+  snippetId,
+}: {
+  snippetId?: string,
+}) {
   const [code, setCode] = useState("// Loading...")
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<States | null>(null)
@@ -28,7 +32,7 @@ export default function Playground() {
   const { isMounted, isDarkMode, setIsDarkMode } = useDarkMode()
 
   // load shared code or example code
-  useEdit(setCode);
+  useEdit(snippetId, setCode);
 
   if (!isMounted) return null;
 
