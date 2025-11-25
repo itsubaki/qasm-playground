@@ -41,7 +41,7 @@ export function Editor({
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
                 className={cn(
                     "font-mono text-[0.83rem] leading-[1.4]",
-                    "flex-1 h-full py-2",
+                    "flex-1",
                     "whitespace-pre overflow-x-auto overflow-y-auto resize-none",
                     "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
                     transition,

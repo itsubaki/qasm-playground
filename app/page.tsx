@@ -40,10 +40,10 @@ export default function Playground() {
         </div>
 
         {/* Main */}
-        <div className="flex flex-col lg:flex-row gap-3 h-[600px]">
+        <div className="flex flex-col lg:flex-row gap-3 h-screen lg:h-[80vh]">
           {/* Code Editor */}
-          <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
-            <CardContent className="p-3   flex flex-col h-full">
+          <Card className={`lg:w-[70%] border flex flex-col rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
+            <CardContent className="p-3 flex flex-col h-full">
               {/* Toolbar */}
               <div className="mb-3 flex justify-end items-center gap-3">
                 <Button
@@ -77,7 +77,7 @@ export default function Playground() {
           </Card>
 
           {/* Results */}
-          <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
+          <Card className={`lg:w-[30%] border flex flex-col rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="p-3 flex flex-col h-full">
               <div className="mb-3 flex justify-between items-center gap-3">
                 <div className={`py-1 text-lg font-semibold ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
