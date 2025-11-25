@@ -52,6 +52,6 @@ describe("cn", () => {
 
 describe("transition constant", () => {
   it("should have the correct value", () => {
-    expect(smooth).toBe("transition-colors duration-150 ease-in-out")
+    expect(smooth).toBe("transition-colors duration-500 ease-in-out")
   })
 })

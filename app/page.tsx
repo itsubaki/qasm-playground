@@ -121,7 +121,7 @@ export default function Playground({
                     Error Details
                   </div>
 
-                  <pre className={`text-sm whitespace-pre-wrap font-mono p-3 rounded border overflow-auto w-full break-all ${smooth} ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
+                  <pre className={`p-3 text-sm whitespace-pre-wrap font-mono rounded border overflow-auto w-full break-all ${smooth} ${isDarkMode ? "text-red-300 bg-red-900/30 border-red-800" : "text-red-700 bg-red-100 border-red-200"}`}>
                     {error}
                   </pre>
                 </div>

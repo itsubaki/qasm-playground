@@ -46,13 +46,23 @@ export function Header({
                     className={`w-8 h-8 flex items-center justify-center rounded ${smooth} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
                     aria-label="View source on GitHub"
                 >
-                    <Image
-                        src="/github-mark.svg"
-                        alt="GitHub"
-                        width={24}
-                        height={24}
-                        style={{ filter: isDarkMode ? "invert(1)" : "none" }}
-                    />
+                    {isDarkMode ? (
+                        <Image
+                            src="/github-mark.svg"
+                            alt="GitHub"
+                            width={24}
+                            height={24}
+                            className="invert"
+                        />
+                    ) : (
+                        <Image
+                            src="/github-mark-white.svg"
+                            alt="GitHub"
+                            width={24}
+                            height={24}
+                            className="invert"
+                        />
+                    )}
                 </a>
             </div>
         </div>
