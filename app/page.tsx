@@ -116,7 +116,7 @@ export default function Playground() {
   if (!isMounted) return null;
 
   return (
-    <div className={`min-h-screen p-4 ${transition} ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
+    <div className={`p-4 min-h-screen ${transition} ${isDarkMode ? "bg-gray-900" : "bg-blue-50"}`}>
       <div className="max-w-7xl mx-auto">
         <div className="my-6">
           <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
@@ -126,9 +126,9 @@ export default function Playground() {
         <div className="flex flex-col lg:flex-row gap-3 h-[600px]">
           {/* Code Editor */}
           <Card className={`lg:w-[70%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
-            <CardContent className="flex flex-col h-full p-3">
+            <CardContent className="p-3   flex flex-col h-full">
               {/* Toolbar */}
-              <div className="flex justify-end items-center mb-3 gap-3">
+              <div className="mb-3 flex justify-end items-center gap-3">
                 <Button
                   onClick={run}
                   disabled={isLoading}
@@ -162,7 +162,7 @@ export default function Playground() {
           {/* Results */}
           <Card className={`lg:w-[30%] border flex flex-col h-full rounded-l-lg shadow-lg backdrop-blur-sm ${transition} ${isDarkMode ? "bg-gray-800/50 border-gray-700" : "bg-white/90 border-gray-200"}`}>
             <CardContent className="p-3 flex flex-col h-full">
-              <div className="flex justify-between items-center mb-3 gap-3">
+              <div className="mb-3 flex justify-between items-center gap-3">
                 <div className={`py-1 text-lg font-semibold ${transition} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
                   Quantum States
                 </div>
@@ -207,13 +207,13 @@ export default function Playground() {
               )}
 
               {isLoading && (
-                <div className={`text-center py-12 flex flex-col justify-center ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                <div className={`py-12 text-center flex flex-col justify-center ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Waiting for remote server...</p>
                 </div>
               )}
 
               {!result && !error && !isLoading && (
-                <div className={`text-center py-12 flex flex-col justify-center ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                <div className={`py-12 text-center flex flex-col justify-center ${transition} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
                   <p>Run your OpenQASM code to see quantum states here</p>
                 </div>
               )}
