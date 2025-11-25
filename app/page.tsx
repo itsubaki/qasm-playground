@@ -9,13 +9,13 @@ import { Header } from '@/components/header';
 import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
 import { Examples, examples } from "@/components/examples";
-import { type States } from "@/lib/http"
-import { transition } from "@/lib/utils"
-import { copyToClipboard } from "@/lib/clipboard"
 import { useSimulator } from "@/hooks/useSimulator"
 import { useShareURL } from "@/hooks/useShareURL"
 import { useEdit } from "@/hooks/useEdit"
 import { useDarkMode } from "@/hooks/useDarkMode"
+import { type States } from "@/lib/http"
+import { transition } from "@/lib/utils"
+import { copyToClipboard } from "@/lib/clipboard"
 
 export default function Playground() {
   const [code, setCode] = useState("// Loading...")
