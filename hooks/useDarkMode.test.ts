@@ -46,4 +46,28 @@ describe("useDarkMode", () => {
 
         expect(result.current.isDarkMode).toBe(true)
     })
+
+    it("should update isDarkMode when system dark mode changes", () => {
+        let handler: (e: MediaQueryListEvent) => void = () => { }
+        window.matchMedia = vi.fn().mockImplementation((query) => ({
+            matches: false,
+            media: query,
+            addEventListener: vi.fn((event, cb) => {
+                if (event === "change") handler = cb
+            }),
+            removeEventListener: vi.fn(),
+        }))
+        const { result } = renderHook(() => useDarkMode())
+
+        act(() => {
+            vi.runAllTimers()
+        })
+        expect(result.current.isDarkMode).toBe(false)
+
+        act(() => {
+            handler({ matches: true } as MediaQueryListEvent)
+        })
+
+        expect(result.current.isDarkMode).toBe(true)
+    })
 })
