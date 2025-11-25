@@ -1,0 +1,79 @@
+import { renderHook, act } from "@testing-library/react"
+import { describe, it, expect, vi, beforeEach } from "vitest"
+import { useEdit } from "./useEdit"
+import * as http from "@/lib/http"
+
+describe("useEdit", () => {
+    const examples = [{ name: "Example 1", code: "console.log('hi')" }]
+
+    let setCode: (code: string) => void
+    beforeEach(() => {
+        setCode = vi.fn()
+        vi.clearAllMocks()
+    })
+
+    it("sets code from examples if path doesn't match", async () => {
+        vi.spyOn(window, "location", "get").mockReturnValue({
+            ...window.location,
+            pathname: "/other-path",
+        } as any)
+
+        await act(async () => {
+            renderHook(() => useEdit(setCode, examples))
+        })
+
+        expect(setCode).toHaveBeenCalledWith(examples[0].code)
+    })
+
+    it("fetches snippet and sets code if path matches", async () => {
+        vi.spyOn(window, "location", "get").mockReturnValue({
+            ...window.location,
+            pathname: "/p/abc123",
+        } as any)
+
+        const snippet = { code: "console.log('snippet')" }
+        vi.spyOn(http, "httpPost").mockResolvedValue(snippet)
+
+        await act(async () => {
+            renderHook(() => useEdit(setCode, examples))
+        })
+
+        expect(http.httpPost).toHaveBeenCalledWith("/api/edit", { id: "abc123" })
+        expect(setCode).toHaveBeenCalledWith(snippet.code)
+    })
+
+    it("does not set code if snippet.code is empty and logs error", async () => {
+        vi.spyOn(window, "location", "get").mockReturnValue({
+            ...window.location,
+            pathname: "/p/abc123",
+        } as any)
+
+        const snippet = { code: "" }
+        vi.spyOn(http, "httpPost").mockResolvedValue(snippet)
+        const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
+
+        await act(async () => {
+            renderHook(() => useEdit(setCode, examples))
+        })
+
+        expect(setCode).not.toHaveBeenCalled()
+        expect(consoleSpy).toHaveBeenCalled()
+    })
+
+    it("logs error if httpPost throws", async () => {
+        vi.spyOn(window, "location", "get").mockReturnValue({
+            ...window.location,
+            pathname: "/p/abc123",
+        } as any)
+
+        const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
+        vi.spyOn(http, "httpPost").mockRejectedValue(new Error("Network error"))
+
+        await act(async () => {
+            renderHook(() => useEdit(setCode, examples))
+        })
+
+        expect(setCode).not.toHaveBeenCalled()
+        expect(consoleSpy).toHaveBeenCalled()
+    })
+})
