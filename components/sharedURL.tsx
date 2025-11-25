@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react"
-import { transition } from "@/lib/utils"
-import { cn } from "@/lib/utils"
+import { transition, cn } from "@/lib/utils"
 
 export function SharedURL({
     isDarkMode,
