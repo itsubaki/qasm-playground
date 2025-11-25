@@ -27,5 +27,5 @@ export function useEdit(
         }
 
         edit()
-    }, [setCode])
+    }, [setCode, snippetId])
 }
