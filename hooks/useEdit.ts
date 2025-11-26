@@ -2,10 +2,13 @@ import { useEffect } from "react"
 import { type Snippet, httpPost } from "@/lib/http"
 import { examples } from "@/lib/examples"
 
-export function useEdit(
-    snippetId: string | undefined,
-    setCode: (code: string) => void,
-) {
+export function useEdit({
+    snippetId,
+    setCode,
+}: {
+    snippetId: string | undefined
+    setCode: (code: string) => void
+}) {
     useEffect(() => {
         const edit = async () => {
             if (!snippetId) {
@@ -27,5 +30,5 @@ export function useEdit(
         }
 
         edit()
-    }, [setCode, snippetId])
+    }, [snippetId, setCode])
 }

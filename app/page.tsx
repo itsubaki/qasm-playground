@@ -31,8 +31,8 @@ export default function Playground({
   const { isLoading, simulate } = useSimulator({ setError, setResult })
   const { isMounted, isDarkMode, setIsDarkMode } = useDarkMode()
 
-  // load shared code or example code
-  useEdit(snippetId, setCode);
+  // set shared code or example code
+  useEdit({ snippetId, setCode });
 
   if (!isMounted) return null;
 
