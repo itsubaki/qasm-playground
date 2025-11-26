@@ -8,9 +8,10 @@ export function Notes({
     return (
         <div className="text-left">
             <ul className={`text-sm space-y-1 ${smooth} ${isDarkMode ? "text-gray-400" : "text-gray-600"}`}>
-                <li>Any unitary operation requires exponential resources with respect to the number of qubits.</li>
-                <li>This playground supports up to 10 qubits. If you want to lift this limitation, please self-host it.</li>
-                <li>There are several other limitations. For more details, please refer to{" "}
+                <li>Simulating arbitrary unitary operations requires resources that grow exponentially with the number of qubits.</li>
+                <li>This playground supports up to 10 qubits. To remove this limit, please self-host the system.</li>
+                <li>Additional limitations apply. For details, see
+                    {" "}
                     <a
                         href="https://github.com/itsubaki/qasm/issues"
                         target="_blank"
@@ -19,7 +20,8 @@ export function Notes({
                     >
                         the issues
                     </a>
-                    {" "}on GitHub.
+                    {" "}
+                    on GitHub.
                 </li>
             </ul>
         </div>
