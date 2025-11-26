@@ -1,6 +1,6 @@
 import { type NextRequest } from "next/server"
-import { apiCall, Path, Key } from "@/lib/api"
+import { apiCall, API } from "@/lib/api"
 
 export async function POST(req: NextRequest) {
-  return apiCall(req, Path.Share, Key.Code)
+  return apiCall(req, API.Share)
 }

@@ -1,20 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server"
 
-export enum Path {
-    Edit = "Edit",
-    Share = "Share",
-    Simulate = "Simulate",
-}
+export const API = {
+    Edit: { path: "Edit", key: "id" } as const,
+    Share: { path: "Share", key: "code" } as const,
+    Simulate: { path: "Simulate", key: "code" } as const,
+};
 
-export enum Key {
-    Id = "id",
-    Code = "code",
-}
+type APICallOptions = typeof API[keyof typeof API];
 
 export async function apiCall(
     request: NextRequest,
-    path: Path,
-    key: Key,
+    options: APICallOptions,
 ) {
     const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
     if (!SERVICE_URL) {
@@ -24,7 +20,10 @@ export async function apiCall(
         )
     }
 
+    const { path, key } = options;
+
     try {
+
         const body = await request.json()
         const value = body?.[key]
 
