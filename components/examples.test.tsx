@@ -47,7 +47,7 @@ describe("Examples component", () => {
         expect(setError).toHaveBeenCalledWith(null)
     })
 
-    it("applies dark mode classes when theme = dark", () => {
+    it("includes dark mode classes", () => {
         const setCode = vi.fn()
         const setResult = vi.fn()
         const setError = vi.fn()
