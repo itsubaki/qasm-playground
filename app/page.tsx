@@ -120,7 +120,6 @@ export default function Playground({
                     variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
                     className={cn(
-                      "text-white",
                       "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white",
                       "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
                     )}>
@@ -133,7 +132,6 @@ export default function Playground({
                     variant="outline"
                     onClick={() => copyToClipboard(error)}
                     className={cn(
-                      "text-white",
                       "text-red-700 border-red-300 hover:bg-red-100 bg-red-50",
                       "dark:text-red-300 dark:border-red-700 dark:hover:bg-red-900/30 dark:bg-red-900/20",
                     )}>
@@ -183,6 +181,6 @@ export default function Playground({
           <Notes />
         </div>
       </div>
-    </div >
+    </div>
   )
 }

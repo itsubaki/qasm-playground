@@ -10,18 +10,18 @@ vi.mock("@/lib/http", () => ({
 describe("useSimulator", () => {
     let setError: (msg: string | null) => void
     let setResult: (states: States | null) => void
-    let original: typeof console.error;
+    let originalConsoleError: typeof console.error;
 
 
     beforeEach(() => {
         setError = vi.fn()
         setResult = vi.fn()
         vi.clearAllMocks()
-        original = console.error;
+        originalConsoleError = console.error;
     })
 
     afterEach(() => {
-        console.error = original;
+        console.error = originalConsoleError;
     });
 
     it("should not call anything if code is empty", async () => {
