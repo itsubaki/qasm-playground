@@ -58,10 +58,14 @@ export default function Playground({
         </div>
 
         {/* Main */}
-        <div className="flex flex-col lg:flex-row gap-3 lg:h-[80vh]">
+        <div className={cn(
+          "lg:flex-row lg:h-[80vh]",
+          "flex flex-col gap-3",
+        )}>
           {/* Code Editor */}
           <Card className={cn(
-            "lg:w-[70%] flex flex-col backdrop-blur-sm",
+            "lg:w-[70%]",
+            "flex flex-col backdrop-blur-sm",
             "dark:bg-gray-800/50 dark:border-gray-700",
             "bg-white/90 border-gray-200",
           )}>
@@ -105,7 +109,8 @@ export default function Playground({
 
           {/* Results */}
           <Card className={cn(
-            "lg:w-[30%] flex flex-col backdrop-blur-sm",
+            "lg:w-[30%]",
+            "flex flex-col backdrop-blur-sm",
             "bg-white/90 border-gray-200",
             "dark:bg-gray-800/50 dark:border-gray-700",
           )}>
