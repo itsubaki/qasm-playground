@@ -3,15 +3,17 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Header } from './header'
 
+let mockTheme = 'light'
+const mockSetTheme = vi.fn()
+
 vi.mock('next-themes', () => ({
     useTheme: () => ({
-        theme: mockTheme,
+        get theme() {
+            return mockTheme
+        },
         setTheme: mockSetTheme,
     }),
 }))
-
-let mockTheme = 'light'
-const mockSetTheme = vi.fn()
 
 describe('Header', () => {
     beforeEach(() => {
@@ -34,10 +36,10 @@ describe('Header', () => {
         mockTheme = 'dark'
         render(<Header />)
 
-        const title = screen.getByText('OpenQASM 3.0 Playground');
-        const button = screen.getByRole('button', { name: 'Toggle dark mode' });
-        expect(title.className.includes('dark:text-white')).toBe(true);
-        expect(button.className.includes('dark:bg-gray-800')).toBe(true);
+        const title = screen.getByText('OpenQASM 3.0 Playground')
+        const button = screen.getByRole('button', { name: 'Toggle dark mode' })
+        expect(title.className.includes('dark:text-white')).toBe(true)
+        expect(button.className.includes('dark:bg-gray-800')).toBe(true)
 
         const githubLink = screen.getByRole('link', { name: /source on github/i })
         expect(githubLink).toHaveAttribute('href', 'https://github.com/itsubaki/qasm-playground')

@@ -45,7 +45,7 @@ describe("Editor", () => {
         expect(lineNumbers!.scrollTop).toBe(120)
     })
 
-    it("applies dark mode styles", () => {
+    it("has dark mode styles", () => {
         render(
             <Editor
                 code=""
