@@ -45,7 +45,7 @@ describe("edit function", () => {
         const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
         await edit("123", setCode)
 
-        expect(consoleSpy).toHaveBeenCalled()
+        expect(consoleSpy).toHaveBeenCalledWith("Edit code:", mock)
         consoleSpy.mockRestore()
     })
 
