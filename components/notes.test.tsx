@@ -22,6 +22,6 @@ describe('Notes', () => {
 
         const link = screen.getByRole('link')
         expect(link).toHaveAttribute('href', 'https://github.com/itsubaki/qasm/issues')
-        expect(link.className.includes('text-blue-400')).toBe(true)
+        expect(link.classList.contains('dark:text-blue-400')).toBe(true)
     })
 })
