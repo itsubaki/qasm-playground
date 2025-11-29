@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react"
-import { smooth, cn } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 export function SharedURL({
     sharedURL,
@@ -29,9 +29,8 @@ export function SharedURL({
                 "text-sm",
                 "rounded-md border outline-none",
                 "focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50",
-                smooth,
-                "dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800",
                 "bg-white border-gray-300 text-gray-900 hover:bg-gray-50",
+                "dark:bg-gray-900 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800",
             )}
         />
     )

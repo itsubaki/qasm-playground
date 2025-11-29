@@ -12,7 +12,7 @@ import { SharedURL } from '@/components/sharedURL';
 import { useSimulator } from "@/hooks/useSimulator"
 import { useShareURL } from "@/hooks/useShareURL"
 import { type States } from "@/lib/http"
-import { smooth } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
 import { edit } from "@/lib/edit"
 
@@ -47,7 +47,11 @@ export default function Playground({
   }
 
   return (
-    <div className={`p-4 min-h-screen ${smooth} dark:bg-gray-900 bg-blue-50`}>
+    <div className={cn(
+      "p-4 min-h-screen",
+      "bg-blue-50",
+      "dark:bg-gray-900",
+    )}>
       <div className="max-w-7xl mx-auto">
         <div className="mb-4">
           <Header />
@@ -56,23 +60,32 @@ export default function Playground({
         {/* Main */}
         <div className="flex flex-col lg:flex-row gap-3 lg:h-[80vh]">
           {/* Code Editor */}
-          <Card className={`lg:w-[70%] flex flex-col backdrop-blur-sm ${smooth} dark:bg-gray-800/50 dark:border-gray-700 bg-white/90 border-gray-200`}>
+          <Card className={cn(
+            "lg:w-[70%] flex flex-col backdrop-blur-sm",
+            "dark:bg-gray-800/50 dark:border-gray-700",
+            "bg-white/90 border-gray-200",
+          )}>
             <CardContent className="p-3 flex flex-col h-full">
               {/* Toolbar */}
               <div className="mb-3 flex justify-end items-center gap-3">
                 <Button
                   onClick={() => simulate(code)}
                   disabled={isLoading}
-                  className={`text-white ${smooth} dark:bg-blue-500 dark:hover:bg-blue-600 bg-blue-600 hover:bg-blue-700`}
-                >
+                  className={cn(
+                    "text-white",
+                    "bg-blue-600 hover:bg-blue-700",
+                    "dark:bg-blue-500 dark:hover:bg-blue-600",
+                  )}>
                   Run
                 </Button>
 
                 <Button
                   onClick={() => share(code)}
                   variant="outline"
-                  className={`${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 border-gray-300 text-gray-700 hover:bg-white-50 bg-white`}
-                >
+                  className={cn(
+                    "border-gray-300 text-gray-700 hover:bg-white-50 bg-white",
+                    "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
+                  )}>
                   Share
                 </Button>
 
@@ -91,10 +104,14 @@ export default function Playground({
           </Card>
 
           {/* Results */}
-          <Card className={`lg:w-[30%] flex flex-col backdrop-blur-sm ${smooth} dark:bg-gray-800/50 dark:border-gray-700 bg-white/90 border-gray-200`}>
+          <Card className={cn(
+            "lg:w-[30%] flex flex-col backdrop-blur-sm",
+            "bg-white/90 border-gray-200",
+            "dark:bg-gray-800/50 dark:border-gray-700",
+          )}>
             <CardContent className="p-3 flex flex-col h-full">
               <div className="mb-3 flex justify-between items-center gap-3">
-                <div className={`py-1 text-lg font-semibold ${smooth} dark:text-white text-gray-900`}>
+                <div className={`py-1 text-lg font-semibold text-gray-900 dark:text-white`}>
                   Quantum States
                 </div>
 
@@ -102,8 +119,11 @@ export default function Playground({
                   <Button
                     variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                    className={`text-white ${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 border-gray-300 text-gray-700 hover:bg-gray-50 bg-white`}
-                  >
+                    className={cn(
+                      "text-white",
+                      "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white",
+                      "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
+                    )}>
                     Copy JSON
                   </Button>
                 )}
@@ -112,8 +132,11 @@ export default function Playground({
                   <Button
                     variant="outline"
                     onClick={() => copyToClipboard(error)}
-                    className={`text-white ${smooth} dark:text-red-300 dark:border-red-700 dark:hover:bg-red-900/30 dark:bg-red-900/20 text-red-700 border-red-300 hover:bg-red-100 bg-red-50`}
-                  >
+                    className={cn(
+                      "text-white",
+                      "text-red-700 border-red-300 hover:bg-red-100 bg-red-50",
+                      "dark:text-red-300 dark:border-red-700 dark:hover:bg-red-900/30 dark:bg-red-900/20",
+                    )}>
                     Copy Error
                   </Button>
                 )}
@@ -126,25 +149,29 @@ export default function Playground({
               )}
 
               {error && (
-                <div className={`p-3 border rounded-lg ${smooth} dark:bg-red-900/20 dark:border-red-800 bg-red-50 border-red-200`}>
-                  <div className={`pb-3 font-semibold ${smooth} dark:text-red-300 text-red-800`}>
+                <div className={`p-3 border rounded-lg bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800`}>
+                  <div className={`pb-3 font-semibold text-red-800 dark:text-red-300`}>
                     Error Details
                   </div>
 
-                  <pre className={`p-3 text-sm whitespace-pre-wrap font-mono rounded border overflow-auto w-full break-all ${smooth} dark:text-red-300 dark:bg-red-900/30 dark:border-red-800 text-red-700 bg-red-100 border-red-200`}>
+                  <pre className={cn(
+                    "p-3 text-sm whitespace-pre-wrap font-mono rounded border overflow-auto w-full break-all",
+                    "text-red-700 bg-red-100 border-red-200",
+                    "dark:text-red-300 dark:bg-red-900/30 dark:border-red-800",
+                  )}>
                     {error}
                   </pre>
                 </div>
               )}
 
               {isLoading && (
-                <div className={`py-12 text-center ${smooth} dark:text-gray-400 text-gray-500`}>
+                <div className={`py-12 text-center dark:text-gray-400 text-gray-500`}>
                   <p>Waiting for remote server...</p>
                 </div>
               )}
 
               {!result && !error && !isLoading && (
-                <div className={`py-12 text-center ${smooth} dark:text-gray-400 text-gray-500`}>
+                <div className={`py-12 text-center dark:text-gray-400 text-gray-500`}>
                   <p>Run your OpenQASM code to see quantum states here</p>
                 </div>
               )}
@@ -156,6 +183,6 @@ export default function Playground({
           <Notes />
         </div>
       </div>
-    </div>
+    </div >
   )
 }

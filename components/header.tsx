@@ -1,8 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { smooth } from "@/lib/utils"
 import { useTheme } from "next-themes";
+import { cn } from "@/lib/utils"
 
 export function Header() {
     const { setTheme, resolvedTheme, theme } = useTheme();
@@ -11,14 +11,19 @@ export function Header() {
 
     return (
         <div className="flex justify-between items-center text-center">
-            <div className={`font-bold text-2xl leading-7 text-left ${smooth} dark:text-white text-gray-900`}>
+            <div className={`font-bold text-2xl leading-7 text-left text-gray-900 dark:text-white`}>
                 OpenQASM 3.0 Playground
             </div>
 
             <div className="flex gap-1">
                 <button
                     onClick={toggle}
-                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700 bg-white text-gray-600 hover:bg-gray-50`}
+                    className={cn(
+                        "flex items-center justify-center rounded",
+                        "w-8 h-8",
+                        "bg-white text-gray-600 hover:bg-gray-50",
+                        "dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700",
+                    )}
                     aria-label="Toggle dark mode"
                 >
                     {isDark ? (
@@ -40,7 +45,12 @@ export function Header() {
                     href="https://github.com/itsubaki/qasm-playground"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} dark:border-gray-600 dark:hover:bg-gray-600 dark:text-white dark:bg-transparent bg-background`}
+                    className={cn(
+                        "flex items-center justify-center rounded",
+                        "w-8 h-8",
+                        "bg-background",
+                        "dark:border-gray-600 dark:hover:bg-gray-600 dark:text-white dark:bg-transparent",
+                    )}
                     aria-label="View source on GitHub"
                 >
                     <Image

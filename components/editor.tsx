@@ -1,6 +1,6 @@
 import { Textarea } from "@/components/ui/textarea"
 import { useMemo, useRef } from "react"
-import { smooth, cn } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 export function Editor({
     code,
@@ -20,10 +20,25 @@ export function Editor({
     }
 
     return (
-        <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${smooth} dark:border-gray-600 border-gray-300`}>
-            <div ref={lineNumbersRef} className={`px-3 py-2 flex-shrink-0 text-right select-none overflow-hidden scrollbar-hide ${smooth} dark:bg-gray-900 bg-gray-50`}>
+        <div className={cn(
+            "relative flex-1 flex overflow-hidden",
+            "min-h-0 border rounded-lg",
+            "border-gray-300",
+            "dark:border-gray-600",
+        )}>
+            <div ref={lineNumbersRef} className={cn(
+                "px-3 py-2 flex-shrink-0 text-right",
+                "select-none overflow-hidden scrollbar-hide",
+                "bg-gray-50",
+                "dark:bg-gray-900",
+            )}>
                 {lineNumbers.map((num) => (
-                    <div key={num} className={`font-mono min-w-[3ch] text-[0.83rem] leading-[1.4] ${smooth} dark:text-gray-400 text-gray-500`}>
+                    <div key={num} className={cn(
+                        "min-w-[3ch] text-[0.83rem] leading-[1.4]",
+                        "font-mono",
+                        "text-gray-500",
+                        "dark:text-gray-400",
+                    )}>
                         {num}
                     </div>
                 ))}
@@ -42,9 +57,8 @@ export function Editor({
                     "flex-1",
                     "whitespace-pre overflow-x-auto overflow-y-auto resize-none",
                     "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
-                    smooth,
-                    "dark:bg-gray-900 dark:text-white dark:placeholder-gray-400",
                     "bg-white text-gray-900 placeholder-gray-500",
+                    "dark:bg-gray-900 dark:text-white dark:placeholder-gray-400",
                 )}
             />
         </div>

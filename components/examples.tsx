@@ -1,7 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { type States } from "@/lib/http"
-import { smooth } from "@/lib/utils"
 import { examples } from "@/lib/examples";
+import { cn } from "@/lib/utils"
 
 export function Examples({
     setCode,
@@ -21,7 +21,7 @@ export function Examples({
 
     return (
         <Select onValueChange={select} defaultValue={examples[0]?.name} aria-label="Choose an example">
-            <SelectTrigger className={`w-48 ${smooth} dark:bg-gray-900 dark:border-gray-600 dark:text-white bg-white border-gray-300 text-gray-900`}>
+            <SelectTrigger className={`w-48 dark:bg-gray-900 dark:border-gray-600 dark:text-white bg-white border-gray-300 text-gray-900`}>
                 <SelectValue />
             </SelectTrigger>
             <SelectContent className={`dark:bg-gray-900 dark:border-gray-700 bg-white border-gray-200`}>
@@ -29,8 +29,10 @@ export function Examples({
                     <SelectItem
                         key={example.name}
                         value={example.name}
-                        className={`dark:text-white dark:focus:bg-gray-800 dark:focus:text-white text-gray-900 focus:bg-gray-100 focus:text-gray-900`}
-                    >
+                        className={cn(
+                            "text-gray-900 focus:bg-gray-100 focus:text-gray-900",
+                            "dark:text-white dark:focus:bg-gray-800 dark:focus:text-white",
+                        )}>
                         {example.name}
                     </SelectItem>
                 ))}

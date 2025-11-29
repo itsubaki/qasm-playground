@@ -1,5 +1,5 @@
 import { type States } from "@/lib/http"
-import { smooth } from "@/lib/utils"
+import { cn } from "@/lib/utils"
 
 export function Result({
     result,
@@ -8,10 +8,14 @@ export function Result({
 }) {
     return (result.states.map((state, index) => {
         return (
-            <div key={index} className={`p-4 border rounded-lg ${smooth} dark:bg-gray-900/50 dark:border-gray-700 bg-gray-50 border-gray-200`}>
-                <div className="flex items-center justify-between mb-3">
+            <div key={index} className={cn(
+                "p-4 border rounded-lg",
+                "bg-gray-50 border-gray-200",
+                "dark:bg-gray-900/50 dark:border-gray-700",
+            )}>
+                <div className="mb-3 flex items-center justify-between">
                     {/* Ket */}
-                    <div className={`font-mono ${smooth} dark:text-white text-gray-900`}>
+                    <div className={`font-mono text-gray-900 dark:text-white`}>
                         {state.binaryString.map((str, i) => (
                             <span key={i}>
                                 |{str}⟩
@@ -24,16 +28,16 @@ export function Result({
                     {/* Probability Bar */}
                     <div className="space-y-2">
                         <div className="flex justify-between text-sm">
-                            <span className={`${smooth} dark:text-gray-400 text-gray-600`}>
+                            <span className={`text-gray-600 dark:text-gray-400`}>
                                 Probability
                             </span>
-                            <span className={`${smooth} dark:text-white text-gray-900`}>
+                            <span className={`text-gray-900 dark:text-white`}>
                                 {state.probability?.toFixed(6) || "0.000000"}
                             </span>
                         </div>
-                        <div className={`rounded-full h-2 w-full ${smooth} dark:bg-gray-700 bg-gray-200`}>
+                        <div className={`rounded-full h-2 w-full bg-gray-200 dark:bg-gray-700`}>
                             <div
-                                className={`rounded-full h-2 min-w-[6px] ${smooth} dark:bg-blue-400 bg-blue-500`}
+                                className={`rounded-full h-2 min-w-[6px] bg-blue-500 dark:bg-blue-400`}
                                 style={{
                                     width: `${(state.probability || 0) * 100}%`,
                                 }}
@@ -43,10 +47,10 @@ export function Result({
 
                     {/* Amplitude */}
                     <div className="space-y-2">
-                        <span className={`text-sm ${smooth} dark:text-gray-400 text-gray-600`}>
+                        <span className={`text-sm text-gray-600 dark:text-gray-400`}>
                             Amplitude
                         </span>
-                        <div className={`text-sm font-mono ${smooth} dark:text-white text-gray-900`}>
+                        <div className={`text-sm font-mono text-gray-900 dark:text-white`}>
                             {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
                             {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
                         </div>
