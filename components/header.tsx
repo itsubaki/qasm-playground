@@ -1,30 +1,27 @@
+"use client"
+
 import Image from "next/image"
 import { smooth } from "@/lib/utils"
+import { useTheme } from "next-themes";
 
-export function Header({
-    isDarkMode,
-    setIsDarkMode,
-}: {
-    isDarkMode: boolean,
-    setIsDarkMode: (isDarkMode: boolean) => void,
-}) {
-    const toggle = () => {
-        setIsDarkMode(!isDarkMode)
-    }
+export function Header() {
+    const { setTheme, resolvedTheme, theme } = useTheme();
+    const isDark = (theme === "dark") || (resolvedTheme === "dark");
+    const toggle = () => { setTheme(isDark ? "light" : "dark"); };
 
     return (
         <div className="flex justify-between items-center text-center">
-            <div className={`font-bold text-2xl leading-7 text-left ${smooth} ${isDarkMode ? "text-white" : "text-gray-900"}`}>
+            <div className={`font-bold text-2xl leading-7 text-left ${smooth} dark:text-white text-gray-900`}>
                 OpenQASM 3.0 Playground
             </div>
 
             <div className="flex gap-1">
                 <button
                     onClick={toggle}
-                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} ${isDarkMode ? "bg-gray-800 text-yellow-400 hover:bg-gray-700" : "bg-white text-gray-600 hover:bg-gray-50"}`}
+                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700 bg-white text-gray-600 hover:bg-gray-50`}
                     aria-label="Toggle dark mode"
                 >
-                    {isDarkMode ? (
+                    {isDark ? (
                         <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path
                                 fillRule="evenodd"
@@ -43,24 +40,15 @@ export function Header({
                     href="https://github.com/itsubaki/qasm-playground"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} ${isDarkMode ? "border-gray-600 hover:bg-gray-600 text-white" : "bg-background"}`}
+                    className={`w-8 h-8 flex items-center justify-center rounded ${smooth} dark:border-gray-600 dark:hover:bg-gray-600 dark:text-white dark:bg-transparent bg-background`}
                     aria-label="View source on GitHub"
                 >
-                    {isDarkMode ? (
-                        <Image
-                            src="/github-mark-white.svg"
-                            alt="GitHub"
-                            width={24}
-                            height={24}
-                        />
-                    ) : (
-                        <Image
-                            src="/github-mark.svg"
-                            alt="GitHub"
-                            width={24}
-                            height={24}
-                        />
-                    )}
+                    <Image
+                        src={isDark ? "/github-mark-white.svg" : "/github-mark.svg"}
+                        alt="GitHub"
+                        width={24}
+                        height={24}
+                    />
                 </a>
             </div>
         </div>

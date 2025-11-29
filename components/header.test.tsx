@@ -6,7 +6,7 @@ import { Header } from './header'
 describe('Header', () => {
     it('renders header in light mode', () => {
         const setIsDarkMode = vi.fn()
-        render(<Header isDarkMode={false} setIsDarkMode={setIsDarkMode} />)
+        render(<Header setIsDarkMode={setIsDarkMode} />)
 
         expect(screen.getByText('OpenQASM 3.0 Playground')).toHaveClass('text-gray-900')
         expect(screen.getByRole('button', { name: 'Toggle dark mode' })).toHaveClass('bg-white')

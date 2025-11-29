@@ -3,11 +3,9 @@ import { useMemo, useRef } from "react"
 import { smooth, cn } from "@/lib/utils"
 
 export function Editor({
-    isDarkMode,
     code,
     setCode,
 }: {
-    isDarkMode: boolean,
     code: string,
     setCode: (code: string) => void,
 }) {
@@ -22,10 +20,10 @@ export function Editor({
     }
 
     return (
-        <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${smooth} ${isDarkMode ? "border-gray-600" : "border-gray-300"}`}>
-            <div ref={lineNumbersRef} className={`px-3 py-2 flex-shrink-0 text-right select-none overflow-hidden scrollbar-hide ${smooth} ${isDarkMode ? "bg-gray-900" : "bg-gray-50"}`}>
+        <div className={`relative flex-1 flex overflow-hidden min-h-0 border rounded-lg ${smooth} dark:border-gray-600 border-gray-300`}>
+            <div ref={lineNumbersRef} className={`px-3 py-2 flex-shrink-0 text-right select-none overflow-hidden scrollbar-hide ${smooth} dark:bg-gray-900 bg-gray-50`}>
                 {lineNumbers.map((num) => (
-                    <div key={num} className={`font-mono min-w-[3ch] text-[0.83rem] leading-[1.4] ${smooth} ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}>
+                    <div key={num} className={`font-mono min-w-[3ch] text-[0.83rem] leading-[1.4] ${smooth} dark:text-gray-400 text-gray-500`}>
                         {num}
                     </div>
                 ))}
@@ -45,9 +43,8 @@ export function Editor({
                     "whitespace-pre overflow-x-auto overflow-y-auto resize-none",
                     "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
                     smooth,
-                    isDarkMode
-                        ? "bg-gray-900 text-white placeholder-gray-400"
-                        : "bg-white text-gray-900 placeholder-gray-500"
+                    "dark:bg-gray-900 dark:text-white dark:placeholder-gray-400",
+                    "bg-white text-gray-900 placeholder-gray-500",
                 )}
             />
         </div>
