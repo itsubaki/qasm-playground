@@ -71,7 +71,7 @@ export default function Playground({
                 <Button
                   onClick={() => share(code)}
                   variant="outline"
-                  className={`${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 order-gray-300 text-gray-700 hover:bg-white-50 bg-white`}
+                  className={`${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 border-gray-300 text-gray-700 hover:bg-white-50 bg-white`}
                 >
                   Share
                 </Button>
