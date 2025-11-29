@@ -33,7 +33,7 @@ export default function Playground({
   // set shared code or example code
   useEffect(() => {
     edit(snippetId, setCode)
-  }, [snippetId])
+  }, [snippetId, setCode])
 
   // wait until mounted to avoid hydration mismatch
   useEffect(() => {
