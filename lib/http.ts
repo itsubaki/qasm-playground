@@ -24,7 +24,6 @@ export async function httpPost<T>(url: string, body: object) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     })
-
     if (!resp.ok) {
         await throwError(resp)
     }
