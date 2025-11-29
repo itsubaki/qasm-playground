@@ -37,7 +37,7 @@ export default function Playground({
 
   // wait until mounted to avoid hydration mismatch
   useEffect(() => {
-    // avoid calling setState synchronously within an effect can trigger cascading renders
+    // avoid calling setState synchronously within an effect, as it can trigger cascading renders
     const timeout = setTimeout(() => setMounted(true), 0);
     return () => clearTimeout(timeout);
   }, [])
@@ -102,7 +102,7 @@ export default function Playground({
                   <Button
                     variant="outline"
                     onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
-                    className={`text-white ${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 border-gray-300 text-gray-700 hover:bg-gray-50 bg-white"}`}
+                    className={`text-white ${smooth} dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900 border-gray-300 text-gray-700 hover:bg-gray-50 bg-white`}
                   >
                     Copy JSON
                   </Button>
