@@ -14,7 +14,7 @@ describe('Notes', () => {
         expect(link.classList.contains('text-blue-600')).toBe(true)
     })
 
-    it('renders notes in dark mode', () => {
+    it('includes dark mode classes', () => {
         render(<Notes />)
 
         const list = screen.getByRole('list')

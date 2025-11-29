@@ -12,7 +12,7 @@ export function Notes() {
                         href="https://github.com/itsubaki/qasm/issues"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`${smooth} dark:text-blue-400 text-blue-600`}
+                        className={`${smooth} underline dark:text-blue-400 text-blue-600`}
                     >
                         the issues
                     </a>
