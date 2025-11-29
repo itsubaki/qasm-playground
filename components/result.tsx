@@ -14,7 +14,7 @@ export function Result({
                 "dark:bg-gray-900/50 dark:border-gray-700",
             )}>
                 <div className="mb-3 flex items-center justify-between">
-                    {/* Ket */}
+                    {/* Ket notation (quantum state) */}
                     <div className={`font-mono text-gray-900 dark:text-white`}>
                         {state.binaryString.map((str, i) => (
                             <span key={i}>
