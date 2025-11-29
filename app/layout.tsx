@@ -29,7 +29,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} antialiased`}
-      suppressHydrationWarning
+      suppressHydrationWarning // To avoid hydration mismatch due to theme change
     >
       <body className="font-sans">
         <ThemeProvider
