@@ -11,10 +11,10 @@ import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
 import { useSimulator } from "@/hooks/useSimulator"
 import { useShareURL } from "@/hooks/useShareURL"
-import { useEdit } from "@/hooks/useEdit"
 import { type States } from "@/lib/http"
 import { smooth } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
+import { edit } from "@/lib/edit"
 
 export default function Playground({
   snippetId,
@@ -31,13 +31,19 @@ export default function Playground({
   const { isLoading, simulate } = useSimulator({ setError, setResult })
 
   // set shared code or example code
-  useEdit({ snippetId, setCode });
+  useEffect(() => {
+    edit(snippetId, setCode)
+  }, [snippetId])
 
-  // wait for mounted to avoid hydration mismatch
-  useEffect(() => setMounted(true), []);
+  // wait until mounted to avoid hydration mismatch
+  useEffect(() => {
+    // avoid calling setState synchronously within an effect can trigger cascading renders
+    const timeout = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timeout);
+  }, [])
 
   if (!isMounted) {
-    return null;
+    return null
   }
 
   return (
