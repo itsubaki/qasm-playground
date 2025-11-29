@@ -6,6 +6,7 @@ import { Header } from './header'
 vi.mock('next-themes', () => ({
     useTheme: () => ({
         theme: mockTheme,
+        resolvedTheme: mockTheme,
         setTheme: mockSetTheme,
     }),
 }))
