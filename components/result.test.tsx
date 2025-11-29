@@ -49,7 +49,7 @@ describe("Result", () => {
         expect(screen.getByText("0.866000 + 0.000000i")).toBeInTheDocument()
     })
 
-    it("applies dark mode classes", () => {
+    it("renders dark mode class strings", () => {
         const { container } = render(<Result result={mock} />)
 
         const rootDivs = container.querySelectorAll("div")
