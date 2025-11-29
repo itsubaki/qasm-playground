@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from "vitest"
 import { render, screen, fireEvent } from "@testing-library/react"
-import { Examples } from "./examples";
-import { examples } from "@/lib/examples";
+import { Examples } from "./examples"
+import { examples } from "@/lib/examples"
 
 describe("Examples component", () => {
     it("renders the select dropdown with the default value", () => {
@@ -11,7 +11,6 @@ describe("Examples component", () => {
 
         render(
             <Examples
-                isDarkMode={false}
                 setCode={setCode}
                 setResult={setResult}
                 setError={setError}
@@ -30,7 +29,6 @@ describe("Examples component", () => {
 
         render(
             <Examples
-                isDarkMode={false}
                 setCode={setCode}
                 setResult={setResult}
                 setError={setError}
@@ -49,14 +47,13 @@ describe("Examples component", () => {
         expect(setError).toHaveBeenCalledWith(null)
     })
 
-    it("applies dark mode classes when isDarkMode is true", () => {
+    it("includes dark mode classes", () => {
         const setCode = vi.fn()
         const setResult = vi.fn()
         const setError = vi.fn()
 
         render(
             <Examples
-                isDarkMode={true}
                 setCode={setCode}
                 setResult={setResult}
                 setError={setError}
@@ -64,8 +61,8 @@ describe("Examples component", () => {
         )
 
         const selectTrigger = screen.getByRole("combobox")
-        expect(selectTrigger).toHaveClass("bg-gray-900")
-        expect(selectTrigger).toHaveClass("border-gray-600")
-        expect(selectTrigger).toHaveClass("text-white")
+        expect(selectTrigger.classList.contains("dark:bg-gray-900")).toBe(true)
+        expect(selectTrigger.classList.contains("dark:border-gray-600")).toBe(true)
+        expect(selectTrigger.classList.contains("dark:text-white")).toBe(true)
     })
 })

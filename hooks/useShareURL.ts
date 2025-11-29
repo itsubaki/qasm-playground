@@ -18,6 +18,7 @@ export const useShareURL = () => {
             const url = `${window.location.origin}/p/${snippet.id}`
             window.history.pushState(null, "", `/p/${snippet.id}`)
             setSharedURL(url)
+
             await copyToClipboard(url)
             return url
         } catch (err) {

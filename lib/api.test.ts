@@ -4,13 +4,11 @@ import { apiCall, API } from "./api"
 
 describe("apiCall", () => {
     beforeEach(() => {
-        // Mock fetch
         global.fetch = vi.fn()
     })
 
     afterEach(() => {
         vi.restoreAllMocks()
-        // Mock console.error to suppress stack traces
         vi.spyOn(console, "error").mockImplementation(() => { })
     })
 

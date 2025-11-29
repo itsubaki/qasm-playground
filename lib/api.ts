@@ -21,12 +21,10 @@ export async function apiCall(
     }
 
     const { path, key } = options;
-
     try {
 
         const body = await request.json()
         const value = body?.[key]
-
         if (!value) {
             return NextResponse.json(
                 { error: `${key} is required` },
@@ -39,7 +37,6 @@ export async function apiCall(
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ [key]: value }),
         })
-
         if (resp.ok) {
             return NextResponse.json(await resp.json())
         }

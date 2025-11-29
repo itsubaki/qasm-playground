@@ -7,7 +7,6 @@ describe("Editor", () => {
         render(
             <Editor
                 code={"line1\nline2\nline3"}
-                isDarkMode={false}
                 setCode={() => { }}
             />
         )
@@ -23,7 +22,6 @@ describe("Editor", () => {
         render(
             <Editor
                 code=""
-                isDarkMode={false}
                 setCode={setCode}
             />
         )
@@ -37,7 +35,6 @@ describe("Editor", () => {
         render(
             <Editor
                 code={"a\nb\nc\nd\ne\nf\ng"}
-                isDarkMode={false}
                 setCode={() => { }}
             />
         )
@@ -48,16 +45,15 @@ describe("Editor", () => {
         expect(lineNumbers!.scrollTop).toBe(120)
     })
 
-    it("applies dark mode styles", () => {
+    it("includes dark mode styles", () => {
         render(
             <Editor
                 code=""
-                isDarkMode={true}
                 setCode={() => { }}
             />
         )
 
         const container = screen.getByRole("textbox").parentElement!
-        expect(container.className).toContain("border-gray-600")
+        expect(container.className).toContain("dark:border-gray-600")
     })
 })
