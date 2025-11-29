@@ -12,7 +12,6 @@ describe("useSimulator", () => {
     let setResult: (states: States | null) => void
     let originalConsoleError: typeof console.error;
 
-
     beforeEach(() => {
         setError = vi.fn()
         setResult = vi.fn()

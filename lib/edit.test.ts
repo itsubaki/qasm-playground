@@ -46,6 +46,7 @@ describe("edit function", () => {
         await edit("123", setCode)
 
         expect(consoleSpy).toHaveBeenCalledWith("Edit code:", mock)
+        expect(setCode).not.toHaveBeenCalled()
         consoleSpy.mockRestore()
     })
 
@@ -57,6 +58,7 @@ describe("edit function", () => {
         await edit("123", setCode)
 
         expect(consoleSpy).toHaveBeenCalledWith("Edit code:", error)
+        expect(setCode).not.toHaveBeenCalled()
         consoleSpy.mockRestore()
     })
 })
