@@ -21,10 +21,17 @@ export function Examples({
 
     return (
         <Select onValueChange={select} defaultValue={examples[0]?.name} aria-label="Choose an example">
-            <SelectTrigger className={`w-48 dark:bg-gray-900 dark:border-gray-600 dark:text-white bg-white border-gray-300 text-gray-900`}>
+            <SelectTrigger className={cn(
+                "w-48",
+                "bg-white border-gray-300 text-gray-900",
+                "dark:bg-gray-900 dark:border-gray-600 dark:text-white",
+            )}>
                 <SelectValue />
             </SelectTrigger>
-            <SelectContent className={`dark:bg-gray-900 dark:border-gray-700 bg-white border-gray-200`}>
+            <SelectContent className={cn(
+                "bg-white border-gray-200",
+                "dark:bg-gray-900 dark:border-gray-700",
+            )}>
                 {examples.map((example) => (
                     <SelectItem
                         key={example.name}
