@@ -168,13 +168,13 @@ export default function Playground({
               )}
 
               {isLoading && (
-                <div className={`py-12 text-center dark:text-gray-400 text-gray-500`}>
+                <div className={`py-12 text-center text-gray-500 dark:text-gray-400`}>
                   <p>Waiting for remote server...</p>
                 </div>
               )}
 
               {!result && !error && !isLoading && (
-                <div className={`py-12 text-center dark:text-gray-400 text-gray-500`}>
+                <div className={`py-12 text-center text-gray-500 dark:text-gray-400`}>
                   <p>Run your OpenQASM code to see quantum states here</p>
                 </div>
               )}
