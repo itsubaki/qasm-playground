@@ -54,7 +54,7 @@ describe("Result", () => {
 
         const rootDivs = container.querySelectorAll("div")
         const hasDarkModeBackground = Array.from(rootDivs).some(div =>
-            div.className.includes("bg-gray-900/50")
+            div.className.includes("dark:bg-gray-900/50")
         )
         expect(hasDarkModeBackground).toBe(true)
     })
