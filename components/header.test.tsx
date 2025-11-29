@@ -11,6 +11,9 @@ vi.mock('next-themes', () => ({
         get theme() {
             return mockTheme
         },
+        get resolvedTheme() {
+            return mockTheme
+        },
         setTheme: mockSetTheme,
     }),
 }))
