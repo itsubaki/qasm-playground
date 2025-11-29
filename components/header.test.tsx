@@ -1,52 +1,71 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Header } from './header'
 
-describe('Header', () => {
-    it('renders header in light mode', () => {
-        const setIsDarkMode = vi.fn()
-        render(<Header setIsDarkMode={setIsDarkMode} />)
+vi.mock('next-themes', () => ({
+    useTheme: () => ({
+        theme: mockTheme,
+        setTheme: mockSetTheme,
+    }),
+}))
 
-        expect(screen.getByText('OpenQASM 3.0 Playground')).toHaveClass('text-gray-900')
-        expect(screen.getByRole('button', { name: 'Toggle dark mode' })).toHaveClass('bg-white')
+let mockTheme = 'light'
+const mockSetTheme = vi.fn()
+
+describe('Header', () => {
+    beforeEach(() => {
+        mockTheme = 'light'
+        mockSetTheme.mockClear()
+    })
+
+    it('renders header in light mode', () => {
+        const { container } = render(<Header />)
+
+        expect(screen.getByText('OpenQASM 3.0 Playground')).toBeInTheDocument()
+        expect(container.querySelector('.text-gray-900')).not.toBeNull()
+        expect(container.querySelector('.bg-white')).not.toBeNull()
+
         const githubLink = screen.getByRole('link', { name: /source on github/i })
         expect(githubLink).toHaveAttribute('href', 'https://github.com/itsubaki/qasm-playground')
     })
 
     it('renders header in dark mode', () => {
-        const setIsDarkMode = vi.fn()
-        render(<Header isDarkMode={true} setIsDarkMode={setIsDarkMode} />)
+        mockTheme = 'dark'
+        render(<Header />)
 
-        expect(screen.getByText('OpenQASM 3.0 Playground')).toHaveClass('text-white')
-        expect(screen.getByRole('button', { name: 'Toggle dark mode' })).toHaveClass('bg-gray-800')
+        const title = screen.getByText('OpenQASM 3.0 Playground');
+        const button = screen.getByRole('button', { name: 'Toggle dark mode' });
+        expect(title.className.includes('dark:text-white')).toBe(true);
+        expect(button.className.includes('dark:bg-gray-800')).toBe(true);
+
         const githubLink = screen.getByRole('link', { name: /source on github/i })
         expect(githubLink).toHaveAttribute('href', 'https://github.com/itsubaki/qasm-playground')
     })
 
     it('toggles dark mode on button click', async () => {
-        const setIsDarkMode = vi.fn()
-        render(<Header isDarkMode={false} setIsDarkMode={setIsDarkMode} />)
         const user = userEvent.setup()
-        const toggleButton = screen.getByRole('button', { name: 'Toggle dark mode' })
+        render(<Header />)
 
+        const toggleButton = screen.getByRole('button', { name: 'Toggle dark mode' })
         await user.click(toggleButton)
-        expect(setIsDarkMode).toHaveBeenCalledWith(true)
+
+        expect(mockSetTheme).toHaveBeenCalledWith('dark')
     })
 
     it('toggles dark mode off when already on', async () => {
-        const setIsDarkMode = vi.fn()
-        render(<Header isDarkMode={true} setIsDarkMode={setIsDarkMode} />)
+        mockTheme = 'dark'
         const user = userEvent.setup()
-        const toggleButton = screen.getByRole('button', { name: 'Toggle dark mode' })
+        render(<Header />)
 
+        const toggleButton = screen.getByRole('button', { name: 'Toggle dark mode' })
         await user.click(toggleButton)
-        expect(setIsDarkMode).toHaveBeenCalledWith(false)
+
+        expect(mockSetTheme).toHaveBeenCalledWith('light')
     })
 
     it('github icon uses correct alt text', () => {
-        const setIsDarkMode = vi.fn()
-        render(<Header isDarkMode={false} setIsDarkMode={setIsDarkMode} />)
+        render(<Header />)
         const img = screen.getByAltText('GitHub')
         expect(img).toBeInTheDocument()
     })

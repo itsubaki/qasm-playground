@@ -24,7 +24,7 @@ export default function Playground({
   const [code, setCode] = useState("// Loading...")
   const [error, setError] = useState<string | null>(null)
   const [result, setResult] = useState<States | null>(null)
-  const [mounted, setMounted] = useState(false);
+  const [isMounted, setMounted] = useState(false);
 
   // custom hooks
   const { sharedURL, share } = useShareURL()
@@ -35,7 +35,8 @@ export default function Playground({
 
   // wait for mounted to avoid hydration mismatch
   useEffect(() => setMounted(true), []);
-  if (!mounted) {
+
+  if (!isMounted) {
     return null;
   }
 
@@ -87,7 +88,7 @@ export default function Playground({
           <Card className={`lg:w-[30%] flex flex-col backdrop-blur-sm ${smooth} dark:bg-gray-800/50 dark:border-gray-700 bg-white/90 border-gray-200`}>
             <CardContent className="p-3 flex flex-col h-full">
               <div className="mb-3 flex justify-between items-center gap-3">
-                <div className={`py-1 text-lg font-semibold ${smooth} dark:text-white ext-gray-900`}>
+                <div className={`py-1 text-lg font-semibold ${smooth} dark:text-white text-gray-900`}>
                   Quantum States
                 </div>
 
