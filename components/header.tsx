@@ -17,6 +17,7 @@ export function Header() {
 
             <div className="flex gap-1">
                 <button
+                    title={isDark ? "Switch to light mode" : "Switch to dark mode"}
                     onClick={toggle}
                     className={cn(
                         "flex items-center justify-center rounded",
@@ -42,6 +43,7 @@ export function Header() {
                 </button>
 
                 <a
+                    title="View on GitHub"
                     href="https://github.com/itsubaki/qasm-playground"
                     target="_blank"
                     rel="noopener noreferrer"
