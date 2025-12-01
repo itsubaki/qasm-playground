@@ -22,7 +22,7 @@ export function Header() {
                         "flex items-center justify-center rounded",
                         "w-8 h-8",
                         "bg-white text-gray-600 hover:bg-gray-50",
-                        "dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700",
+                        "dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-yellow-400",
                     )}
                     aria-label="Toggle dark mode"
                 >
@@ -49,7 +49,7 @@ export function Header() {
                         "flex items-center justify-center rounded",
                         "w-8 h-8",
                         "bg-background",
-                        "dark:border-gray-600 dark:hover:bg-gray-600 dark:text-white dark:bg-transparent",
+                        "dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white",
                     )}
                     aria-label="View source on GitHub"
                 >
