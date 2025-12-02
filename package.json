@@ -42,6 +42,7 @@
     "@radix-ui/react-tooltip": "1.2.8",
     "@remix-run/react": "latest",
     "@sveltejs/kit": "latest",
+    "@testing-library/dom": "^10.4.1",
     "@testing-library/react-hooks": "^8.0.1",
     "@vercel/analytics": "latest",
     "@vercel/speed-insights": "latest",
