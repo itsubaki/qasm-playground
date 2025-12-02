@@ -11,6 +11,7 @@ import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
 import { useSimulator } from "@/hooks/useSimulator"
 import { useShareURL } from "@/hooks/useShareURL"
+import { useSort } from "@/hooks/useSort"
 import { type States } from "@/lib/http"
 import { cn } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
@@ -27,8 +28,9 @@ export default function Playground({
   const [isMounted, setMounted] = useState(false);
 
   // custom hooks
-  const { sharedURL, share } = useShareURL()
   const { isLoading, simulate } = useSimulator({ setError, setResult })
+  const { sharedURL, share } = useShareURL()
+  const { sortMode, sort } = useSort()
 
   // set shared code or example code
   useEffect(() => {
@@ -120,36 +122,42 @@ export default function Playground({
                   Quantum States
                 </div>
 
-                {result && (
+                <div className="flex gap-3">
                   <Button
                     variant="outline"
-                    onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
+                    onClick={() => sort()}
                     className={cn(
                       "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white",
                       "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
                     )}>
-                    Copy JSON
+                    Sort
                   </Button>
-                )}
 
-                {error && (
-                  <Button
-                    variant="outline"
-                    onClick={() => copyToClipboard(error)}
-                    className={cn(
-                      "text-red-700 border-red-300 hover:bg-red-100 bg-red-50",
-                      "dark:text-red-300 dark:border-red-700 dark:hover:bg-red-900/30 dark:bg-red-900/20",
-                    )}>
-                    Copy Error
-                  </Button>
-                )}
-              </div>
+                  {error && (
+                    <Button
+                      variant="outline"
+                      onClick={() => copyToClipboard(error)}
+                      className={cn(
+                        "text-red-700 border-red-300 hover:bg-red-100 bg-red-50",
+                        "dark:text-red-300 dark:border-red-700 dark:hover:bg-red-900/30 dark:bg-red-900/20",
+                      )}>
+                      Copy
+                    </Button>
+                  )}
 
-              {result && (
-                <div className={`space-y-3 rounded-lg overflow-y-auto`}>
-                  <Result result={result} />
+                  {!error && (
+                    <Button
+                      variant="outline"
+                      onClick={() => copyToClipboard(JSON.stringify(result, null, 2))}
+                      className={cn(
+                        "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white",
+                        "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
+                      )}>
+                      Copy
+                    </Button>
+                  )}
                 </div>
-              )}
+              </div>
 
               {error && (
                 <div className={`p-3 border rounded-lg bg-red-50 border-red-200 dark:bg-red-900/20 dark:border-red-800`}>
@@ -164,6 +172,12 @@ export default function Playground({
                   )}>
                     {error}
                   </pre>
+                </div>
+              )}
+
+              {result && (
+                <div className={`space-y-3 rounded-lg overflow-y-auto`}>
+                  <Result result={result} sort={sortMode} />
                 </div>
               )}
 
