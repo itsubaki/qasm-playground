@@ -22,40 +22,47 @@ describe("Result", () => {
     }
 
     it("renders the correct number of state blocks", () => {
-        render(<Result result={mock} />)
+        render(<Result result={mock} sort="index" />)
 
         const blocks = screen.getAllByText(/Probability/i)
         expect(blocks.length).toBe(2)
     })
 
     it("renders ket notation correctly", () => {
-        render(<Result result={mock} />)
+        render(<Result result={mock} sort="index" />)
 
         expect(screen.getByText("|010⟩")).toBeInTheDocument()
         expect(screen.getByText("|111⟩")).toBeInTheDocument()
     })
 
     it("shows probability with 6 decimal places", () => {
-        render(<Result result={mock} />)
+        render(<Result result={mock} sort="index" />)
 
         expect(screen.getByText("0.250000")).toBeInTheDocument()
         expect(screen.getByText("0.750000")).toBeInTheDocument()
     })
 
     it("shows amplitude formatted correctly", () => {
-        render(<Result result={mock} />)
+        render(<Result result={mock} sort="index" />)
 
         expect(screen.getByText("0.500000 + -0.500000i")).toBeInTheDocument()
         expect(screen.getByText("0.866000 + 0.000000i")).toBeInTheDocument()
     })
 
     it("renders dark mode class strings", () => {
-        const { container } = render(<Result result={mock} />)
+        const { container } = render(<Result result={mock} sort="index" />)
 
         const rootDivs = container.querySelectorAll("div")
         const hasDarkModeBackground = Array.from(rootDivs).some(div =>
             div.className.includes("dark:bg-gray-900/50")
         )
         expect(hasDarkModeBackground).toBe(true)
+    })
+
+    it("sorts states by probability in descending order when sort is 'prob_desc'", () => {
+        render(<Result result={mock} sort="prob_desc" />)
+
+        const ketNotations = screen.getAllByText(/\|\d{3}⟩/).map(el => el.textContent)
+        expect(ketNotations).toEqual(["|111⟩", "|010⟩"])
     })
 })

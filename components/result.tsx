@@ -3,12 +3,19 @@ import { cn } from "@/lib/utils"
 
 export function Result({
     result,
+    sort,
 }: {
     result: States,
+    sort: "index" | "prob_desc",
 }) {
-    return (result.states.map((state, index) => {
+    const sorted = [...result.states].sort((a, b) => {
+        if (sort === "prob_desc") return (b.probability || 0) - (a.probability || 0)
+        return 0 // index order (default)
+    })
+
+    return (sorted.map((state, index) => {
         return (
-            <div key={index} className={cn(
+            <div key={state.binaryString.join("")} className={cn(
                 "p-4 border rounded-lg",
                 "bg-gray-50 border-gray-200",
                 "dark:bg-gray-900/50 dark:border-gray-700",
