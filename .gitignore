@@ -30,4 +30,3 @@ next-env.d.ts
 coverage/
 app/components
 .DS_Store
-package-lock.json
