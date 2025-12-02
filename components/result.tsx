@@ -15,7 +15,7 @@ export function Result({
 
     return (sorted.map((state, index) => {
         return (
-            <div key={index} className={cn(
+            <div key={state.binaryString.join("")} className={cn(
                 "p-4 border rounded-lg",
                 "bg-gray-50 border-gray-200",
                 "dark:bg-gray-900/50 dark:border-gray-700",
