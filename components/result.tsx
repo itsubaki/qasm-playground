@@ -9,7 +9,7 @@ export function Result({
     sort: "index" | "prob_desc",
 }) {
     const sorted = [...result.states].sort((a, b) => {
-        if (sort === "prob_desc") return (b.probability || 0) - (a.probability || 0)
+        if (sort === "prob_desc") return b.probability - a.probability
         return 0 // index order (default)
     })
 
@@ -39,14 +39,14 @@ export function Result({
                                 Probability
                             </span>
                             <span className={`text-gray-900 dark:text-white`}>
-                                {state.probability?.toFixed(6) || "0.000000"}
+                                {state.probability.toFixed(6)}
                             </span>
                         </div>
                         <div className={`rounded-full h-2 w-full bg-gray-200 dark:bg-gray-700`}>
                             <div
                                 className={`rounded-full h-2 min-w-[6px] bg-blue-500 dark:bg-blue-400`}
                                 style={{
-                                    width: `${(state.probability || 0) * 100}%`,
+                                    width: `${state.probability * 100}%`,
                                 }}
                             />
                         </div>
@@ -58,8 +58,8 @@ export function Result({
                             Amplitude
                         </span>
                         <div className={`text-sm font-mono text-gray-900 dark:text-white`}>
-                            {state.amplitude?.real?.toFixed(6) || "0.000000"} +{" "}
-                            {state.amplitude?.imag?.toFixed(6) || "0.000000"}i
+                            {state.amplitude.real?.toFixed(6) || "0.000000"} +{" "}
+                            {state.amplitude.imag?.toFixed(6) || "0.000000"}i
                         </div>
                     </div>
                 </div>
