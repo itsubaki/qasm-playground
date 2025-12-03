@@ -1,16 +1,26 @@
 import { NextResponse, type NextRequest } from "next/server"
 
-export const API = {
+export async function edit(request: NextRequest) {
+    return apiCall(request, API.Edit);
+}
+
+export async function share(request: NextRequest) {
+    return apiCall(request, API.Share);
+}
+
+export async function simulate(request: NextRequest) {
+    return apiCall(request, API.Simulate);
+}
+
+const API = {
     Edit: { path: "Edit", key: "id" } as const,
     Share: { path: "Share", key: "code" } as const,
     Simulate: { path: "Simulate", key: "code" } as const,
 };
 
-type APICallOptions = typeof API[keyof typeof API];
-
-export async function apiCall(
+async function apiCall(
     request: NextRequest,
-    options: APICallOptions,
+    options: typeof API[keyof typeof API],
 ) {
     const SERVICE_URL = process.env.GOOGLE_CLOUD_SERVICE_URL
     if (!SERVICE_URL) {

@@ -31,7 +31,7 @@ export async function httpPost<T>(url: string, body: object) {
     return resp.json() as Promise<T>
 }
 
-export async function throwError(resp: Response) {
+async function throwError(resp: Response) {
     let message = `HTTP ${resp.status}: ${resp.statusText}`;
     const contentType = resp.headers.get("content-type");
 

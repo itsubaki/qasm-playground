@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { NextRequest } from "next/server"
-import { apiCall, API } from "./api"
+import { simulate, share, edit } from "./api"
 
 describe("apiCall", () => {
     beforeEach(() => {
@@ -18,7 +18,7 @@ describe("apiCall", () => {
             body: JSON.stringify({}),
         })
 
-        const response = await apiCall(req, API.Simulate)
+        const response = await simulate(req)
         const data = await response.json()
 
         expect(response.status).toBe(400)
@@ -39,7 +39,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await apiCall(req, API.Simulate)
+        const response = await simulate(req)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -66,7 +66,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ id: "test-id" }),
         })
 
-        const response = await apiCall(req, API.Edit)
+        const response = await edit(req)
         const data = await response.json()
 
         expect(response.status).toBe(400)
@@ -85,7 +85,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await apiCall(req, API.Share)
+        const response = await share(req)
         const data = await response.json()
 
         expect(response.status).toBe(503)
@@ -104,7 +104,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await apiCall(req, API.Simulate)
+        const response = await simulate(req)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -119,7 +119,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await apiCall(req, API.Simulate)
+        const response = await simulate(req)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -134,7 +134,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "test code" }),
         })
 
-        const response = await apiCall(req, API.Simulate)
+        const response = await simulate(req)
         const data = await response.json()
 
         expect(response.status).toBe(500)
@@ -155,7 +155,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ id: "abc123" }),
         })
 
-        const response = await apiCall(req, API.Edit)
+        const response = await edit(req)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -184,7 +184,7 @@ describe("apiCall", () => {
             body: JSON.stringify({ code: "shared code" }),
         })
 
-        const response = await apiCall(req, API.Share)
+        const response = await share(req)
         const data = await response.json()
 
         expect(response.status).toBe(200)
@@ -206,7 +206,7 @@ describe("apiCall", () => {
             json: async () => ({ id: '123' }),
         } as unknown as NextRequest
 
-        const res = await apiCall(req, API.Edit)
+        const res = await edit(req)
         const data = await res.json()
 
         expect(res.status).toBe(500)
