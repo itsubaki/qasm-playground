@@ -65,4 +65,27 @@ describe("Result", () => {
         const ketNotations = screen.getAllByText(/\|\d{3}⟩/).map(el => el.textContent)
         expect(ketNotations).toEqual(["|111⟩", "|010⟩"])
     })
+
+    it("renders amplitude with fallback '0.000000' for missing real/imag", () => {
+        const fallbackMock: States = {
+            states: [
+                {
+                    amplitude: { real: 1 },
+                    probability: 1,
+                    binaryString: ["000"],
+                    int: [0],
+                },
+                {
+                    amplitude: { imag: 1 },
+                    probability: 1,
+                    binaryString: ["001"],
+                    int: [1],
+                },
+            ]
+        }
+
+        render(<Result result={fallbackMock} sort="index" />)
+        expect(screen.getAllByText("1.000000 + 0.000000i").length).toBe(1)
+        expect(screen.getAllByText("0.000000 + 1.000000i").length).toBe(1)
+    })
 })
