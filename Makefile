@@ -7,6 +7,9 @@ install:
 	npm install -g pnpm
 	pnpm install
 
+update:
+	pnpm update --latest
+
 build:
 	pnpm run build
 
