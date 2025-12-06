@@ -1,12 +1,10 @@
 import { useState } from "react"
 import { type States, httpPost } from "@/lib/http"
 
-export const useSimulator = (options: {
-    setError: (msg: string | null) => void
-    setResult: (states: States | null) => void
-}) => {
+export const useSimulate = () => {
     const [isLoading, setIsLoading] = useState(false)
-    const { setError, setResult } = options
+    const [error, setError] = useState<string | null>(null)
+    const [result, setResult] = useState<States | null>(null)
 
     const simulate = async (code: string) => {
         if (!code.trim()) return
@@ -27,7 +25,9 @@ export const useSimulator = (options: {
     }
 
     return {
-        simulate,
         isLoading,
+        result,
+        error,
+        simulate,
     }
 }

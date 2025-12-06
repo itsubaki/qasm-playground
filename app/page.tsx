@@ -9,10 +9,9 @@ import { Header } from '@/components/header';
 import { Examples } from "@/components/examples"
 import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
-import { useSimulator } from "@/hooks/useSimulator"
+import { useSimulate } from "@/hooks/useSimulate"
 import { useShareURL } from "@/hooks/useShareURL"
 import { useSort } from "@/hooks/useSort"
-import { type States } from "@/lib/http"
 import { cn } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
 import { edit } from "@/lib/edit"
@@ -23,14 +22,17 @@ export default function Playground({
   snippetId?: string,
 }) {
   const [code, setCode] = useState("// Loading...")
-  const [error, setError] = useState<string | null>(null)
-  const [result, setResult] = useState<States | null>(null)
   const [isMounted, setMounted] = useState(false);
 
   // custom hooks
-  const { isLoading, simulate } = useSimulator({ setError, setResult })
   const { sharedURL, share } = useShareURL()
   const { sortMode, sort } = useSort()
+  const {
+    isLoading,
+    result,
+    error,
+    simulate,
+  } = useSimulate()
 
   // set shared code or example code
   useEffect(() => {
@@ -100,7 +102,7 @@ export default function Playground({
                 )}
 
                 {!sharedURL && (
-                  <Examples setCode={setCode} setResult={setResult} setError={setError} />
+                  <Examples setCode={setCode} />
                 )}
               </div>
 
@@ -177,7 +179,7 @@ export default function Playground({
 
               {result && (
                 <div className={`space-y-3 rounded-lg overflow-y-auto`}>
-                  <Result result={result} sort={sortMode} />
+                  <Result result={result} sortMode={sortMode} />
                 </div>
               )}
 

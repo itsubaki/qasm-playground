@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils"
 
 export function Result({
     result,
-    sort,
+    sortMode,
 }: {
     result: States,
-    sort: "index" | "prob_desc",
+    sortMode: "index" | "prob_desc",
 }) {
     const sorted = [...result.states].sort((a, b) => {
-        if (sort === "prob_desc") return b.probability - a.probability
+        if (sortMode === "prob_desc") return b.probability - a.probability
         return 0 // index order (default)
     })
 

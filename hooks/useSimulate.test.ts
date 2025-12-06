@@ -1,20 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { renderHook, waitFor, act } from "@testing-library/react"
-import { useSimulator } from "./useSimulator"
+import { useSimulate } from "./useSimulate"
 import { type States, httpPost } from "@/lib/http"
 
 vi.mock("@/lib/http", () => ({
     httpPost: vi.fn(),
 }))
 
-describe("useSimulator", () => {
-    let setError: (msg: string | null) => void
-    let setResult: (states: States | null) => void
+describe("useSimulate", () => {
     let originalConsoleError: typeof console.error;
 
     beforeEach(() => {
-        setError = vi.fn()
-        setResult = vi.fn()
         vi.clearAllMocks()
         originalConsoleError = console.error;
     })
@@ -25,15 +21,16 @@ describe("useSimulator", () => {
 
     it("should not call anything if code is empty", async () => {
         const { result } = renderHook(() =>
-            useSimulator({ setError, setResult })
+            useSimulate()
         )
 
         await act(async () => {
-            await result.current.simulate("   ")
+            await result.current.simulate("")
         })
 
-        expect(setError).not.toHaveBeenCalled()
-        expect(setResult).not.toHaveBeenCalled()
+        expect(result.current.result).toBeNull()
+        expect(result.current.error).toBeNull()
+        expect(result.current.isLoading).toBe(false)
     })
 
     it("should call setResult when simulation succeeds", async () => {
@@ -50,16 +47,15 @@ describe("useSimulator", () => {
         vi.mocked(httpPost).mockResolvedValue(states)
 
         const { result } = renderHook(() =>
-            useSimulator({ setError, setResult })
+            useSimulate()
         )
 
         await act(async () => {
-            await result.current.simulate("print('hello')")
+            await result.current.simulate("OPENQASM 3.0;")
         })
 
-        expect(setError).toHaveBeenCalledWith(null)
-        expect(setResult).toHaveBeenCalledWith(null)
-        expect(setResult).toHaveBeenCalledWith(states)
+        expect(result.current.result).toEqual(states)
+        expect(result.current.error).toBeNull()
         expect(result.current.isLoading).toBe(false)
     })
 
@@ -79,7 +75,7 @@ describe("useSimulator", () => {
         )
 
         const { result } = renderHook(() =>
-            useSimulator({ setError, setResult })
+            useSimulate()
         )
 
         expect(result.current.isLoading).toBe(false)
@@ -102,16 +98,15 @@ describe("useSimulator", () => {
         vi.mocked(httpPost).mockRejectedValue(new Error("fail!"))
 
         const { result } = renderHook(() =>
-            useSimulator({ setError, setResult })
+            useSimulate()
         )
 
         await act(async () => {
             await result.current.simulate("print('error')")
         })
 
-        expect(setResult).toHaveBeenCalledWith(null)
-        expect(setError).toHaveBeenCalledWith(null)
-        expect(setError).toHaveBeenCalledWith("fail!")
+        expect(result.current.result).toBeNull()
+        expect(result.current.error).toBe("fail!")
         expect(result.current.isLoading).toBe(false)
     })
 
@@ -120,15 +115,15 @@ describe("useSimulator", () => {
         vi.mocked(httpPost).mockRejectedValue("unexpected error string")
 
         const { result } = renderHook(() =>
-            useSimulator({ setError, setResult })
+            useSimulate()
         )
 
         await act(async () => {
             await result.current.simulate("some code")
         })
 
-        expect(setResult).toHaveBeenCalledWith(null)
-        expect(setError).toHaveBeenCalledWith(null)
-        expect(setError).toHaveBeenCalledWith("An unknown error occurred")
+        expect(result.current.result).toBeNull()
+        expect(result.current.error).toBe("An unknown error occurred")
+        expect(result.current.isLoading).toBe(false)
     })
 })

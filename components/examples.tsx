@@ -1,22 +1,15 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { type States } from "@/lib/http"
 import { examples } from "@/lib/examples";
 import { cn } from "@/lib/utils"
 
 export function Examples({
     setCode,
-    setResult,
-    setError,
 }: {
     setCode: (code: string) => void,
-    setResult: (result: States | null) => void,
-    setError: (error: string | null) => void,
 }) {
     const select = (name: string) => {
         const example = examples.find((ex) => ex.name === name)! // always found
         setCode(example.code)
-        setResult(null)
-        setError(null)
     }
 
     return (
