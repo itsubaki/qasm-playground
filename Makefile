@@ -8,7 +8,7 @@ install:
 	pnpm install
 
 update:
-	pnpm update
+	pnpm update --latest
 	pnpm audit
 
 build:
