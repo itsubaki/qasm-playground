@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { NextRequest } from "next/server"
 import { simulate, share, edit } from "./api"
 
-describe("apiCall", () => {
+describe("call", () => {
     beforeEach(() => {
         global.fetch = vi.fn()
     })

@@ -1,15 +1,15 @@
 import { NextResponse, type NextRequest } from "next/server"
 
 export async function edit(request: NextRequest) {
-    return apiCall(request, API.Edit);
+    return call(request, API.Edit);
 }
 
 export async function share(request: NextRequest) {
-    return apiCall(request, API.Share);
+    return call(request, API.Share);
 }
 
 export async function simulate(request: NextRequest) {
-    return apiCall(request, API.Simulate);
+    return call(request, API.Simulate);
 }
 
 const API = {
@@ -18,7 +18,7 @@ const API = {
     Simulate: { path: "Simulate", key: "code" } as const,
 };
 
-async function apiCall(
+async function call(
     request: NextRequest,
     options: typeof API[keyof typeof API],
 ) {
