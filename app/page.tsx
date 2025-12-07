@@ -11,6 +11,7 @@ import { Notes } from "@/components/notes"
 import { SharedURL } from '@/components/sharedURL';
 import { useSimulate } from "@/hooks/useSimulate"
 import { useShareURL } from "@/hooks/useShareURL"
+import { useMount } from "@/hooks/useMount"
 import { useSort } from "@/hooks/useSort"
 import { cn } from "@/lib/utils"
 import { copyToClipboard } from "@/lib/clipboard"
@@ -22,9 +23,7 @@ export default function Playground({
   snippetId?: string,
 }) {
   const [code, setCode] = useState("// Loading...")
-  const [isMounted, setMounted] = useState(false);
-
-  // custom hooks
+  const { isMounted } = useMount()
   const { sharedURL, share } = useShareURL()
   const { sortMode, sort } = useSort()
   const {
@@ -38,13 +37,6 @@ export default function Playground({
   useEffect(() => {
     edit(snippetId, setCode)
   }, [snippetId, setCode])
-
-  // wait until mounted to avoid hydration mismatch
-  useEffect(() => {
-    // avoid calling setState synchronously within an effect, as it can trigger cascading renders
-    const timeout = setTimeout(() => setMounted(true), 0);
-    return () => clearTimeout(timeout);
-  }, [])
 
   if (!isMounted) {
     return null
