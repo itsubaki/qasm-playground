@@ -12,7 +12,7 @@ export function Header() {
     return (
         <div className="flex justify-between items-center text-center">
             <div className={`font-bold text-2xl leading-7 text-left text-gray-900 dark:text-white`}>
-                OpenQASM Playground
+                OpenQASM 3.x Playground
             </div>
 
             <div className="flex gap-1">
