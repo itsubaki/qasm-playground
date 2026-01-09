@@ -27,7 +27,7 @@ describe('Header', () => {
     it('renders header in light mode', () => {
         const { container } = render(<Header />)
 
-        expect(screen.getByText('OpenQASM Playground')).toBeInTheDocument()
+        expect(screen.getByText('OpenQASM 3.x Playground')).toBeInTheDocument()
         expect(container.querySelector('.text-gray-900')).not.toBeNull()
         expect(container.querySelector('.bg-white')).not.toBeNull()
 
@@ -39,7 +39,7 @@ describe('Header', () => {
         mockTheme = 'dark'
         render(<Header />)
 
-        const title = screen.getByText('OpenQASM Playground')
+        const title = screen.getByText('OpenQASM 3.x Playground')
         const button = screen.getByRole('button', { name: 'Toggle dark mode' })
         expect(title.className.includes('dark:text-white')).toBe(true)
         expect(button.className.includes('dark:bg-gray-800')).toBe(true)
