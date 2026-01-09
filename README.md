@@ -1,9 +1,9 @@
-# OpenQASM playground
+# OpenQASM 3.x playground
 
 [![tests](https://github.com/itsubaki/qasm-playground/workflows/tests/badge.svg)](https://github.com/itsubaki/qasm-playground/actions)
 [![codecov](https://codecov.io/gh/itsubaki/qasm-playground/branch/main/graph/badge.svg?token=iNccCs1Tez)](https://codecov.io/gh/itsubaki/qasm-playground)
 
- - A playground that lets you write and run OpenQASM code in a web browser.
+ - A playground that lets you write and run OpenQASM 3.x code in a web browser.
 
 ## Deployment and Configuration
 
