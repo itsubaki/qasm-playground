@@ -125,6 +125,8 @@ reset q;
 reset a;
 
 h q;
+
+x a;
 h a;
 
 int N = 2**(n+1);
