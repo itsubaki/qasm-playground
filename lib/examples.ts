@@ -125,8 +125,6 @@ reset q;
 reset a;
 
 h q;
-
-x a;
 h a;
 
 int N = 2**(n+1);
@@ -188,8 +186,6 @@ reset s;
 reset a;
 
 h r;
-
-x a;
 h a;
 
 int N = 2**n;
