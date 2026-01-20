@@ -138,8 +138,8 @@ measure a;
 `,
     },
     {
-        name: "Grover's Algorithm (CSP)",
-        code: `// Grover's Algorithm (CSP)
+        name: "Grover's Algorithm (2x2)",
+        code: `// Grover's Algorithm (2x2)
 
 OPENQASM 3.0;
 
