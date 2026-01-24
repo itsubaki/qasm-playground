@@ -168,7 +168,7 @@ def oracle(qubit[4] r, qubit[4] s, qubit a) {
     xor r[0], r[1], s[0];
 }
 
-def diffuser(qubit[4] r) {
+def diffuser(qubit[4] r, qubit a) {
     h r;
     x r;
     ccccz r[0], r[1], r[2], r[3], a;
