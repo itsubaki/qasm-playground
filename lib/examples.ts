@@ -144,7 +144,6 @@ OPENQASM 3.0;
 
 gate x q { U(pi, 0, pi) q; }
 gate h q { U(pi/2.0, 0, pi) q; }
-
 gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
 gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
