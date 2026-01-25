@@ -97,15 +97,13 @@ OPENQASM 3.0;
 
 gate x q { U(pi, 0, pi) q; }
 gate h q { U(pi/2.0, 0, pi) q; }
-gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
+gate c3z c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
 
 // oracle for |110>|x>
 def oracle(qubit[3] q, qubit a) {
     x q[2];
 
-    x a;
-    cccz q[0], q[1], q[2], a;
-    x a;
+    c3z q[0], q[1], q[2], a;
 
     x q[2];
 }
@@ -113,7 +111,7 @@ def oracle(qubit[3] q, qubit a) {
 def diffuser(qubit[3] q, qubit a) {
     h q; h a;
     x q; x a;
-    cccz q[0], q[1], q[2], a;
+    c3z q[0], q[1], q[2], a;
     x q; x a;
     h q; h a;
 }
@@ -164,9 +162,7 @@ def oracle(qubit[4] r, qubit[4] s, qubit a) {
     xor r[0], r[2], s[2];
     xor r[1], r[3], s[3];
 
-    x a;
     c4z s[0], s[1], s[2], s[3], a;
-    x a;
 
     xor r[1], r[3], s[3];
     xor r[0], r[2], s[2];
