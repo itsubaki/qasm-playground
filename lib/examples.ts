@@ -103,57 +103,10 @@ OPENQASM 3.0;
 
 gate x q { U(pi, 0, pi) q; }
 gate h q { U(pi/2.0, 0, pi) q; }
-gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
-
-// oracle for |110>|x>
-def oracle(qubit[3] q, qubit a) {
-    x q[2];
-    cccz q[0], q[1], q[2], a;
-    x q[2];
-}
-
-def diffuser(qubit[3] q, qubit a) {
-    h q; h a;
-    x q; x a;
-    cccz q[0], q[1], q[2], a;
-    x q; x a;
-    h q; h a;
-}
-
-def G(qubit[3] q, qubit a) {
-    oracle(q, a);
-    diffuser(q, a);
-}
-
-const int n = 3;
-qubit[n] q;
-qubit a;
-reset q;
-reset a;
-
-h q;
-h a;
-
-int N = 2**(n+1);
-int R = int(pi/4 * sqrt(float(N)));
-
-for int i in [1:R] {
-    G(q, a);
-}
-`,
-    },
-    {
-        name: "Grover's Algorithm (2x2)",
-        code: `// Grover's Algorithm (2x2)
-
-OPENQASM 3.0;
-
-gate x q { U(pi, 0, pi) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
 gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
 gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
-gate ccccz c0, c1, c2, c3, t { ctrl(4) @ U(0, 0, pi) c0, c1, c2, c3, t; }
+gate ccccx c0, c1, c2, c3, t { ctrl(4) @ U(pi, 0, pi) c0, c1, c2, c3, t; }
 
 // The oracle constructs a Grover oracle that checks solutions to a 2x2 sudoku puzzle.
 // The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
@@ -164,7 +117,7 @@ def oracle(qubit[4] r, qubit[4] s, qubit a) {
     xor r[0], r[2], s[2];
     xor r[1], r[3], s[3];
 
-    ccccz s[0], s[1], s[2], s[3], a;
+    ccccx s[0], s[1], s[2], s[3], a;
 
     xor r[1], r[3], s[3];
     xor r[0], r[2], s[2];
@@ -195,6 +148,7 @@ reset s;
 reset a;
 
 h r;
+x a;
 h a;
 
 int N = 2**n;
