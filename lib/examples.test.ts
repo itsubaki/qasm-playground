@@ -20,7 +20,6 @@ describe('Quantum examples', () => {
             'Quantum Teleportation',
             'Deutsch-Jozsa Algorithm',
             'Grover\'s Algorithm',
-            'Grover\'s Algorithm (2x2)',
             'Shor\'s Algorithm (N=15, a=7)',
         ]));
     });
