@@ -38,7 +38,7 @@ reset phi;
 reset a;
 reset t;
 
-// 0.92|0> + 0.27(1+i))|1>
+// phi = 0.92|0> + 0.27(1+i))|1>
 U(pi/4, pi/4, pi/4) phi;
 
 h a;
@@ -49,7 +49,7 @@ h phi;
 cx a, t;
 cz phi, t;
 
-// 0.92|0> + 0.27(1+i))|1>
+// t = 0.92|0> + 0.27(1+i))|1>
 measure phi;
 measure a;
 `,
