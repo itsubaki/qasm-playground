@@ -18,7 +18,8 @@ describe('Quantum examples', () => {
         expect(names).toEqual(expect.arrayContaining([
             'Bell State',
             'Quantum Teleportation',
-            'Deutsch-Jozsa Algorithm',
+            'Deutsch-Jozsa Algorithm (constant)',
+            'Deutsch-Jozsa Algorithm (balanced)',
             'Grover\'s Algorithm',
             'Shor\'s Algorithm (N=15, a=7)',
         ]));
