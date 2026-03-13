@@ -268,11 +268,15 @@ gate x q { U(pi, 0, pi) q; }
 gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
 
 qubit phi;
+reset phi;
+
 // phi = 0.92|0> + 0.27(1+i))|1>
 U(pi/4, pi/4, pi/4) phi;
 
-// encoding
+// encode
 qubit[2] enc;
+reset enc;
+
 cx phi, enc[0];
 cx phi, enc[1];
 
@@ -281,6 +285,7 @@ x phi;
 
 // add ancilla
 qubit[2] a;
+reset a;
 
 // error correction
 cx phi,    a[0];
@@ -295,7 +300,7 @@ if(m0 && !m1) { x phi; }
 if(m0 && m1)  { x enc[0]; }
 if(!m0 && m1) { x enc[1]; }
 
-// decoding
+// decode
 cx phi, enc[1];
 cx phi, enc[0];
 `,
