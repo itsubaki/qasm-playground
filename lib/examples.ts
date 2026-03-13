@@ -259,8 +259,8 @@ measure a;
 `,
     },
     {
-        name: "Error Correction (3-qubit bit-flip code)",
-        code: `// Error Correction (3-qubit bit-flip code)
+        name: "Error Correction (bit-flip)",
+        code: `// Error Correction (bit-flip)
 
 OPENQASM 3.0;
 
