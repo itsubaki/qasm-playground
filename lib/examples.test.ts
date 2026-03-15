@@ -21,6 +21,7 @@ describe('Quantum examples', () => {
             'Deutsch-Jozsa Algorithm (constant)',
             'Deutsch-Jozsa Algorithm (balanced)',
             'Grover\'s Algorithm',
+            'Quantum Counting',
             'Shor\'s Algorithm (N=15, a=7)',
         ]));
     });
