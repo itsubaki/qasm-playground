@@ -213,6 +213,9 @@ gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate ccccz c0, c1, c2, c3, t { ctrl(4) @ U(0, 0, pi) c0, c1, c2, c3, t; }
 gate cccccx c0, c1, c2, c3, c4, t { ctrl(5) @ U(pi, 0, pi) c0, c1, c2, c3, c4, t; }
 
+// The oracle constructs a Grover oracle that checks solutions to a 2x2 sudoku puzzle.
+// The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
+// The valid solutions are [1,0,0,1] and [0,1,1,0].
 def oracle(qubit[4] r, qubit[4] s, qubit c, qubit a) {
     xor r[0], r[1], s[0];
     xor r[2], r[3], s[1];
@@ -294,9 +297,6 @@ gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
 gate ccx c0, c1, t { ctrl(2) @ U(pi, 0, pi) c0, c1, t; }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
-// The oracle constructs a Grover oracle that checks solutions to a 2x2 sudoku puzzle.
-// The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
-// The valid solutions are [1,0,0,1] and [0,1,1,0].
 def modexp(qubit[3] q, qubit[4] a) {
     // controlled-U^(2^0)
     cx q[0], a[1];
