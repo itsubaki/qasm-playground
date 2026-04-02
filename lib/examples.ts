@@ -162,8 +162,8 @@ qubit t;
 reset c;
 reset t;
 
-x t;
 h c;
+x t;
 
 // controlled-U^(2^i)
 cr(pi/4) c[0], t;
@@ -215,8 +215,8 @@ qubit t;
 reset c;
 reset t;
 
-x t;
 h c;
+x t;
 
 // controlled-U^(2^i)
 cr(pi/3)    c[0], t;
@@ -275,8 +275,8 @@ qubit[4] a;
 reset q;
 reset a;
 
-x a[3];
 h q;
+x a[3];
 
 modexp(q, a);
 inv_qft(q);
