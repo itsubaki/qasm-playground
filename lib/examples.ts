@@ -135,6 +135,160 @@ measure q0;
 `
     },
     {
+        name: "Quantum Phase Estimation (T gate)",
+        code: `// Quantum Phase Estimation (T gate)
+
+OPENQASM 3.0;
+
+gate h q { U(pi/2, 0, pi) q; }
+gate x q { U(pi, 0, pi) q; }
+gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
+
+def inv_qft(qubit[3] q) {
+    h q[2];
+    cr(-pi/2) q[2], q[1];
+
+    h q[1];
+    cr(-pi/4) q[2], q[0];
+    cr(-pi/2) q[1], q[0];
+
+    h q[0];
+}
+
+const int n = 3;
+qubit[n] c;
+qubit t;
+
+reset c;
+reset t;
+
+x t;
+h c;
+
+// controlled-U^(2^i)
+cr(pi/4) c[0], t;
+cr(pi/2) c[1], t;
+cr(pi)   c[2], t;
+
+inv_qft(c);
+
+// bit m = measure c;
+// phi = 1/8 = 0.001
+`
+    },
+    {
+        name: "Quantum Phase Estimation (Rz(pi/3) gate)",
+        code: `// Quantum Phase Estimation (Rz(pi/3) gate)
+
+OPENQASM 3.0;
+
+gate h q { U(pi/2, 0, pi) q; }
+gate x q { U(pi, 0, pi) q; }
+gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
+
+def inv_qft(qubit[5] q) {
+    h q[4];
+    cr(-pi/2) q[4], q[3];
+    cr(-pi/4) q[4], q[2];
+    cr(-pi/8) q[4], q[1];
+    cr(-pi/16) q[4], q[0];
+
+    h q[3];
+    cr(-pi/2) q[3], q[2];
+    cr(-pi/4) q[3], q[1];
+    cr(-pi/8) q[3], q[0];
+
+    h q[2];
+    cr(-pi/2) q[2], q[1];
+    cr(-pi/4) q[2], q[0];
+
+    h q[1];
+    cr(-pi/2) q[1], q[0];
+
+    h q[0];
+}
+
+const int n = 5;
+qubit[n] c;
+qubit t;
+
+reset c;
+reset t;
+
+x t;
+h c;
+
+// controlled-U^(2^i)
+cr(pi/3)    c[0], t;
+cr(2*pi/3)  c[1], t;
+cr(4*pi/3)  c[2], t;
+cr(8*pi/3)  c[3], t;
+cr(16*pi/3) c[4], t;
+
+inv_qft(c);
+
+// bit m = measure c;
+// phi = 1/6 = 0.001010101...
+`
+    },
+    {
+        name: "Shor's Algorithm (N=15, a=7)",
+        code: `// Shor's Algorithm (N=15, a=7)
+
+OPENQASM 3.0;
+
+gate x q { U(pi, 0, pi) q; }
+gate h q { U(pi/2.0, 0, pi) q; }
+gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
+gate ccx c0, c1, t { ctrl(2) @ U(pi, 0, pi) c0, c1, t; }
+gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
+
+def modexp(qubit[3] q, qubit[4] a) {
+    // controlled-U^(2^0)
+    cx q[0], a[1];
+    cx q[0], a[2];
+
+    // controlled-U^(2^1)
+    cx        a[0], a[2];
+    ccx q[1], a[2], a[0];
+    cx        a[0], a[2];
+
+    cx        a[3], a[1];
+    ccx q[1], a[1], a[3];
+    cx        a[3], a[1];
+}
+
+def inv_qft(qubit[3] q) {
+  h q[2];
+  cr(-pi/2) q[2], q[1];
+  
+  h q[1];
+  cr(-pi/4) q[2], q[0];
+  cr(-pi/2) q[1], q[0];
+  
+  h q[0];
+}
+
+// N=15, a=7
+qubit[3] q;
+qubit[4] a;
+reset q;
+reset a;
+
+x a[3];
+h q;
+
+modexp(q, a);
+inv_qft(q);
+
+// bit m = measure q;
+// 010: 0.010 = 0.25 = 1/4; r=4.
+// 110: 0.110 = 0.75 = 3/4; r=4.
+// gcd(pow(a, r/2)-1, N) = 3.
+// gcd(pow(a, r/2)+1, N) = 5.
+`,
+    },
+    {
         name: "Grover's Algorithm",
         code: `// Grover's Algorithm
 
@@ -282,65 +436,6 @@ inv_qft(c);
 // bit m = measure c;
 // 011: phi=0.3750, theta=2.3562, M=2.3431
 // 101: phi=0.6250, theta=3.9270, M=2.3431
-`,
-    },
-    {
-        name: "Shor's Algorithm (N=15, a=7)",
-        code: `// Shor's Algorithm (N=15, a=7)
-
-OPENQASM 3.0;
-
-gate x q { U(pi, 0, pi) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
-gate ccx c0, c1, t { ctrl(2) @ U(pi, 0, pi) c0, c1, t; }
-gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
-
-def modexp(qubit[3] q, qubit[4] a) {
-    // controlled-U^(2^0)
-    cx q[0], a[1];
-    cx q[0], a[2];
-
-    // controlled-U^(2^1)
-    cx        a[0], a[2];
-    ccx q[1], a[2], a[0];
-    cx        a[0], a[2];
-
-    cx        a[3], a[1];
-    ccx q[1], a[1], a[3];
-    cx        a[3], a[1];
-}
-
-def inv_qft(qubit[3] q) {
-  h q[2];
-  cr(-pi/2) q[2], q[1];
-  
-  h q[1];
-  cr(-pi/4) q[2], q[0];
-  cr(-pi/2) q[1], q[0];
-  
-  h q[0];
-}
-
-// N=15, a=7
-qubit[3] q;
-qubit[4] a;
-reset q;
-reset a;
-
-x a[3];
-h q;
-
-modexp(q, a);
-inv_qft(q);
-
-measure a;
-// measure q;
-//
-// 010 > 0.010 > 0.25 > 1/4; r=4.
-// 110 > 0.110 > 0.75 > 3/4; r=4.
-// gcd(pow(a, r/2)-1, N) = 3.
-// gcd(pow(a, r/2)+1, N) = 5.
 `,
     },
     {

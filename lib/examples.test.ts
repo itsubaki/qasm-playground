@@ -20,9 +20,12 @@ describe('Quantum examples', () => {
             'Quantum Teleportation',
             'Deutsch-Jozsa Algorithm (constant)',
             'Deutsch-Jozsa Algorithm (balanced)',
+            'Quantum Phase Estimation (T gate)',
+            'Quantum Phase Estimation (Rz(pi/3) gate)',
+            'Shor\'s Algorithm (N=15, a=7)',
             'Grover\'s Algorithm',
             'Quantum Counting',
-            'Shor\'s Algorithm (N=15, a=7)',
+            'Error Correction (bit-flip)',
         ]));
     });
 
