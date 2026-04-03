@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { States } from "@/lib/http"
 import Playground from "./page"
 
 const mockSimulate = vi.fn()
@@ -13,7 +14,7 @@ let shareState: { sharedURL: string | null, share: typeof mockShare }
 let sortState: { sortMode: "index" | "prob_desc", sort: typeof mockSort }
 let simulateState: {
     isLoading: boolean
-    result: { states: Array<{ binaryString: string[], probability: number, amplitude: { real?: number, imag?: number }, int: number[] }> } | null
+    result: States | null
     error: string | null
     simulate: typeof mockSimulate
 }
