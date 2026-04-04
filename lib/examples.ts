@@ -135,8 +135,8 @@ measure q0;
 `
     },
     {
-        name: "Quantum Phase Estimation (T gate)",
-        code: `// Quantum Phase Estimation (T gate)
+        name: "Quantum Phase Estimation (T)",
+        code: `// Quantum Phase Estimation (T)
 
 OPENQASM 3.0;
 
@@ -177,8 +177,8 @@ inv_qft(c);
 `
     },
     {
-        name: "Quantum Phase Estimation (Rz(pi/3) gate)",
-        code: `// Quantum Phase Estimation (Rz(pi/3) gate)
+        name: "Quantum Phase Estimation (Rz(pi/3))",
+        code: `// Quantum Phase Estimation (Rz(pi/3))
 
 OPENQASM 3.0;
 
@@ -474,8 +474,8 @@ W(pi/6) q;
 `,
     },
     {
-        name: "Error Correction (bit-flip)",
-        code: `// Error Correction (bit-flip)
+        name: "Error Correction",
+        code: `// Error Correction
 
 OPENQASM 3.0;
 
