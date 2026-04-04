@@ -30,27 +30,27 @@ gate h q { U(pi/2.0, 0, pi) q; }
 gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
 gate cz c, t { ctrl @ U(0, pi, 0) c, t; }
 
-qubit phi;
+qubit psi;
 qubit a;
 qubit t;
 
-reset phi;
+reset psi;
 reset a;
 reset t;
 
-// phi = 0.92|0> + 0.27(1+i))|1>
-U(pi/4, pi/4, pi/4) phi;
+// psi = 0.92|0> + 0.27(1+i))|1>
+U(pi/4, pi/4, pi/4) psi;
 
 h a;
 cx a, t;
-cx phi, a;
-h phi;
+cx psi, a;
+h psi;
 
 cx a, t;
-cz phi, t;
+cz psi, t;
 
 // t = 0.92|0> + 0.27(1+i))|1>
-measure phi;
+measure psi;
 measure a;
 `,
     },
@@ -246,6 +246,8 @@ inv_qft(c);
 
 // bit m = measure c;
 // phi = 1/6 = 0.001010101...
+// U|psi> = exp(2pi*i*phi)|psi>
+// exp(i*pi/3) = exp(i*2pi*1/6)
 `
     },
     {
@@ -499,28 +501,28 @@ OPENQASM 3.0;
 gate x q { U(pi, 0, pi) q; }
 gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
 
-qubit phi;
-reset phi;
+qubit psi;
+reset psi;
 
-// phi = 0.92|0> + 0.27(1+i))|1>
-U(pi/4, pi/4, pi/4) phi;
+// psi = 0.92|0> + 0.27(1+i))|1>
+U(pi/4, pi/4, pi/4) psi;
 
 // encode
 qubit[2] enc;
 reset enc;
 
-cx phi, enc[0];
-cx phi, enc[1];
+cx psi, enc[0];
+cx psi, enc[1];
 
 // error (bit-flip on the first qubit)
-x phi;
+x psi;
 
 // add ancilla
 qubit[2] a;
 reset a;
 
 // error correction
-cx phi,    a[0];
+cx psi,    a[0];
 cx enc[0], a[0];
 cx enc[0], a[1];
 cx enc[1], a[1];
@@ -528,13 +530,13 @@ cx enc[1], a[1];
 bit m0 = measure a[0];
 bit m1 = measure a[1];
 
-if(m0 && !m1) { x phi; }
+if(m0 && !m1) { x psi; }
 if(m0 && m1)  { x enc[0]; }
 if(!m0 && m1) { x enc[1]; }
 
 // decode
-cx phi, enc[1];
-cx phi, enc[0];
+cx psi, enc[1];
+cx psi, enc[0];
 `,
     },
     {
