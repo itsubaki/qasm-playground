@@ -485,38 +485,4 @@ cx phi, enc[1];
 cx phi, enc[0];
 `,
     },
-    {
-        name: "Shor's code",
-        code: `// Shor's code
-
-OPENQASM 3.0;
-
-gate x q { U(pi, 0, pi) q; }
-gate z q { U(0, pi, 0) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
-
-qubit[9] q;
-qubit[2] a;
-reset q;
-reset a;
-
-// |psi> = 0.92|0> + 0.27(1+i))|1>
-U(pi/4, pi/4, pi/4) q[0];
-
-// encode |psi> into the 9-qubit Shor code
-cx q[0], q[3];
-cx q[0], q[6];
-h q[0];
-h q[3];
-h q[6];
-
-cx q[0], q[1];
-cx q[0], q[2];
-cx q[3], q[4];
-cx q[3], q[5];
-cx q[6], q[7];
-cx q[6], q[8];
-`
-    },
 ]
