@@ -25,6 +25,7 @@ describe('Quantum examples', () => {
             'Shor\'s Algorithm (N=15, a=7)',
             'Grover\'s Algorithm',
             'Quantum Counting',
+            'Quantum Signal Processing',
             'Error Correction (bit-flip)',
         ]));
     });

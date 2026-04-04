@@ -439,6 +439,41 @@ inv_qft(c);
 `,
     },
     {
+        name: "Quantum Signal Processing",
+        code: `// Quantum Signal Processing
+// This example uses the textbook-style QSP building blocks:
+//   W(theta): signal operator with x = cos(theta)
+//   S(phi):   phase operator
+//
+// The phase sequence is:
+//   W(pi/6) -> S(pi/4) -> W(pi/6) -> S(-pi/4) -> W(pi/6)
+//
+// For this sequence, the |0> amplitude becomes:
+//   P(x) = 2x^3 - x
+//
+// Here x = cos(pi/6) = sqrt(3)/2, so:
+//   P(x) = 2x^3 - x = sqrt(3)/4 ~= 0.433013
+//
+// Verified:
+//   final state = 0.433013|0> + (-0.5 + 0.75i)|1>
+
+OPENQASM 3.0;
+
+gate Rx(theta) q { U(theta, -pi/2, pi/2) q; }
+gate W(theta) q { Rx(-2 * theta) q; }
+gate S(phi) q { U(0, 0, -2 * phi) q; }
+
+qubit q;
+reset q;
+
+W(pi/6) q;
+S(pi/4) q;
+W(pi/6) q;
+S(-pi/4) q;
+W(pi/6) q;
+`,
+    },
+    {
         name: "Error Correction (bit-flip)",
         code: `// Error Correction (bit-flip)
 
