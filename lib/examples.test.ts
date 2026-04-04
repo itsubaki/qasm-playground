@@ -27,6 +27,7 @@ describe('Quantum examples', () => {
             'Quantum Counting',
             'Quantum Signal Processing',
             'Error Correction (bit-flip)',
+            'Magic State Distillation',
         ]));
     });
 

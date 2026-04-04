@@ -520,4 +520,52 @@ cx phi, enc[1];
 cx phi, enc[0];
 `,
     },
+    {
+        name: "Magic State Distillation",
+        code: `// Magic State Distillation
+
+OPENQASM 3.0;
+
+gate h q { U(pi/2, 0, pi) q; }
+gate ry(theta) q { U(theta, 0, 0) q; }
+gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
+
+def prepare_magic(qubit q) {
+    ry(pi/4) q;
+}
+
+qubit z;
+qubit a;
+qubit plus;
+
+reset z;
+reset a;
+reset plus;
+
+// |A> is the "magic state" used to implement the T gate
+// It can be seen as a rotated version of |+> under T:
+// T|+> = exp(-i * pi/8 * Z) |+>
+// |A>  = exp(-i * pi/8 * Y) |0> = cos(pi/8)|0> + sin(pi/8)|1> = 0.9239...|0> + 0.3827...|1>
+// This representation rotates the computational basis from Z to Y
+// |A> is an eigenstate of Hadamard: H|A> = |A>
+// Hadamard can also be expressed as H = A†XA
+prepare_magic(a);
+h plus;
+
+h z;
+ry(pi/4) a;
+cx z, a;
+ry(-pi/4) a;
+h z;
+
+cx plus, a;
+
+measure z;
+measure a;
+
+// |0>|0>|A>: accept
+// |1>|0>|x>: reject
+// |0>|1>|x>: reject
+`,
+    },
 ]
