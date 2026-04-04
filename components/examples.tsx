@@ -22,6 +22,7 @@ export function Examples({
                 <SelectValue />
             </SelectTrigger>
             <SelectContent className={cn(
+                "max-h-[26rem]",
                 "bg-white border-gray-200",
                 "dark:bg-gray-900 dark:border-gray-700",
             )}>
