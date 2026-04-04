@@ -186,29 +186,44 @@ gate h q { U(pi/2, 0, pi) q; }
 gate x q { U(pi, 0, pi) q; }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
-def inv_qft(qubit[5] q) {
+def inv_qft(qubit[7] q) {
+    h q[6];
+    cr(-pi/2)   q[6], q[5];
+    cr(-pi/4)   q[6], q[4];
+    cr(-pi/8)   q[6], q[3];
+    cr(-pi/16)  q[6], q[2];
+    cr(-pi/32)  q[6], q[1];
+    cr(-pi/64)  q[6], q[0];
+
+    h q[5];
+    cr(-pi/2)   q[5], q[4];
+    cr(-pi/4)   q[5], q[3];
+    cr(-pi/8)   q[5], q[2];
+    cr(-pi/16)  q[5], q[1];
+    cr(-pi/32)  q[5], q[0];
+
     h q[4];
-    cr(-pi/2) q[4], q[3];
-    cr(-pi/4) q[4], q[2];
-    cr(-pi/8) q[4], q[1];
-    cr(-pi/16) q[4], q[0];
+    cr(-pi/2)   q[4], q[3];
+    cr(-pi/4)   q[4], q[2];
+    cr(-pi/8)   q[4], q[1];
+    cr(-pi/16)  q[4], q[0];
 
     h q[3];
-    cr(-pi/2) q[3], q[2];
-    cr(-pi/4) q[3], q[1];
-    cr(-pi/8) q[3], q[0];
+    cr(-pi/2)   q[3], q[2];
+    cr(-pi/4)   q[3], q[1];
+    cr(-pi/8)   q[3], q[0];
 
     h q[2];
-    cr(-pi/2) q[2], q[1];
-    cr(-pi/4) q[2], q[0];
+    cr(-pi/2)   q[2], q[1];
+    cr(-pi/4)   q[2], q[0];
 
     h q[1];
-    cr(-pi/2) q[1], q[0];
+    cr(-pi/2)   q[1], q[0];
 
     h q[0];
 }
 
-const int n = 5;
+const int n = 7;
 qubit[n] c;
 qubit t;
 
@@ -219,11 +234,13 @@ h c;
 x t;
 
 // controlled-U^(2^i)
-cr(pi/3)    c[0], t;
-cr(2*pi/3)  c[1], t;
-cr(4*pi/3)  c[2], t;
-cr(8*pi/3)  c[3], t;
-cr(16*pi/3) c[4], t;
+cr(pi/3)      c[0], t;
+cr(2*pi/3)    c[1], t;
+cr(4*pi/3)    c[2], t;
+cr(8*pi/3)    c[3], t;
+cr(16*pi/3)   c[4], t;
+cr(32*pi/3)   c[5], t;
+cr(64*pi/3)   c[6], t;
 
 inv_qft(c);
 
