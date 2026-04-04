@@ -1,6 +1,14 @@
 import { type States } from "@/lib/http"
 import { cn } from "@/lib/utils"
 
+function formatAmplitude(real?: number, imag?: number) {
+    const safeReal = real ?? 0
+    const safeImag = imag ?? 0
+    const imagSign = safeImag < 0 ? "-" : "+"
+
+    return `${safeReal.toFixed(6)} ${imagSign}${Math.abs(safeImag).toFixed(6)}i`
+}
+
 export function Result({
     result,
     sortMode,
@@ -58,8 +66,7 @@ export function Result({
                             Amplitude
                         </span>
                         <div className={`text-sm font-mono text-gray-900 dark:text-white`}>
-                            {state.amplitude.real?.toFixed(6) || "0.000000"} +{" "}
-                            {state.amplitude.imag?.toFixed(6) || "0.000000"}i
+                            {formatAmplitude(state.amplitude.real, state.amplitude.imag)}
                         </div>
                     </div>
                 </div>

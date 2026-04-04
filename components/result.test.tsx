@@ -45,8 +45,8 @@ describe("Result", () => {
     it("shows amplitude formatted correctly", () => {
         render(<Result result={mock} sortMode="index" />)
 
-        expect(screen.getByText("0.500000 + -0.500000i")).toBeInTheDocument()
-        expect(screen.getByText("0.866000 + 0.000000i")).toBeInTheDocument()
+        expect(screen.getByText("0.500000 -0.500000i")).toBeInTheDocument()
+        expect(screen.getByText("0.866000 +0.000000i")).toBeInTheDocument()
     })
 
     it("renders dark mode class strings", () => {
@@ -85,7 +85,23 @@ describe("Result", () => {
         }
 
         render(<Result result={fallbackMock} sortMode="index" />)
-        expect(screen.getAllByText("1.000000 + 0.000000i").length).toBe(1)
-        expect(screen.getAllByText("0.000000 + 1.000000i").length).toBe(1)
+        expect(screen.getAllByText("1.000000 +0.000000i").length).toBe(1)
+        expect(screen.getAllByText("0.000000 +1.000000i").length).toBe(1)
+    })
+
+    it("renders negative imaginary values without duplicating the sign", () => {
+        const negativeImagMock: States = {
+            states: [
+                {
+                    amplitude: { real: 0, imag: -0.25 },
+                    probability: 1,
+                    binaryString: ["011"],
+                    int: [3],
+                },
+            ]
+        }
+
+        render(<Result result={negativeImagMock} sortMode="index" />)
+        expect(screen.getByText("0.000000 -0.250000i")).toBeInTheDocument()
     })
 })
