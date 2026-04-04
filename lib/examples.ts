@@ -246,7 +246,7 @@ inv_qft(c);
 
 // bit m = measure c;
 // phi = 1/6 = 0.001010101...
-// U|psi> = exp(2pi*i*phi)|psi>
+// U|psi> = exp(i*2pi*phi)|psi>
 // exp(i*pi/3) = exp(i*2pi*1/6)
 `
     },
