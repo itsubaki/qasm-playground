@@ -47,6 +47,7 @@ export function Editor({
             <Textarea
                 id="code-editor"
                 ref={textareaRef}
+                rows={20}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
                 onScroll={scroll}

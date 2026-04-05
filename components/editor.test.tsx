@@ -31,6 +31,17 @@ describe("Editor", () => {
         expect(setCode).toHaveBeenCalledWith("hello")
     })
 
+    it("renders the editor with a 20-row minimum height", () => {
+        render(
+            <Editor
+                code=""
+                setCode={() => { }}
+            />
+        )
+
+        expect(screen.getByRole("textbox")).toHaveAttribute("rows", "20")
+    })
+
     it("syncs scroll position between textarea and line numbers", () => {
         render(
             <Editor
