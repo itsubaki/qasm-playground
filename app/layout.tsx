@@ -9,45 +9,45 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
+    subsets: ["latin"],
+    display: "swap",
+    variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
-  title: "OpenQASM 3.x Playground",
-  description: "A playground that lets you write and run OpenQASM 3.x code in your browser",
+    title: "OpenQASM 3.x Playground",
+    description: "A playground that lets you write and run OpenQASM 3.x code in your browser",
 }
 
 export default function RootLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode
+    children: React.ReactNode
 }>) {
-  return (
-    <html
-      lang="en"
-      className={`${inter.variable} antialiased`}
-      suppressHydrationWarning // To avoid hydration mismatch due to theme change
-    >
-      <body className="font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+    return (
+        <html
+            lang="en"
+            className={`${inter.variable} antialiased`}
+            suppressHydrationWarning // To avoid hydration mismatch due to theme change
         >
-          <main>
-            {children}
-          </main>
-          <Toaster position="top-center" />
-        </ThemeProvider>
-      </body>
+            <body className="font-sans">
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <main>
+                        {children}
+                    </main>
+                    <Toaster position="top-center" />
+                </ThemeProvider>
+            </body>
 
-      <Analytics />
-      <SpeedInsights />
-      {process.env.NEXT_PUBLIC_GTM_ID && (<GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />)}
-      {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
-    </html>
-  )
+            <Analytics />
+            <SpeedInsights />
+            {process.env.NEXT_PUBLIC_GTM_ID && (<GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />)}
+            {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
+        </html>
+    )
 }

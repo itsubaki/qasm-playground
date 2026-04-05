@@ -12,7 +12,7 @@ export function Editor({
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const lineNumbersRef = useRef<HTMLDivElement>(null)
     const lineNumbers = useMemo(() => Array.from({ length: code.split("\n").length }, (_, i) => i + 1), [code])
-    const indent = "\t"
+    const indent = "    "
 
     const scroll = () => {
         if (textareaRef.current && lineNumbersRef.current) {
