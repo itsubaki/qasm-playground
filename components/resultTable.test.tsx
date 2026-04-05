@@ -34,6 +34,17 @@ describe("ResultTable", () => {
         expect(probabilityBars).toHaveLength(2)
     })
 
+    it("keeps the basis column sticky during horizontal scroll", () => {
+        const { container } = render(<ResultTable result={mock} sortMode="index" />)
+
+        const basisHeader = screen.getByText("Basis")
+        const basisCell = screen.getByText("|010⟩")
+
+        expect(basisHeader).toHaveClass("sticky", "left-0")
+        expect(basisCell).toHaveClass("sticky", "left-0")
+        expect(container.firstChild).toHaveClass("overflow-x-auto")
+    })
+
     it("sorts states by probability in descending order when requested", () => {
         render(<ResultTable result={mock} sortMode="prob_desc" />)
 
