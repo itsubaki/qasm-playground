@@ -46,7 +46,7 @@ describe("Editor", () => {
 
         fireEvent.keyDown(textarea, { key: "Tab", code: "Tab" })
 
-        expect(setCode).toHaveBeenCalledWith("  OPENQASM 3.0;")
+        expect(setCode).toHaveBeenCalledWith("    OPENQASM 3.0;")
     })
 
     it("renders the editor with a 20-row minimum height", () => {
