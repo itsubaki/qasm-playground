@@ -511,7 +511,7 @@ measure a;
 // where x = cos(theta).
 //
 // Example:
-//   theta = pi/6  →  x = cos(pi/6) = sqrt(3)/2
+//   theta = pi/6 -> x = cos(pi/6) = sqrt(3)/2
 //   P(x) = 2x^3 - x = sqrt(3)/4 ≈ 0.433013
 //
 // The final state has the form:
@@ -523,8 +523,8 @@ measure a;
 OPENQASM 3.0;
 
 gate Rx(theta) q { U(theta, -pi/2, pi/2) q; }
-gate W(theta) q { Rx(-2 * theta) q; }
-gate S(phi) q { U(0, 0, -2 * phi) q; }
+gate W(theta) q { Rx(-2*theta) q; }
+gate S(phi) q { U(0, 0, -2*phi) q; }
 
 qubit q;
 reset q;
