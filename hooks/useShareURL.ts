@@ -4,9 +4,12 @@ import { copyToClipboard } from "@/lib/clipboard"
 
 export const useShareURL = () => {
     const [sharedURL, setSharedURL] = useState<string | null>(null)
+    const [isSharing, setIsSharing] = useState(false)
 
     const share = async (code: string) => {
         if (!code.trim()) return
+
+        setIsSharing(true)
 
         try {
             const snippet = await httpPost<Snippet>("/api/share", { code })
@@ -24,11 +27,14 @@ export const useShareURL = () => {
         } catch (err) {
             console.error("Share code:", err)
             throw err
+        } finally {
+            setIsSharing(false)
         }
     }
 
     return {
         share,
         sharedURL,
+        isSharing,
     }
 }

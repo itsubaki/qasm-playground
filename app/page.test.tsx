@@ -10,7 +10,7 @@ const mockCopyToClipboard = vi.fn()
 const mockEdit = vi.fn()
 
 let mountState = { isMounted: true }
-let shareState: { sharedURL: string | null, share: typeof mockShare }
+let shareState: { sharedURL: string | null, share: typeof mockShare, isSharing: boolean }
 let sortState: { sortMode: "index" | "prob_desc", sort: typeof mockSort }
 let simulateState: {
     isLoading: boolean
@@ -86,7 +86,7 @@ vi.mock("@/lib/edit", () => ({
 describe("Playground", () => {
     beforeEach(() => {
         mountState = { isMounted: true }
-        shareState = { sharedURL: null, share: mockShare }
+        shareState = { sharedURL: null, share: mockShare, isSharing: false }
         sortState = { sortMode: "index", sort: mockSort }
         simulateState = {
             isLoading: false,
@@ -146,7 +146,7 @@ describe("Playground", () => {
     })
 
     it("shows the shared URL instead of examples when a share link exists", () => {
-        shareState = { sharedURL: "https://example.com/p/abc", share: mockShare }
+        shareState = { sharedURL: "https://example.com/p/abc", share: mockShare, isSharing: false }
 
         render(<Playground />)
 
@@ -166,6 +166,13 @@ describe("Playground", () => {
         expect(screen.getByText("Waiting for remote server...")).toBeInTheDocument()
         expect(screen.getByRole("button", { name: "Run" })).toBeDisabled()
         expect(screen.queryByText("Running...")).not.toBeInTheDocument()
+
+        shareState = {
+            ...shareState,
+            isSharing: true,
+        }
+        rerender(<Playground />)
+        expect(screen.getByRole("button", { name: "Share" })).toBeDisabled()
 
         const result = {
             states: [{

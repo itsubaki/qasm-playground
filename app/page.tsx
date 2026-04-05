@@ -27,7 +27,7 @@ export default function Playground({
   const [code, setCode] = useState("// Loading...")
   const [isResultTableOpen, setIsResultTableOpen] = useState(false)
   const { isMounted } = useMount()
-  const { sharedURL, share } = useShareURL()
+  const { sharedURL, share, isSharing } = useShareURL()
   const { sortMode, sort } = useSort()
   const {
     isLoading,
@@ -93,12 +93,22 @@ export default function Playground({
 
                 <Button
                   onClick={() => share(code)}
+                  disabled={isSharing}
+                  aria-busy={isSharing}
                   variant="outline"
                   className={cn(
+                    "relative",
                     "border-gray-300 text-gray-700 hover:bg-white-50 bg-white",
                     "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
                   )}>
-                  Share
+                  {isSharing && (
+                    <span
+                      className="absolute inset-0 flex items-center justify-center"
+                      aria-hidden="true">
+                      <LoaderCircle className="animate-spin" />
+                    </span>
+                  )}
+                  <span className={cn(isSharing && "opacity-0")}>Share</span>
                 </Button>
 
                 {sharedURL && (
