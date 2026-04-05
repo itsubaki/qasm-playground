@@ -23,6 +23,7 @@ export default function Playground({
   snippetId?: string,
 }) {
   const [code, setCode] = useState("// Loading...")
+  const [isResultTableOpen, setIsResultTableOpen] = useState(false)
   const { isMounted } = useMount()
   const { sharedURL, share } = useShareURL()
   const { sortMode, sort } = useSort()
@@ -112,9 +113,18 @@ export default function Playground({
           )}>
             <CardContent className="p-3 flex flex-col h-full">
               <div className="mb-3 flex justify-between items-center gap-3">
-                <div className={`py-1 text-lg font-semibold text-gray-900 dark:text-white`}>
+                <button
+                  type="button"
+                  onClick={() => result && !error && setIsResultTableOpen(true)}
+                  disabled={!result || !!error}
+                  className={cn(
+                    "py-1 text-left text-lg font-semibold transition-colors",
+                    "text-gray-900 dark:text-white",
+                    result && !error && "cursor-pointer hover:text-blue-600 dark:hover:text-blue-400",
+                    (!result || error) && "cursor-default",
+                  )}>
                   Quantum States
-                </div>
+                </button>
 
                 <div className="flex gap-3">
                   <Button
@@ -193,6 +203,48 @@ export default function Playground({
         <div className="m-3">
           <Notes />
         </div>
+
+        {isResultTableOpen && result && !error && (
+          <div
+            className={cn(
+              "fixed inset-0 z-50 flex items-center justify-center",
+              "bg-gray-950/60 p-4 backdrop-blur-sm",
+            )}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quantum-states-dialog-title"
+            onClick={() => setIsResultTableOpen(false)}>
+            <div
+              className={cn(
+                "flex h-[92vh] w-full max-w-7xl flex-col overflow-hidden rounded-2xl border shadow-2xl",
+                "border-gray-200 bg-white",
+                "dark:border-gray-700 dark:bg-gray-900",
+              )}
+              onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-center justify-between gap-3 border-b border-gray-200 px-6 py-4 dark:border-gray-700">
+                <div>
+                  <div id="quantum-states-dialog-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Quantum States
+                  </div>
+                </div>
+
+                <Button
+                  variant="outline"
+                  onClick={() => setIsResultTableOpen(false)}
+                  className={cn(
+                    "border-gray-300 text-gray-700 hover:bg-gray-50 bg-white",
+                    "dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800 dark:bg-gray-900",
+                  )}>
+                  Close
+                </Button>
+              </div>
+
+              <div className="flex-1 overflow-auto p-6">
+                <Result result={result} sortMode={sortMode} viewMode="table" />
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

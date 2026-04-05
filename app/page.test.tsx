@@ -28,8 +28,8 @@ vi.mock("@/components/notes", () => ({
 }))
 
 vi.mock("@/components/result", () => ({
-    Result: ({ result, sortMode }: { result: { states: Array<unknown> }, sortMode: string }) => (
-        <div data-testid="result-view">{sortMode}:{result.states.length}</div>
+    Result: ({ result, sortMode, viewMode }: { result: { states: Array<unknown> }, sortMode: string, viewMode?: string }) => (
+        <div data-testid="result-view">{sortMode}:{viewMode}:{result.states.length}</div>
     ),
 }))
 
@@ -177,7 +177,12 @@ describe("Playground", () => {
         sortState = { sortMode: "prob_desc", sort: mockSort }
         rerender(<Playground />)
 
-        expect(screen.getByTestId("result-view")).toHaveTextContent("prob_desc:1")
+        expect(screen.getByTestId("result-view")).toHaveTextContent("prob_desc::1")
+        fireEvent.click(screen.getByRole("button", { name: "Quantum States" }))
+        expect(screen.getAllByTestId("result-view").map((el) => el.textContent)).toEqual([
+            "prob_desc::1",
+            "prob_desc:table:1",
+        ])
         fireEvent.click(screen.getByRole("button", { name: "Sort" }))
         fireEvent.click(screen.getByRole("button", { name: "Copy" }))
         expect(mockSort).toHaveBeenCalled()
@@ -193,5 +198,35 @@ describe("Playground", () => {
         expect(screen.getByText("Error Details")).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", { name: "Copy" }))
         expect(mockCopyToClipboard).toHaveBeenCalledWith("broken circuit")
+    })
+
+    it("opens and closes the result table modal from the Quantum States header", () => {
+        const { rerender } = render(<Playground />)
+
+        const titleButton = screen.getByRole("button", { name: "Quantum States" })
+        expect(titleButton).toBeDisabled()
+
+        simulateState = {
+            ...simulateState,
+            result: {
+                states: [{
+                    binaryString: ["0"],
+                    probability: 1,
+                    amplitude: { real: 1, imag: 0 },
+                    int: [0],
+                }],
+            },
+        }
+        rerender(<Playground />)
+
+        const enabledTitleButton = screen.getByRole("button", { name: "Quantum States" })
+        expect(enabledTitleButton).toBeEnabled()
+
+        fireEvent.click(enabledTitleButton)
+        expect(screen.getByRole("dialog")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Close" }))
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })
 })
