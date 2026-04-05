@@ -7,6 +7,9 @@ export const examples: Example[] = [
     {
         name: "Bell State",
         code: `// Bell State
+//
+// Prepares two qubits in the entangled Bell state
+// The final state is (|00> + |11>)/sqrt(2).
 
 OPENQASM 3.0;
 
@@ -23,6 +26,9 @@ cx q[0], q[1];
     {
         name: "Quantum Teleportation",
         code: `// Quantum Teleportation
+//
+// Transfers the state of psi to t using entanglement and classical communication.
+// The final state of t is the same as the initial state of psi: 0.92|0> + 0.27(1+i))|1>.
 
 OPENQASM 3.0;
 
@@ -57,6 +63,12 @@ measure a;
     {
         name: "Deutsch-Jozsa Algorithm (constant)",
         code: `// Deutsch-Jozsa Algorithm (constant)
+//
+// Runs Deutsch-Jozsa with a constant oracle.
+// Measuring 0 indicates the oracle is constant.
+//
+// constant: 00 + 01
+// balanced: 10 + 11
 
 OPENQASM 3.0;
 
@@ -89,14 +101,17 @@ oracle(q0, q1);
 
 h q0;
 measure q0;
-
-// constant: 00 + 01
-// balanced: 10 + 11
 `
     },
     {
         name: "Deutsch-Jozsa Algorithm (balanced)",
         code: `// Deutsch-Jozsa Algorithm (balanced)
+//
+// Runs Deutsch-Jozsa with a balanced oracle.
+// Measuring 1 indicates the oracle is balanced.
+//
+// constant: 00 + 01
+// balanced: 10 + 11
 
 OPENQASM 3.0;
 
@@ -129,14 +144,17 @@ oracle(q0, q1);
 
 h q0;
 measure q0;
-
-// constant: 00 + 01
-// balanced: 10 + 11
 `
     },
     {
         name: "Quantum Phase Estimation (T)",
         code: `// Quantum Phase Estimation (T)
+//
+// Estimates the eigenphase of the T gate.
+// The expected phase is phi = 1/8 = 0.001.
+//
+// U|psi> = exp(i*2pi*phi)|psi>
+// exp(i*pi/4) = exp(i*2pi*1/8)
 
 OPENQASM 3.0;
 
@@ -171,14 +189,17 @@ cr(pi/2) c[1], t;
 cr(pi)   c[2], t;
 
 inv_qft(c);
-
-// bit m = measure c;
-// phi = 1/8 = 0.001
 `
     },
     {
         name: "Quantum Phase Estimation (Rz(pi/3))",
         code: `// Quantum Phase Estimation (Rz(pi/3))
+//
+// Estimates the eigenphase of Rz(pi/3).
+// The expected phase is phi = 1/6 = 0.001010101...
+//
+// U|psi> = exp(i*2pi*phi)|psi>
+// exp(i*pi/3) = exp(i*2pi*1/6)
 
 OPENQASM 3.0;
 
@@ -243,16 +264,21 @@ cr(32*pi/3)   c[5], t;
 cr(64*pi/3)   c[6], t;
 
 inv_qft(c);
-
-// bit m = measure c;
-// phi = 1/6 = 0.001010101...
-// U|psi> = exp(i*2pi*phi)|psi>
-// exp(i*pi/3) = exp(i*2pi*1/6)
 `
     },
     {
         name: "Shor's Algorithm (N=15, a=7)",
         code: `// Shor's Algorithm (N=15, a=7)
+//
+// Uses phase estimation to find the order of 7 mod 15.
+// The recovered order r = 4 gives the factors 3 and 5.
+//
+// 010: 0.010 = 0.25 = 1/4; r=4.
+// 110: 0.110 = 0.75 = 3/4; r=4.
+// otherwise: reject and repeat.
+//
+// gcd(pow(a, r/2)-1, N) = gcd(pow(7, 4/2)-1, 15) = 3.
+// gcd(pow(a, r/2)+1, N) = gcd(pow(7, 4/2)+1, 15) = 5.
 
 OPENQASM 3.0;
 
@@ -299,17 +325,14 @@ x a[3];
 
 modexp(q, a);
 inv_qft(q);
-
-// bit m = measure q;
-// 010: 0.010 = 0.25 = 1/4; r=4.
-// 110: 0.110 = 0.75 = 3/4; r=4.
-// gcd(pow(a, r/2)-1, N) = 3.
-// gcd(pow(a, r/2)+1, N) = 5.
 `,
     },
     {
         name: "Grover's Algorithm",
         code: `// Grover's Algorithm
+//
+// Searches a 2x2 puzzle state space with Grover iterations.
+// The oracle marks the two valid solutions. [1,0,0,1] and [0,1,1,0].
 
 OPENQASM 3.0;
 
@@ -320,9 +343,8 @@ gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
 gate ccccx c0, c1, c2, c3, t { ctrl(4) @ U(pi, 0, pi) c0, c1, c2, c3, t; }
 
-// The oracle constructs a Grover oracle that checks solutions to a 2x2 puzzle.
-// The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
-// The valid solutions are [1,0,0,1] and [0,1,1,0].
+// The oracle flips the phase when the following uniqueness constraints are satisfied:
+// a != b, c != d, a != c, and b != d.
 def oracle(qubit[4] r, qubit[4] s, qubit a) {
     xor r[0], r[1], s[0];
     xor r[2], r[3], s[1];
@@ -374,7 +396,14 @@ for int i in [0:R-1] {
     },
     {
         name: "Quantum Counting",
-        code: ` // Quantum Counting
+        code: `// Quantum Counting
+//
+// Applies phase estimation to the Grover operator.
+// This estimates how many solutions the oracle marks.
+// The oracle marks the two valid solutions. [1,0,0,1] and [0,1,1,0].
+//
+// 011: phi=0.3750, theta=2.3562; M=13.6569, N-M=2.3431
+// 101: phi=0.6250, theta=3.9270; M=13.6569, N-M=2.3431
 
 OPENQASM 3.0;
 
@@ -386,9 +415,8 @@ gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate ccccz c0, c1, c2, c3, t { ctrl(4) @ U(0, 0, pi) c0, c1, c2, c3, t; }
 gate cccccx c0, c1, c2, c3, c4, t { ctrl(5) @ U(pi, 0, pi) c0, c1, c2, c3, c4, t; }
 
-// The oracle constructs a Grover oracle that checks solutions to a 2x2 puzzle.
-// The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
-// The valid solutions are [1,0,0,1] and [0,1,1,0].
+// The oracle flips the phase when the following uniqueness constraints are satisfied:
+// a != b, c != d, a != c, and b != d.
 def oracle(qubit[4] r, qubit[4] s, qubit c, qubit a) {
     xor r[0], r[1], s[0];
     xor r[2], r[3], s[1];
@@ -451,10 +479,6 @@ for int i in [0:n-1] {
 }
 
 inv_qft(c);
-
-// bit m = measure c;
-// 011: phi=0.3750, theta=2.3562, M=2.3431
-// 101: phi=0.6250, theta=3.9270, M=2.3431
 `,
     },
     {
@@ -502,6 +526,9 @@ W(pi/6) q;
     {
         name: "Error Correction",
         code: `// Error Correction
+//
+// Encodes one qubit with the three-qubit bit-flip code.
+// It detects and corrects a single X error.
 
 OPENQASM 3.0;
 
@@ -549,6 +576,21 @@ cx psi, enc[0];
     {
         name: "Magic State Distillation",
         code: `// Magic State Distillation
+//
+// Prepares and checks a magic state used for non-Clifford gates.
+// The final measurements decide whether to accept the state.
+//
+// |A> is the "magic state" used to implement the T gate
+// It can be seen as a rotated version of |+> under T:
+// T|+> = exp(-i * pi/8 * Z) |+>
+// |A>  = exp(-i * pi/8 * Y) |0> = cos(pi/8)|0> + sin(pi/8)|1> = 0.9239...|0> + 0.3827...|1>
+//
+// This representation rotates the computational basis from Z to Y
+// |A> is an eigenstate of Hadamard: H|A> = |A>
+// Hadamard can also be expressed as H = A†XA
+//
+// |0>|0>|A>: accept.
+// otherwise: reject and repeat.
 
 OPENQASM 3.0;
 
@@ -568,13 +610,6 @@ reset z;
 reset a;
 reset plus;
 
-// |A> is the "magic state" used to implement the T gate
-// It can be seen as a rotated version of |+> under T:
-// T|+> = exp(-i * pi/8 * Z) |+>
-// |A>  = exp(-i * pi/8 * Y) |0> = cos(pi/8)|0> + sin(pi/8)|1> = 0.9239...|0> + 0.3827...|1>
-// This representation rotates the computational basis from Z to Y
-// |A> is an eigenstate of Hadamard: H|A> = |A>
-// Hadamard can also be expressed as H = A†XA
 prepare_magic(a);
 h plus;
 
@@ -588,9 +623,6 @@ cx plus, a;
 
 measure z;
 measure a;
-
-// |0>|0>|A>: accept.
-// otherwise: reject and repeat.
 `,
     },
 ]
