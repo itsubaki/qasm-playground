@@ -529,11 +529,13 @@ gate S(phi) q { U(0, 0, -2*phi) q; }
 qubit q;
 reset q;
 
-W(pi/6) q;
+const float theta = pi/6;
+
+W(theta) q;
 S(pi/4) q;
-W(pi/6) q;
+W(theta) q;
 S(-pi/4) q;
-W(pi/6) q;
+W(theta) q;
 `,
     },
     {
