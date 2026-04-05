@@ -31,6 +31,24 @@ describe("Editor", () => {
         expect(setCode).toHaveBeenCalledWith("hello")
     })
 
+    it("inserts indentation when Tab is pressed", () => {
+        const setCode = vi.fn()
+
+        render(
+            <Editor
+                code={"OPENQASM 3.0;"}
+                setCode={setCode}
+            />
+        )
+
+        const textarea = screen.getByRole("textbox") as HTMLTextAreaElement
+        textarea.setSelectionRange(0, 0)
+
+        fireEvent.keyDown(textarea, { key: "Tab", code: "Tab" })
+
+        expect(setCode).toHaveBeenCalledWith("\tOPENQASM 3.0;")
+    })
+
     it("renders the editor with a 20-row minimum height", () => {
         render(
             <Editor

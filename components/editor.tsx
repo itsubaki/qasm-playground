@@ -12,11 +12,29 @@ export function Editor({
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const lineNumbersRef = useRef<HTMLDivElement>(null)
     const lineNumbers = useMemo(() => Array.from({ length: code.split("\n").length }, (_, i) => i + 1), [code])
+    const indent = "\t"
 
     const scroll = () => {
         if (textareaRef.current && lineNumbersRef.current) {
             lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop
         }
+    }
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+        if (event.key !== "Tab") {
+            return
+        }
+
+        event.preventDefault()
+        const textarea = event.currentTarget
+        const { selectionStart, selectionEnd } = textarea
+        const nextCode = `${code.slice(0, selectionStart)}${indent}${code.slice(selectionEnd)}`
+        setCode(nextCode)
+
+        requestAnimationFrame(() => {
+            textarea.selectionStart = selectionStart + indent.length
+            textarea.selectionEnd = selectionStart + indent.length
+        })
     }
 
     return (
@@ -50,6 +68,7 @@ export function Editor({
                 rows={20}
                 value={code}
                 onChange={(e) => setCode(e.target.value)}
+                onKeyDown={handleKeyDown}
                 onScroll={scroll}
                 placeholder="Enter your OpenQASM code here..."
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
