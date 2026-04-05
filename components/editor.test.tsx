@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, createEvent } from "@testing-library/react"
 import { describe, it, expect, vi } from "vitest"
 import { Editor } from "./editor"
 
@@ -65,6 +65,27 @@ describe("Editor", () => {
         fireEvent.keyDown(textarea, { key: "Escape", code: "Escape" })
 
         expect(document.activeElement).not.toBe(textarea)
+    })
+
+    it("does nothing for keys other than Escape and Tab", () => {
+        const setCode = vi.fn()
+
+        render(
+            <Editor
+                code={"OPENQASM 3.0;"}
+                setCode={setCode}
+            />
+        )
+
+        const textarea = screen.getByRole("textbox") as HTMLTextAreaElement
+        textarea.focus()
+
+        const event = createEvent.keyDown(textarea, { key: "Enter", code: "Enter" })
+        fireEvent(textarea, event)
+
+        expect(setCode).not.toHaveBeenCalled()
+        expect(document.activeElement).toBe(textarea)
+        expect(event.defaultPrevented).toBe(false)
     })
 
     it("renders the editor with a 20-row minimum height", () => {
