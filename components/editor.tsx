@@ -21,20 +21,24 @@ export function Editor({
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (event.key !== "Tab") {
+        if (event.key === "Escape") {
+            event.currentTarget.blur()
             return
         }
 
-        event.preventDefault()
-        const textarea = event.currentTarget
-        const { selectionStart, selectionEnd } = textarea
-        const nextCode = `${code.slice(0, selectionStart)}${indent}${code.slice(selectionEnd)}`
-        setCode(nextCode)
+        if (event.key == "Tab") {
+            event.preventDefault()
+            const textarea = event.currentTarget
+            const { selectionStart, selectionEnd } = textarea
+            const nextCode = `${code.slice(0, selectionStart)}${indent}${code.slice(selectionEnd)}`
+            setCode(nextCode)
 
-        requestAnimationFrame(() => {
-            textarea.selectionStart = selectionStart + indent.length
-            textarea.selectionEnd = selectionStart + indent.length
-        })
+            requestAnimationFrame(() => {
+                textarea.selectionStart = selectionStart + indent.length
+                textarea.selectionEnd = selectionStart + indent.length
+            })
+            return
+        }
     }
 
     return (

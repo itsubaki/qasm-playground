@@ -49,6 +49,24 @@ describe("Editor", () => {
         expect(setCode).toHaveBeenCalledWith("    OPENQASM 3.0;")
     })
 
+    it("removes focus when Escape is pressed", () => {
+        render(
+            <Editor
+                code={"OPENQASM 3.0;"}
+                setCode={() => { }}
+            />
+        )
+
+        const textarea = screen.getByRole("textbox") as HTMLTextAreaElement
+        textarea.focus()
+
+        expect(document.activeElement).toBe(textarea)
+
+        fireEvent.keyDown(textarea, { key: "Escape", code: "Escape" })
+
+        expect(document.activeElement).not.toBe(textarea)
+    })
+
     it("renders the editor with a 20-row minimum height", () => {
         render(
             <Editor
