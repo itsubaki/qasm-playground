@@ -325,6 +325,8 @@ x a[3];
 
 modexp(q, a);
 inv_qft(q);
+
+measure a;
 `,
     },
     {
@@ -393,6 +395,9 @@ int R = int(pi/4 * sqrt(float(N)/float(M)));
 for int i in [0:R-1] {
     G(r, s, a);
 }
+
+measure s;
+measure a;
 `,
     },
     {
@@ -483,6 +488,10 @@ for int i in [0:n-1] {
 }
 
 inv_qft(c);
+
+measure r;
+measure s;
+measure a;
 `,
     },
     {

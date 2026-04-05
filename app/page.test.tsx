@@ -33,6 +33,12 @@ vi.mock("@/components/result", () => ({
     ),
 }))
 
+vi.mock("@/components/resultTable", () => ({
+    ResultTable: ({ result, sortMode }: { result: { states: Array<unknown> }, sortMode: string }) => (
+        <div data-testid="result-table-view">{sortMode}:{result.states.length}</div>
+    ),
+}))
+
 vi.mock("@/components/sharedURL", () => ({
     SharedURL: ({ sharedURL }: { sharedURL: string }) => <div data-testid="shared-url">{sharedURL}</div>,
 }))
@@ -178,6 +184,8 @@ describe("Playground", () => {
         rerender(<Playground />)
 
         expect(screen.getByTestId("result-view")).toHaveTextContent("prob_desc:1")
+        fireEvent.click(screen.getByRole("button", { name: "Quantum States" }))
+        expect(screen.getByTestId("result-table-view")).toHaveTextContent("prob_desc:1")
         fireEvent.click(screen.getByRole("button", { name: "Sort" }))
         fireEvent.click(screen.getByRole("button", { name: "Copy" }))
         expect(mockSort).toHaveBeenCalled()
@@ -193,5 +201,59 @@ describe("Playground", () => {
         expect(screen.getByText("Error Details")).toBeInTheDocument()
         fireEvent.click(screen.getByRole("button", { name: "Copy" }))
         expect(mockCopyToClipboard).toHaveBeenCalledWith("broken circuit")
+    })
+
+    it("opens and closes the result table modal from the Quantum States header", () => {
+        const { rerender } = render(<Playground />)
+
+        const titleButton = screen.getByRole("button", { name: "Quantum States" })
+        expect(titleButton).toBeDisabled()
+
+        simulateState = {
+            ...simulateState,
+            result: {
+                states: [{
+                    binaryString: ["0"],
+                    probability: 1,
+                    amplitude: { real: 1, imag: 0 },
+                    int: [0],
+                }],
+            },
+        }
+        rerender(<Playground />)
+
+        const enabledTitleButton = screen.getByRole("button", { name: "Quantum States" })
+        expect(enabledTitleButton).toBeEnabled()
+
+        fireEvent.click(enabledTitleButton)
+        expect(screen.getByRole("dialog")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument()
+
+        fireEvent.click(screen.getByRole("button", { name: "Close" }))
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    })
+
+    it("closes the result table modal when the overlay is clicked", () => {
+        const { rerender } = render(<Playground />)
+
+        simulateState = {
+            ...simulateState,
+            result: {
+                states: [{
+                    binaryString: ["0"],
+                    probability: 1,
+                    amplitude: { real: 1, imag: 0 },
+                    int: [0],
+                }],
+            },
+        }
+        rerender(<Playground />)
+
+        fireEvent.click(screen.getByRole("button", { name: "Quantum States" }))
+        const dialog = screen.getByRole("dialog")
+        expect(dialog).toBeInTheDocument()
+
+        fireEvent.click(dialog)
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })
 })

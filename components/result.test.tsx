@@ -43,10 +43,10 @@ describe("Result", () => {
     })
 
     it("shows amplitude formatted correctly", () => {
-        render(<Result result={mock} sortMode="index" />)
+        const { container } = render(<Result result={mock} sortMode="index" />)
 
-        expect(screen.getByText("0.500000 -0.500000i")).toBeInTheDocument()
-        expect(screen.getByText("0.866000 +0.000000i")).toBeInTheDocument()
+        expect(container).toHaveTextContent("0.500000-0.500000i")
+        expect(container).toHaveTextContent("0.866000+0.000000i")
     })
 
     it("renders dark mode class strings", () => {
@@ -85,8 +85,8 @@ describe("Result", () => {
         }
 
         render(<Result result={fallbackMock} sortMode="index" />)
-        expect(screen.getAllByText("1.000000 +0.000000i").length).toBe(1)
-        expect(screen.getAllByText("0.000000 +1.000000i").length).toBe(1)
+        expect(screen.getAllByText((_, node) => node?.textContent === "1.000000+0.000000i").length).toBeGreaterThan(0)
+        expect(screen.getAllByText((_, node) => node?.textContent === "0.000000+1.000000i").length).toBeGreaterThan(0)
     })
 
     it("renders negative imaginary values without duplicating the sign", () => {
@@ -102,6 +102,23 @@ describe("Result", () => {
         }
 
         render(<Result result={negativeImagMock} sortMode="index" />)
-        expect(screen.getByText("0.000000 -0.250000i")).toBeInTheDocument()
+        expect(screen.getAllByText((_, node) => node?.textContent === "0.000000-0.250000i").length).toBeGreaterThan(0)
     })
+
+    it("keeps real parts aligned when the real component is negative", () => {
+        const negativeRealMock: States = {
+            states: [
+                {
+                    amplitude: { real: -0.5, imag: 0.25 },
+                    probability: 1,
+                    binaryString: ["101"],
+                    int: [5],
+                },
+            ],
+        }
+
+        const { container } = render(<Result result={negativeRealMock} sortMode="index" />)
+        expect(container).toHaveTextContent("-0.500000+0.250000i")
+    })
+
 })

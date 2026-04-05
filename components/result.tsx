@@ -1,13 +1,6 @@
 import { type States } from "@/lib/http"
 import { cn } from "@/lib/utils"
-
-function formatAmplitude(real?: number, imag?: number) {
-    const safeReal = real ?? 0
-    const safeImag = imag ?? 0
-    const imagSign = safeImag < 0 ? "-" : "+"
-
-    return `${safeReal.toFixed(6)} ${imagSign}${Math.abs(safeImag).toFixed(6)}i`
-}
+import { AmplitudeValue, formatBasis, ProbabilityBar } from "@/components/resultParts"
 
 export function Result({
     result,
@@ -21,7 +14,7 @@ export function Result({
         return 0 // index order (default)
     })
 
-    return (sorted.map((state, index) => {
+    return (sorted.map((state) => {
         return (
             <div key={state.binaryString.join("")} className={cn(
                 "p-4 border rounded-lg",
@@ -31,11 +24,7 @@ export function Result({
                 <div className="mb-3 flex items-center justify-between">
                     {/* Ket notation (quantum state) */}
                     <div className={`font-mono text-gray-900 dark:text-white`}>
-                        {state.binaryString.map((str, i) => (
-                            <span key={i}>
-                                |{str}⟩
-                            </span>
-                        ))}
+                        {formatBasis(state.binaryString)}
                     </div>
                 </div>
 
@@ -50,14 +39,7 @@ export function Result({
                                 {state.probability.toFixed(6)}
                             </span>
                         </div>
-                        <div className={`rounded-full h-2 w-full bg-gray-200 dark:bg-gray-700`}>
-                            <div
-                                className={`rounded-full h-2 min-w-[6px] bg-blue-500 dark:bg-blue-400`}
-                                style={{
-                                    width: `${state.probability * 100}%`,
-                                }}
-                            />
-                        </div>
+                        <ProbabilityBar probability={state.probability} />
                     </div>
 
                     {/* Amplitude */}
@@ -65,8 +47,11 @@ export function Result({
                         <span className={`text-sm text-gray-600 dark:text-gray-400`}>
                             Amplitude
                         </span>
-                        <div className={`text-sm font-mono text-gray-900 dark:text-white`}>
-                            {formatAmplitude(state.amplitude.real, state.amplitude.imag)}
+                        <div className={`text-sm text-gray-900 dark:text-white`}>
+                            <AmplitudeValue
+                                real={state.amplitude.real}
+                                imag={state.amplitude.imag}
+                            />
                         </div>
                     </div>
                 </div>
