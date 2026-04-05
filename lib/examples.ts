@@ -320,7 +320,7 @@ gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
 gate ccccx c0, c1, c2, c3, t { ctrl(4) @ U(pi, 0, pi) c0, c1, c2, c3, t; }
 
-// The oracle constructs a Grover oracle that checks solutions to a 2x2 sudoku puzzle.
+// The oracle constructs a Grover oracle that checks solutions to a 2x2 puzzle.
 // The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
 // The valid solutions are [1,0,0,1] and [0,1,1,0].
 def oracle(qubit[4] r, qubit[4] s, qubit a) {
@@ -386,7 +386,7 @@ gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate ccccz c0, c1, c2, c3, t { ctrl(4) @ U(0, 0, pi) c0, c1, c2, c3, t; }
 gate cccccx c0, c1, c2, c3, c4, t { ctrl(5) @ U(pi, 0, pi) c0, c1, c2, c3, c4, t; }
 
-// The oracle constructs a Grover oracle that checks solutions to a 2x2 sudoku puzzle.
+// The oracle constructs a Grover oracle that checks solutions to a 2x2 puzzle.
 // The oracle flips the phase when the following uniqueness constraints are satisfied: a != b, c != d, a != c, and b != d.
 // The valid solutions are [1,0,0,1] and [0,1,1,0].
 def oracle(qubit[4] r, qubit[4] s, qubit c, qubit a) {
@@ -460,20 +460,27 @@ inv_qft(c);
     {
         name: "Quantum Signal Processing",
         code: `// Quantum Signal Processing
-// This example uses the textbook-style QSP building blocks:
-//   W(theta): signal operator with x = cos(theta)
+//
+// This example uses standard QSP building blocks:
+//   W(theta): signal operator, where x = cos(theta)
 //   S(phi):   phase operator
 //
 // The phase sequence is:
-//   W(pi/6) -> S(pi/4) -> W(pi/6) -> S(-pi/4) -> W(pi/6)
+//   W(theta) -> S(pi/4) -> W(theta) -> S(-pi/4) -> W(theta)
 //
-// For this sequence, the |0> amplitude becomes:
+// For this sequence, the amplitude of |0> becomes:
 //   P(x) = 2x^3 - x
 //
-// Here x = cos(pi/6) = sqrt(3)/2, so:
-//   P(x) = 2x^3 - x = sqrt(3)/4 ~= 0.433013
+// where x = cos(theta).
 //
-// Verified:
+// Example:
+//   theta = pi/6  →  x = cos(pi/6) = sqrt(3)/2
+//   P(x) = 2x^3 - x = sqrt(3)/4 ≈ 0.433013
+//
+// The final state has the form:
+//   P(x)|0> + Q(x)|1>
+//
+// Verified for theta = pi/6:
 //   final state = 0.433013|0> + (-0.5 + 0.75i)|1>
 
 OPENQASM 3.0;
