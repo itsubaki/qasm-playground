@@ -589,9 +589,8 @@ cx plus, a;
 measure z;
 measure a;
 
-// |0>|0>|x>: accept. |x> is |A>
-// |1>|0>|x>: reject.
-// |0>|1>|x>: reject.
+// |0>|0>|A>: accept.
+// otherwise: reject and repeat.
 `,
     },
 ]
