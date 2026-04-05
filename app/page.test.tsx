@@ -232,4 +232,28 @@ describe("Playground", () => {
         fireEvent.click(screen.getByRole("button", { name: "Close" }))
         expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
     })
+
+    it("closes the result table modal when the overlay is clicked", () => {
+        const { rerender } = render(<Playground />)
+
+        simulateState = {
+            ...simulateState,
+            result: {
+                states: [{
+                    binaryString: ["0"],
+                    probability: 1,
+                    amplitude: { real: 1, imag: 0 },
+                    int: [0],
+                }],
+            },
+        }
+        rerender(<Playground />)
+
+        fireEvent.click(screen.getByRole("button", { name: "Quantum States" }))
+        const dialog = screen.getByRole("dialog")
+        expect(dialog).toBeInTheDocument()
+
+        fireEvent.click(dialog)
+        expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
+    })
 })
