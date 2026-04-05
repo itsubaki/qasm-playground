@@ -1,6 +1,6 @@
 import { type States } from "@/lib/http"
 import { cn } from "@/lib/utils"
-import { AmplitudeValue, formatBasis, ProbabilityBar } from "@/components/resultShared"
+import { AmplitudeValue, formatBasis, ProbabilityBar } from "@/components/resultParts"
 
 export function ResultTable({
     result,
