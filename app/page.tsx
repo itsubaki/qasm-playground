@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Editor } from "@/components/editor"
 import { Result } from "@/components/result"
+import { ResultTable } from "@/components/resultTable"
 import { Header } from '@/components/header';
 import { Examples } from "@/components/examples"
 import { Notes } from "@/components/notes"
@@ -240,7 +241,7 @@ export default function Playground({
               </div>
 
               <div className="flex-1 overflow-auto p-6">
-                <Result result={result} sortMode={sortMode} viewMode="table" />
+                <ResultTable result={result} sortMode={sortMode} />
               </div>
             </div>
           </div>

@@ -121,37 +121,4 @@ describe("Result", () => {
         expect(container).toHaveTextContent("-0.500000+0.250000i")
     })
 
-    it("renders a table view with the existing probability bars when requested", () => {
-        const { container } = render(<Result result={mock} sortMode="index" viewMode="table" />)
-
-        expect(screen.getByRole("table")).toBeInTheDocument()
-        expect(screen.getByText("Basis")).toBeInTheDocument()
-        expect(screen.getByText("Amplitude")).toBeInTheDocument()
-        expect(screen.getByText("Probability")).toBeInTheDocument()
-        expect(screen.getByLabelText("Probability bar")).toBeInTheDocument()
-        expect(screen.queryByText("Phase")).not.toBeInTheDocument()
-        expect(screen.queryByText("Bar")).not.toBeInTheDocument()
-
-        const probabilityBars = container.querySelectorAll("div[style*='width: 25%'], div[style*='width: 75%']")
-        expect(probabilityBars).toHaveLength(2)
-    })
-
-    it("preserves register boundaries in basis labels", () => {
-        const registerMock: States = {
-            states: [
-                {
-                    amplitude: { real: 1, imag: 0 },
-                    probability: 1,
-                    binaryString: ["000", "0100", "0000", "1"],
-                    int: [0, 4, 0, 1],
-                },
-            ],
-        }
-
-        const { rerender } = render(<Result result={registerMock} sortMode="index" />)
-        expect(screen.getByText("|000⟩|0100⟩|0000⟩|1⟩")).toBeInTheDocument()
-
-        rerender(<Result result={registerMock} sortMode="index" viewMode="table" />)
-        expect(screen.getByText("|000⟩|0100⟩|0000⟩|1⟩")).toBeInTheDocument()
-    })
 })

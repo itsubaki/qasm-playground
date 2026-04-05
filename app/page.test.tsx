@@ -28,8 +28,14 @@ vi.mock("@/components/notes", () => ({
 }))
 
 vi.mock("@/components/result", () => ({
-    Result: ({ result, sortMode, viewMode }: { result: { states: Array<unknown> }, sortMode: string, viewMode?: string }) => (
-        <div data-testid="result-view">{sortMode}:{viewMode}:{result.states.length}</div>
+    Result: ({ result, sortMode }: { result: { states: Array<unknown> }, sortMode: string }) => (
+        <div data-testid="result-view">{sortMode}:{result.states.length}</div>
+    ),
+}))
+
+vi.mock("@/components/resultTable", () => ({
+    ResultTable: ({ result, sortMode }: { result: { states: Array<unknown> }, sortMode: string }) => (
+        <div data-testid="result-table-view">{sortMode}:{result.states.length}</div>
     ),
 }))
 
@@ -177,12 +183,9 @@ describe("Playground", () => {
         sortState = { sortMode: "prob_desc", sort: mockSort }
         rerender(<Playground />)
 
-        expect(screen.getByTestId("result-view")).toHaveTextContent("prob_desc::1")
+        expect(screen.getByTestId("result-view")).toHaveTextContent("prob_desc:1")
         fireEvent.click(screen.getByRole("button", { name: "Quantum States" }))
-        expect(screen.getAllByTestId("result-view").map((el) => el.textContent)).toEqual([
-            "prob_desc::1",
-            "prob_desc:table:1",
-        ])
+        expect(screen.getByTestId("result-table-view")).toHaveTextContent("prob_desc:1")
         fireEvent.click(screen.getByRole("button", { name: "Sort" }))
         fireEvent.click(screen.getByRole("button", { name: "Copy" }))
         expect(mockSort).toHaveBeenCalled()
