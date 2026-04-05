@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { LoaderCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Editor } from "@/components/editor"
@@ -73,12 +74,21 @@ export default function Playground({
                 <Button
                   onClick={() => simulate(code)}
                   disabled={isLoading}
+                  aria-busy={isLoading}
                   className={cn(
+                    "relative",
                     "text-white",
                     "bg-blue-600 hover:bg-blue-700",
                     "dark:bg-blue-500 dark:hover:bg-blue-600",
                   )}>
-                  Run
+                  {isLoading && (
+                    <span
+                      className="absolute inset-0 flex items-center justify-center"
+                      aria-hidden="true">
+                      <LoaderCircle className="animate-spin" />
+                    </span>
+                  )}
+                  <span className={cn(isLoading && "opacity-0")}>Run</span>
                 </Button>
 
                 <Button

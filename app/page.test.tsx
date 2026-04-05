@@ -164,6 +164,8 @@ describe("Playground", () => {
         }
         rerender(<Playground />)
         expect(screen.getByText("Waiting for remote server...")).toBeInTheDocument()
+        expect(screen.getByRole("button", { name: "Run" })).toBeDisabled()
+        expect(screen.queryByText("Running...")).not.toBeInTheDocument()
 
         const result = {
             states: [{
