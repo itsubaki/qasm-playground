@@ -33,16 +33,13 @@ vi.mock("@vercel/speed-insights/next", () => ({
 }))
 
 vi.mock("@next/third-parties/google", () => ({
-    GoogleTagManager: ({ gtmId }: { gtmId: string }) => <div data-testid="gtm">{gtmId}</div>,
     GoogleAnalytics: ({ gaId }: { gaId: string }) => <div data-testid="ga">{gaId}</div>,
 }))
 
 describe("RootLayout", () => {
-    const originalGtmId = process.env.NEXT_PUBLIC_GTM_ID
     const originalGaId = process.env.NEXT_PUBLIC_GA_ID
 
     afterEach(() => {
-        process.env.NEXT_PUBLIC_GTM_ID = originalGtmId
         process.env.NEXT_PUBLIC_GA_ID = originalGaId
     })
 
@@ -54,7 +51,6 @@ describe("RootLayout", () => {
     })
 
     it("renders providers, children, and shared analytics widgets", () => {
-        delete process.env.NEXT_PUBLIC_GTM_ID
         delete process.env.NEXT_PUBLIC_GA_ID
 
         const { container } = render(
@@ -67,7 +63,6 @@ describe("RootLayout", () => {
         expect(screen.getByTestId("toaster")).toHaveTextContent("top-center")
         expect(screen.getByTestId("analytics")).toBeInTheDocument()
         expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
-        expect(screen.queryByTestId("gtm")).not.toBeInTheDocument()
         expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
 
         const provider = screen.getByTestId("theme-provider")
