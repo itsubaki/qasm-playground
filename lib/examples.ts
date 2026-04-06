@@ -8,7 +8,7 @@ export const examples: Example[] = [
         name: "Bell State",
         code: `// Bell State
 //
-// Prepares two qubits in the entangled state
+// Prepares two qubits in the entangled state.
 // The final state is (|00> + |11>)/sqrt(2).
 
 OPENQASM 3.0;
