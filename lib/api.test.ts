@@ -92,7 +92,7 @@ describe("call", () => {
         expect(data).toEqual({ error: "Service Unavailable" })
     })
 
-    it("handles other HTTP errors as internal server error", async () => {
+    it("handles other HTTP errors with 500 status and upstream body", async () => {
         vi.mocked(global.fetch).mockResolvedValueOnce(
             new Response("", {
                 status: 404,
@@ -108,7 +108,7 @@ describe("call", () => {
         const data = await response.json()
 
         expect(response.status).toBe(500)
-        expect(data).toEqual({ error: "Internal server error" })
+        expect(data).toEqual({ error: "" })
     })
 
     it("handles network errors", async () => {
