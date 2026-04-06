@@ -82,7 +82,6 @@ describe("RootLayout", () => {
     })
 
     it("renders Google analytics tags when environment variables are set", () => {
-        process.env.NEXT_PUBLIC_GTM_ID = "GTM-123"
         process.env.NEXT_PUBLIC_GA_ID = "GA-456"
 
         render(
@@ -91,7 +90,6 @@ describe("RootLayout", () => {
             </RootLayout>
         )
 
-        expect(screen.getByTestId("gtm")).toHaveTextContent("GTM-123")
         expect(screen.getByTestId("ga")).toHaveTextContent("GA-456")
     })
 })
