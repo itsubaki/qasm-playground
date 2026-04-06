@@ -6,7 +6,7 @@ import type { Metadata } from "next"
 import ThemeProvider from "../providers/theme"
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({
     subsets: ["latin"],
@@ -46,7 +46,6 @@ export default function RootLayout({
 
             <Analytics />
             <SpeedInsights />
-            {process.env.NEXT_PUBLIC_GTM_ID && (<GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID} />)}
             {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
         </html>
     )
