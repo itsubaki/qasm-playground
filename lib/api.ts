@@ -32,7 +32,6 @@ async function call(
 
     const { path, key } = options;
     try {
-
         const body = await request.json()
         const value = body?.[key]
         if (!value) {
@@ -51,27 +50,23 @@ async function call(
             return NextResponse.json(await resp.json())
         }
 
-        const text = await resp.text()
-        console.error(`${path} error:`, text)
-
-        if (resp.status === 400) {
-            return NextResponse.json(
-                { error: text },
-                { status: 400 },
-            )
+        switch (resp.status) {
+            case 503:
+                return NextResponse.json(
+                    { error: "Service Unavailable" },
+                    { status: 503 },
+                )
+            case 400:
+                return NextResponse.json(
+                    { error: await resp.text() },
+                    { status: 400 },
+                )
+            default:
+                return NextResponse.json(
+                    { error: await resp.text() },
+                    { status: 500 },
+                )
         }
-
-        if (resp.status === 503) {
-            return NextResponse.json(
-                { error: "Service Unavailable" },
-                { status: 503 },
-            )
-        }
-
-        return NextResponse.json(
-            { error: "Internal server error" },
-            { status: 500 },
-        )
     } catch (err) {
         console.error(`${path}:`, err)
         return NextResponse.json(
