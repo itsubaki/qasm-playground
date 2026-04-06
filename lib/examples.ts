@@ -8,7 +8,7 @@ export const examples: Example[] = [
         name: "Bell State",
         code: `// Bell State
 //
-// Prepares two qubits in the entangled Bell state
+// Prepares two qubits in the entangled state
 // The final state is (|00> + |11>)/sqrt(2).
 
 OPENQASM 3.0;
@@ -148,7 +148,7 @@ h q0;
 // The expected phase is phi = 1/8 = 0.001 in binary.
 //
 // U|psi> = exp(i*2pi*phi)|psi>
-// exp(i*pi/4) = exp(i*2pi*1/8)
+// exp(i*2pi*1/8) = exp(i*pi/4)
 
 OPENQASM 3.0;
 
@@ -193,7 +193,7 @@ inv_qft(c);
 // The expected phase is phi = 1/6 = 0.001010101... in binary.
 //
 // U|psi> = exp(i*2pi*phi)|psi>
-// exp(i*pi/3) = exp(i*2pi*1/6)
+// exp(i*2pi*1/6) = exp(i*pi/3)
 
 OPENQASM 3.0;
 
@@ -331,6 +331,7 @@ measure a;
 //
 // Searches a 4-bit state space (2x2 binary grid) using Grover iterations,
 // where r = [a, b, c, d].
+//
 // The oracle marks the two valid solutions satisfying the constraints:
 // a != b, c != d, a != c, and b != d.
 // The solutions are [1,0,0,1] and [0,1,1,0].
@@ -495,7 +496,7 @@ measure a;
         code: `// Quantum Signal Processing
 //
 // This example uses standard QSP building blocks:
-//   W(theta): signal operator, where x = cos(theta)
+//   W(theta): signal operator
 //   S(phi):   phase operator
 //
 // The phase sequence is:
@@ -503,7 +504,6 @@ measure a;
 //
 // For this sequence, the amplitude of |0> becomes:
 //   P(x) = 2x^3 - x
-//
 // where x = cos(theta).
 //
 // Example:
