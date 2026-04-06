@@ -451,14 +451,14 @@ def controlledG(qubit[4] r, qubit[4] s, qubit c, qubit a) {
 }
 
 def inv_qft(qubit[3] q) {
-  h q[2];
-  cr(-pi/2) q[2], q[1];
-  
-  h q[1];
-  cr(-pi/4) q[2], q[0];
-  cr(-pi/2) q[1], q[0];
-  
-  h q[0];
+    h q[2];
+    cr(-pi/2) q[2], q[1];
+
+    h q[1];
+    cr(-pi/4) q[2], q[0];
+    cr(-pi/2) q[1], q[0];
+
+    h q[0];
 }
 
 const int n = 3;
