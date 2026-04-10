@@ -1,9 +1,9 @@
-# OpenQASM 3.x playground
+# OpenQASM playground
 
 [![tests](https://github.com/itsubaki/qasm-playground/workflows/tests/badge.svg)](https://github.com/itsubaki/qasm-playground/actions)
 [![codecov](https://codecov.io/gh/itsubaki/qasm-playground/branch/main/graph/badge.svg?token=iNccCs1Tez)](https://codecov.io/gh/itsubaki/qasm-playground)
 
- - A playground for writing and running OpenQASM 3.x code in the browser.
+ - A playground for writing and running OpenQASM code in the browser.
 
 ## Deployment and Configuration
 
@@ -14,5 +14,5 @@
 ## Related Projects
 
  - [itsubaki/q](https://github.com/itsubaki/q) Quantum computing simulator in Go
- - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computing simulator with OpenQASM 3.x
+ - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computing simulator with OpenQASM 3
  - [itsubaki/quasar](https://github.com/itsubaki/quasar) Quantum computing simulator as a Service
