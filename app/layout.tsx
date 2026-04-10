@@ -15,8 +15,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-    title: "OpenQASM 3.x Playground",
-    description: "A playground that lets you write and run OpenQASM 3.x code in your browser",
+    title: "OpenQASM Playground",
+    description: "A playground for writing and running OpenQASM code in the browser",
 }
 
 export default function RootLayout({
