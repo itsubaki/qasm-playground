@@ -631,6 +631,9 @@ ry(-pi/4) a;
 h z;
 
 cx plus, a;
+
+measure z;
+measure a;
 `,
     },
 ]
