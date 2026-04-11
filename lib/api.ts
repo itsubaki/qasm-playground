@@ -12,10 +12,15 @@ export async function simulate(request: NextRequest) {
     return call(request, API.Simulate);
 }
 
+export async function validate(request: NextRequest) {
+    return call(request, API.Validate);
+}
+
 const API = {
     Edit: { path: "Edit", key: "id" } as const,
     Share: { path: "Share", key: "code" } as const,
     Simulate: { path: "Simulate", key: "code" } as const,
+    Validate: { path: "Validate", key: "code" } as const,
 };
 
 async function call(
