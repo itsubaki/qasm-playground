@@ -42,11 +42,11 @@ export default function RootLayout({
                     </main>
                     <Toaster position="top-center" />
                 </ThemeProvider>
-            </body>
 
-            <Analytics />
-            <SpeedInsights />
-            {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
+                <Analytics />
+                <SpeedInsights />
+                {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
+            </body>
         </html>
     )
 }
