@@ -25,7 +25,7 @@ export function ResultTable({
     )
 
     const sorted = [...result.states].sort((a, b) => {
-        if (sortMode === "prob_desc") return (b.probability ?? 0) - (a.probability ?? 0)
+        if (sortMode === "prob_desc") return b.probability - a.probability
         return 0
     })
 
@@ -67,10 +67,10 @@ export function ResultTable({
                                 />
                             </td>
                             <td className="px-4 py-3 font-mono whitespace-nowrap">
-                                {(state.probability ?? 0).toFixed(6)}
+                                {state.probability.toFixed(6)}
                             </td>
                             <td className="px-4 py-3 min-w-40">
-                                <ProbabilityBar probability={state.probability ?? 0} />
+                                <ProbabilityBar probability={state.probability} />
                             </td>
                         </tr>
                     ))}

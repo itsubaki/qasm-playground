@@ -1,7 +1,7 @@
 export interface State {
     binaryString: string[]
     int: number[]
-    probability?: number
+    probability: number
     amplitude: {
         real?: number
         imag?: number

@@ -10,7 +10,7 @@ export function Result({
     sortMode: "index" | "prob_desc",
 }) {
     const sorted = [...result.states].sort((a, b) => {
-        if (sortMode === "prob_desc") return (b.probability ?? 0) - (a.probability ?? 0)
+        if (sortMode === "prob_desc") return b.probability - a.probability
         return 0 // index order (default)
     })
 
@@ -36,10 +36,10 @@ export function Result({
                                 Probability
                             </span>
                             <span className={`text-gray-900 dark:text-white`}>
-                                {(state.probability ?? 0).toFixed(6)}
+                                {state.probability.toFixed(6)}
                             </span>
                         </div>
-                        <ProbabilityBar probability={state.probability ?? 0} />
+                        <ProbabilityBar probability={state.probability} />
                     </div>
 
                     {/* Amplitude */}
