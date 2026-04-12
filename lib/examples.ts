@@ -146,6 +146,7 @@ h q0;
 //
 // Estimates the eigenphase of the T gate using the |1> eigenstate.
 // U|psi> = exp(i*2pi*phi)|psi>.
+// U(0,0,theta) = diag{1, exp(i*theta)}.
 // T|1> = U(0,0,pi/4)|1> = exp(i*pi/4)|1> = exp(i*2pi*1/8)|1>.
 // The expected phase is phi = 1/8 = 0.001 in binary.
 
