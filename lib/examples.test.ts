@@ -21,7 +21,7 @@ describe('Quantum examples', () => {
             'Deutsch-Jozsa Algorithm (constant)',
             'Deutsch-Jozsa Algorithm (balanced)',
             'Quantum Phase Estimation (T)',
-            'Quantum Phase Estimation (Rz(pi/3))',
+            'Quantum Phase Estimation (Phase(pi/3))',
             'Shor\'s Algorithm (N=15, a=7)',
             'Grover\'s Algorithm',
             'Quantum Counting',

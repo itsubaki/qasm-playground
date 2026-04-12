@@ -36,7 +36,7 @@ export function Result({
                                 Probability
                             </span>
                             <span className={`text-gray-900 dark:text-white`}>
-                                {state.probability.toFixed(6)}
+                                {(state.probability ?? 0).toFixed(6)}
                             </span>
                         </div>
                         <ProbabilityBar probability={state.probability} />
