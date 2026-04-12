@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest"
 import { NextRequest } from "next/server"
-import { simulate, share, edit } from "./api"
+import { simulate, share, edit, validate } from "./api"
 
 describe("call", () => {
     beforeEach(() => {
@@ -197,6 +197,61 @@ describe("call", () => {
                 body: JSON.stringify({ code: "shared code" }),
             }
         )
+    })
+
+    it("returns valid true for valid code", async () => {
+        const mockResult = { valid: true }
+        vi.mocked(global.fetch).mockResolvedValueOnce(
+            new Response(JSON.stringify(mockResult), {
+                status: 200,
+                headers: { "content-type": "application/json" },
+            })
+        )
+
+        const req = new NextRequest("http://localhost:3000/api/validate", {
+            method: "POST",
+            body: JSON.stringify({ code: "qubit q;" }),
+        })
+
+        const response = await validate(req)
+        const data = await response.json()
+
+        expect(response.status).toBe(200)
+        expect(data).toEqual(mockResult)
+        expect(global.fetch).toHaveBeenCalledWith(
+            "https://example.com/quasar.v1.QuasarService/Validate",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ code: "qubit q;" }),
+            }
+        )
+    })
+
+    it("returns valid false and error info for invalid code", async () => {
+        const mockResult = {
+            valid: false,
+            line: 1,
+            column: 8,
+            message: "mismatched input ';' expecting ']'"
+        }
+        vi.mocked(global.fetch).mockResolvedValueOnce(
+            new Response(JSON.stringify(mockResult), {
+                status: 200,
+                headers: { "content-type": "application/json" },
+            })
+        )
+
+        const req = new NextRequest("http://localhost:3000/api/validate", {
+            method: "POST",
+            body: JSON.stringify({ code: "qubit[ q;" }),
+        })
+
+        const response = await validate(req)
+        const data = await response.json()
+
+        expect(response.status).toBe(200)
+        expect(data).toEqual(mockResult)
     })
 
     it('should return 500 if SERVICE_URL is not set', async () => {
