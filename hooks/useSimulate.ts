@@ -17,7 +17,7 @@ export const useSimulate = () => {
             const states = await httpPost<States>("/api/simulate", { code })
             setResult(states)
         } catch (err) {
-            console.error("Run code:", err)
+            console.error("Simulate:", err)
             setError(err instanceof Error ? err.message : "An unknown error occurred")
         } finally {
             setIsLoading(false)

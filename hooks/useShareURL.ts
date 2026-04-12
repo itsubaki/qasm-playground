@@ -14,7 +14,7 @@ export const useShareURL = () => {
         try {
             const snippet = await httpPost<Snippet>("/api/share", { code })
             if (!snippet.id) {
-                console.error("Share code: invalid response", snippet)
+                console.error("Share: ", snippet)
                 return
             }
 
