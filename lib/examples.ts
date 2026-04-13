@@ -169,18 +169,18 @@ def inv_qft(qubit[3] q) {
 
 const int n = 3;
 qubit[n] c;
-qubit t;
+qubit a;
 
 reset c;
-reset t;
+reset a;
 
 h c;
-x t;
+x a;
 
 // controlled-U^(2^i)
-cr(1*pi/4) c[0], t;
-cr(2*pi/4) c[1], t;
-cr(4*pi/4) c[2], t;
+cr(1*pi/4) c[0], a;
+cr(2*pi/4) c[1], a;
+cr(4*pi/4) c[2], a;
 
 inv_qft(c);
 `
@@ -240,22 +240,22 @@ def inv_qft(qubit[7] q) {
 
 const int n = 7;
 qubit[n] c;
-qubit t;
+qubit a;
 
 reset c;
-reset t;
+reset a;
 
 h c;
-x t;
+x a;
 
 // controlled-U^(2^i)
-cr( 1*pi/3) c[0], t;
-cr( 2*pi/3) c[1], t;
-cr( 4*pi/3) c[2], t;
-cr( 8*pi/3) c[3], t;
-cr(16*pi/3) c[4], t;
-cr(32*pi/3) c[5], t;
-cr(64*pi/3) c[6], t;
+cr( 1*pi/3) c[0], a;
+cr( 2*pi/3) c[1], a;
+cr( 4*pi/3) c[2], a;
+cr( 8*pi/3) c[3], a;
+cr(16*pi/3) c[4], a;
+cr(32*pi/3) c[5], a;
+cr(64*pi/3) c[6], a;
 
 inv_qft(c);
 `
