@@ -3,6 +3,7 @@ export function Notes() {
         <div className="text-left">
             <ul className={`text-sm space-y-1 text-gray-600 dark:text-gray-400`}>
                 <li>A playground for running OpenQASM code in the browser.</li>
+                <li>Bit strings are displayed in declaration order (MSB-first).</li>
                 <li>It supports up to 12 qubits, with additional limitations. For more details, see the GitHub
                     {" "}
                     <a
