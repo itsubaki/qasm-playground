@@ -147,6 +147,7 @@ h q0;
 // Estimates the eigenphase of the T gate using the |1> eigenstate.
 // U|psi> = exp(i*2pi*phi)|psi>.
 // U(0,0,theta) = diag{1, exp(i*theta)}.
+//
 // T|1> = U(0,0,pi/4)|1> = exp(i*pi/4)|1> = exp(i*2pi*1/8)|1>.
 // The expected phase is phi = 1/8 = 0.001 in binary.
 
@@ -191,7 +192,10 @@ inv_qft(c);
 //
 // Estimates the eigenphase of Rz(pi/3) using the |1> eigenstate.
 // U|psi> = exp(i*2pi*phi)|psi>.
-// U(0,0,theta) = exp(i*theta/2)*diag{exp(-i*theta/2), exp(i*theta/2)} = exp(i*theta/2)Rz(theta).
+// U(0,0,theta) = diag{1, exp(i*theta)}
+//              = exp(i*theta/2)*diag{exp(-i*theta/2), exp(i*theta/2)}
+//              = exp(i*theta/2)Rz(theta).
+//
 // Rz(pi/3)|1> = U(0,0,pi/3)|1> = exp(i*pi/3)|1> = exp(i*2pi*1/6)|1>.
 // The expected phase is phi = 1/6 = 0.001010101... in binary.
 
