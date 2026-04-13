@@ -203,38 +203,38 @@ gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
 def inv_qft(qubit[7] q) {
     h q[6];
-    cr(-pi/2)  q[6], q[5];
-    cr(-pi/4)  q[6], q[4];
-    cr(-pi/8)  q[6], q[3];
-    cr(-pi/16) q[6], q[2];
-    cr(-pi/32) q[6], q[1];
-    cr(-pi/64) q[6], q[0];
 
+    cr(-pi/2) q[6], q[5];
     h q[5];
-    cr(-pi/2)  q[5], q[4];
-    cr(-pi/4)  q[5], q[3];
-    cr(-pi/8)  q[5], q[2];
-    cr(-pi/16) q[5], q[1];
-    cr(-pi/32) q[5], q[0];
 
+    cr(-pi/4) q[6], q[4];
+    cr(-pi/2) q[5], q[4];
     h q[4];
-    cr(-pi/2)  q[4], q[3];
-    cr(-pi/4)  q[4], q[2];
-    cr(-pi/8)  q[4], q[1];
-    cr(-pi/16) q[4], q[0];
 
+    cr(-pi/8) q[6], q[3];
+    cr(-pi/4) q[5], q[3];
+    cr(-pi/2) q[4], q[3];
     h q[3];
-    cr(-pi/2)  q[3], q[2];
-    cr(-pi/4)  q[3], q[1];
-    cr(-pi/8)  q[3], q[0];
 
+    cr(-pi/16) q[6], q[2];
+    cr(-pi/ 8) q[5], q[2];
+    cr(-pi/ 4) q[4], q[2];
+    cr(-pi/ 2) q[3], q[2];
     h q[2];
-    cr(-pi/2)  q[2], q[1];
-    cr(-pi/4)  q[2], q[0];
 
+    cr(-pi/32) q[6], q[1];
+    cr(-pi/16) q[5], q[1];
+    cr(-pi/ 8) q[4], q[1];
+    cr(-pi/ 4) q[3], q[1];
+    cr(-pi/ 2) q[2], q[1];
     h q[1];
-    cr(-pi/2)  q[1], q[0];
 
+    cr(-pi/64) q[6], q[0];
+    cr(-pi/32) q[5], q[0];
+    cr(-pi/16) q[4], q[0];
+    cr(-pi/ 8) q[3], q[0];
+    cr(-pi/ 4) q[2], q[0];
+    cr(-pi/ 2) q[1], q[0];
     h q[0];
 }
 
@@ -301,12 +301,12 @@ def modexp(qubit[3] q, qubit[4] a) {
 
 def inv_qft(qubit[3] q) {
     h q[2];
-    cr(-pi/2) q[2], q[1];
 
+    cr(-pi/2) q[2], q[1];
     h q[1];
+
     cr(-pi/4) q[2], q[0];
     cr(-pi/2) q[1], q[0];
-
     h q[0];
 }
 
@@ -452,12 +452,12 @@ def controlledG(qubit[4] r, qubit[4] s, qubit c, qubit a) {
 
 def inv_qft(qubit[3] q) {
     h q[2];
-    cr(-pi/2) q[2], q[1];
 
+    cr(-pi/2) q[2], q[1];
     h q[1];
+
     cr(-pi/4) q[2], q[0];
     cr(-pi/2) q[1], q[0];
-
     h q[0];
 }
 
