@@ -158,12 +158,12 @@ gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
 def inv_qft(qubit[3] q) {
     h q[2];
-    cr(-pi/2) q[2], q[1];
 
+    cr(-pi/2) q[2], q[1];
     h q[1];
+
     cr(-pi/4) q[2], q[0];
     cr(-pi/2) q[1], q[0];
-
     h q[0];
 }
 
