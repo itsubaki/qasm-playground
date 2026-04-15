@@ -597,7 +597,7 @@ cx psi, enc[0];
 // |A> is the "magic state" used to implement the T gate
 // It can be seen as a rotated version of |+> under T:
 // T|+> = exp(-i * pi/8 * Z) |+>
-// |A>  = exp(-i * pi/8 * Y) |0> = cos(pi/8)|0> + sin(pi/8)|1> = 0.9238...|0> + 0.3826...|1>
+//  |A> = exp(-i * pi/8 * Y) |0> = cos(pi/8)|0> + sin(pi/8)|1> = 0.9238...|0> + 0.3826...|1>
 //
 // This representation rotates the computational basis from Z to Y
 // |A> is an eigenstate of Hadamard: H|A> = |A>
