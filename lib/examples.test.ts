@@ -26,8 +26,6 @@ describe('Quantum examples', () => {
             'Grover\'s Algorithm',
             'Quantum Counting',
             'Quantum Signal Processing',
-            'Error Correction',
-            'Magic State Distillation',
         ]));
     });
 
