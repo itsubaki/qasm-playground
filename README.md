@@ -14,5 +14,5 @@ A playground for running OpenQASM code in the browser.
 ## Related Projects
 
  - [itsubaki/q](https://github.com/itsubaki/q) Quantum computing simulator in Go
- - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computing simulator with OpenQASM
+ - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computing simulator for OpenQASM
  - [itsubaki/quasar](https://github.com/itsubaki/quasar) Quantum computing simulator as a Service
