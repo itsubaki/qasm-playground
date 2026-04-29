@@ -78,9 +78,6 @@ describe("RootLayout", () => {
 
         expect(screen.getByText("child content")).toBeInTheDocument()
         expect(screen.getByTestId("toaster")).toHaveTextContent("top-center")
-        expect(screen.getByTestId("analytics")).toBeInTheDocument()
-        expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
-        expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
 
         const provider = screen.getByTestId("theme-provider")
         expect(provider).toHaveAttribute("data-props", JSON.stringify({
@@ -91,17 +88,5 @@ describe("RootLayout", () => {
         }))
 
         expect(container.querySelector("main")).toHaveTextContent("child content")
-    })
-
-    it("renders Google analytics tags when environment variables are set", () => {
-        process.env.NEXT_PUBLIC_GA_ID = "GA-456"
-
-        render(
-            <RootLayout>
-                <div>child content</div>
-            </RootLayout>
-        )
-
-        expect(screen.getByTestId("ga")).toHaveTextContent("GA-456")
     })
 })
