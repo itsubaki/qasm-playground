@@ -60,9 +60,13 @@ export default function RootLayout({
                     <Toaster position="top-center" />
                 </ThemeProvider>
 
-                <Analytics />
-                <SpeedInsights />
-                {process.env.NEXT_PUBLIC_GA_ID && (<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />)}
+                {process.env.NODE_ENV === 'production' && (
+                    <>
+                        <Analytics />
+                        <SpeedInsights />
+                        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
+                    </>
+                )}
             </body>
         </html>
     )
