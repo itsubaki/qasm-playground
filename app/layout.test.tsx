@@ -37,10 +37,8 @@ vi.mock("@next/third-parties/google", () => ({
 }))
 
 describe("RootLayout", () => {
-    const originalGaId = process.env.NEXT_PUBLIC_GA_ID
-
     afterEach(() => {
-        process.env.NEXT_PUBLIC_GA_ID = originalGaId
+        vi.unstubAllEnvs()
     })
 
     it("exports the expected metadata", () => {
@@ -67,8 +65,9 @@ describe("RootLayout", () => {
         })
     })
 
-    it("renders providers, children, and shared analytics widgets", () => {
-        delete process.env.NEXT_PUBLIC_GA_ID
+    it("renders providers and children outside production", () => {
+        vi.stubEnv("NODE_ENV", "test")
+        vi.stubEnv("NEXT_PUBLIC_GA_ID", "")
 
         const { container } = render(
             <RootLayout>
@@ -88,5 +87,38 @@ describe("RootLayout", () => {
         }))
 
         expect(container.querySelector("main")).toHaveTextContent("child content")
+        expect(screen.queryByTestId("analytics")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("speed-insights")).not.toBeInTheDocument()
+        expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
+    })
+
+    it("renders production analytics widgets without Google Analytics when no GA ID is configured", () => {
+        vi.stubEnv("NODE_ENV", "production")
+        vi.stubEnv("NEXT_PUBLIC_GA_ID", "")
+
+        render(
+            <RootLayout>
+                <div>child content</div>
+            </RootLayout>
+        )
+
+        expect(screen.getByTestId("analytics")).toBeInTheDocument()
+        expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
+        expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
+    })
+
+    it("renders Google Analytics in production when a GA ID is configured", () => {
+        vi.stubEnv("NODE_ENV", "production")
+        vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123")
+
+        render(
+            <RootLayout>
+                <div>child content</div>
+            </RootLayout>
+        )
+
+        expect(screen.getByTestId("analytics")).toBeInTheDocument()
+        expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
+        expect(screen.getByTestId("ga")).toHaveTextContent("G-TEST123")
     })
 })
