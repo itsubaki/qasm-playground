@@ -16,7 +16,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
     title: "OpenQASM Playground",
-    description: "A playground for running OpenQASM code in the browser",
+    description: "A playground for OpenQASM code in the browser",
     icons: {
         icon: [
             {

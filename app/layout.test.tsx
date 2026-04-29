@@ -46,7 +46,7 @@ describe("RootLayout", () => {
     it("exports the expected metadata", () => {
         expect(metadata).toEqual({
             title: "OpenQASM Playground",
-            description: "A playground for running OpenQASM code in the browser",
+            description: "A playground for OpenQASM code in the browser",
             icons: {
                 icon: [
                     {
