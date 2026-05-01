@@ -98,6 +98,7 @@ h q1;
 
 oracle(q0, q1);
 h q0;
+h q1;
 `
     },
     {
@@ -138,6 +139,7 @@ h q1;
 
 oracle(q0, q1);
 h q0;
+h q1;
 `
     },
     {
