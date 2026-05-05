@@ -1,12 +1,11 @@
 import "./globals.css"
 import type React from "react"
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'
 import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import ThemeProvider from "../providers/theme"
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const inter = Inter({
     subsets: ["latin"],
@@ -64,7 +63,6 @@ export default function RootLayout({
                     <>
                         <Analytics />
                         <SpeedInsights />
-                        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
                     </>
                 )}
             </body>

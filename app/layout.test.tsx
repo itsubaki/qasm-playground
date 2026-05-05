@@ -32,10 +32,6 @@ vi.mock("@vercel/speed-insights/next", () => ({
     SpeedInsights: () => <div data-testid="speed-insights" />,
 }))
 
-vi.mock("@next/third-parties/google", () => ({
-    GoogleAnalytics: ({ gaId }: { gaId: string }) => <div data-testid="ga">{gaId}</div>,
-}))
-
 describe("RootLayout", () => {
     afterEach(() => {
         vi.unstubAllEnvs()
@@ -92,9 +88,8 @@ describe("RootLayout", () => {
         expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
     })
 
-    it("renders production analytics widgets without Google Analytics when no GA ID is configured", () => {
+    it("renders production analytics widgets", () => {
         vi.stubEnv("NODE_ENV", "production")
-        vi.stubEnv("NEXT_PUBLIC_GA_ID", "")
 
         render(
             <RootLayout>
@@ -104,21 +99,5 @@ describe("RootLayout", () => {
 
         expect(screen.getByTestId("analytics")).toBeInTheDocument()
         expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
-        expect(screen.queryByTestId("ga")).not.toBeInTheDocument()
-    })
-
-    it("renders Google Analytics in production when a GA ID is configured", () => {
-        vi.stubEnv("NODE_ENV", "production")
-        vi.stubEnv("NEXT_PUBLIC_GA_ID", "G-TEST123")
-
-        render(
-            <RootLayout>
-                <div>child content</div>
-            </RootLayout>
-        )
-
-        expect(screen.getByTestId("analytics")).toBeInTheDocument()
-        expect(screen.getByTestId("speed-insights")).toBeInTheDocument()
-        expect(screen.getByTestId("ga")).toHaveTextContent("G-TEST123")
     })
 })
