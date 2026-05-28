@@ -533,7 +533,7 @@ reset q;
 const float theta = pi/6;
 
 W(theta) q;
-S(pi/4) q;
+S(pi/4)  q;
 W(theta) q;
 S(-pi/4) q;
 W(theta) q;
