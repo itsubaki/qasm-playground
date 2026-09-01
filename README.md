@@ -10,9 +10,3 @@ A playground for OpenQASM in the browser.
  1. Deploy [quasar](https://github.com/itsubaki/quasar) to Google Cloud Run.
  1. Deploy qasm-playground to Vercel.
  1. Set the `GOOGLE_CLOUD_SERVICE_URL` environment variable in your Vercel project.
-
-## Related Projects
-
- - [itsubaki/q](https://github.com/itsubaki/q) Quantum computing simulator in Go
- - [itsubaki/qasm](https://github.com/itsubaki/qasm) Quantum computing simulator for OpenQASM
- - [itsubaki/quasar](https://github.com/itsubaki/quasar) Quantum computing simulator as a Service
