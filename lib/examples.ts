@@ -107,13 +107,11 @@ inv_qft(c);
 `
     },
     {
-        name: "Quantum Phase Estimation (Rz(pi/3))",
-        code: `// Quantum Phase Estimation (Rz(pi/3))
+        name: "Quantum Phase Estimation (U(0,0,pi/3))",
+        code: `// Quantum Phase Estimation (U(0,0,pi/3))
 //
-// Estimates the eigenphase of Rz(pi/3) using the |1> eigenstate.
+// Estimates the eigenphase of U(0,0,pi/3) using the |1> eigenstate.
 // U(0,0,theta) = diag{1, exp(i*theta)}
-//              = exp(i*theta/2)*diag{exp(-i*theta/2), exp(i*theta/2)}
-//              = exp(i*theta/2)Rz(theta).
 //
 // U(0,0,pi/3)|1> = exp(i*pi/3)|1> = exp(i*2pi*1/6)|1>.
 // The expected phase is phi = 1/6 = 0.001010101... in binary.
