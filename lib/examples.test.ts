@@ -19,7 +19,7 @@ describe('Quantum examples', () => {
             'Bell State',
             'Quantum Teleportation',
             'Quantum Phase Estimation (T)',
-            'Quantum Phase Estimation (U(0,0,pi/3))',
+            'Quantum Phase Estimation (U)',
             'Shor\'s Algorithm (N=15, a=7)',
             'Grover\'s Algorithm',
             'Quantum Counting',

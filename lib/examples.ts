@@ -107,8 +107,8 @@ inv_qft(c);
 `
     },
     {
-        name: "Quantum Phase Estimation (U(0,0,pi/3))",
-        code: `// Quantum Phase Estimation (U(0,0,pi/3))
+        name: "Quantum Phase Estimation (U)",
+        code: `// Quantum Phase Estimation (U)
 //
 // Estimates the eigenphase of U(0,0,pi/3) using the |1> eigenstate.
 // U(0,0,theta) = diag{1, exp(i*theta)}
