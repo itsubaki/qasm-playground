@@ -139,7 +139,7 @@ export default function Playground({
                                     onClick={() => result && !error && setIsResultTableOpen(true)}
                                     disabled={!result || !!error}
                                     className={cn(
-                                        "py-1 text-left text-lg font-semibold transition-colors",
+                                        "shrink-0 whitespace-nowrap py-1 text-left text-lg font-semibold transition-colors",
                                         "text-gray-900 dark:text-white",
                                         result && !error && "cursor-pointer hover:text-blue-600 dark:hover:text-blue-400",
                                         (!result || error) && "cursor-default",
@@ -243,8 +243,8 @@ export default function Playground({
                             )}
                             onClick={(event) => event.stopPropagation()}>
                             <div className="flex items-center justify-between gap-3 border-b border-gray-200 px-6 py-4 dark:border-gray-700">
-                                <div>
-                                    <div id="quantum-states-dialog-title" className="text-xl font-semibold text-gray-900 dark:text-white">
+                                <div className="shrink-0">
+                                    <div id="quantum-states-dialog-title" className="whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">
                                         Quantum States
                                     </div>
                                 </div>
