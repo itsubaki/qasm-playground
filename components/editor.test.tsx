@@ -138,9 +138,11 @@ describe("Editor", () => {
 
         expect(textarea.className).toContain("text-base")
         expect(textarea.className).toContain("leading-6")
-        expect(textarea.className).toContain("lg:text-[0.83rem]")
-        expect(textarea.className).toContain("lg:leading-[1.4]")
+        expect(textarea.className).toContain("lg:text-sm")
+        expect(textarea.className).toContain("lg:leading-5")
         expect(lineNumber.className).toContain("text-base")
         expect(lineNumber.className).toContain("leading-6")
+        expect(lineNumber.className).toContain("lg:text-sm")
+        expect(lineNumber.className).toContain("lg:leading-5")
     })
 })
