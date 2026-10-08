@@ -124,4 +124,23 @@ describe("Editor", () => {
         const container = screen.getByRole("textbox").parentElement!
         expect(container.className).toContain("dark:border-gray-600")
     })
+
+    it("uses 16px typography on mobile and keeps desktop editor sizing", () => {
+        render(
+            <Editor
+                code={"line1\nline2"}
+                setCode={() => { }}
+            />
+        )
+
+        const textarea = screen.getByRole("textbox")
+        const lineNumber = screen.getByText("1")
+
+        expect(textarea.className).toContain("text-base")
+        expect(textarea.className).toContain("leading-6")
+        expect(textarea.className).toContain("lg:text-[0.83rem]")
+        expect(textarea.className).toContain("lg:leading-[1.4]")
+        expect(lineNumber.className).toContain("text-base")
+        expect(lineNumber.className).toContain("leading-6")
+    })
 })

@@ -56,7 +56,8 @@ export function Editor({
             )}>
                 {lineNumbers.map((num) => (
                     <div key={num} className={cn(
-                        "text-[0.83rem] leading-[1.4] min-w-[3ch]",
+                        "text-base leading-6 lg:text-[0.83rem] lg:leading-[1.4]",
+                        "min-w-[3ch]",
                         "font-mono",
                         "text-gray-500",
                         "dark:text-gray-400",
@@ -77,7 +78,7 @@ export function Editor({
                 placeholder="Enter your OpenQASM code here..."
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
                 className={cn(
-                    "text-[0.83rem] leading-[1.4]",
+                    "text-base leading-6 lg:text-[0.83rem] lg:leading-[1.4]",
                     "flex-1 whitespace-pre overflow-x-auto overflow-y-auto resize-none",
                     "font-mono",
                     "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
