@@ -19,8 +19,7 @@ import { copyToClipboard } from "@/lib/clipboard"
 import { simulationError } from "@/lib/simulationError"
 import { edit } from "@/lib/edit"
 
-// Keep mobile page scrolling on the document rather than these decorative wrappers.
-const panel = "flex min-w-0 flex-col overflow-clip md:overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800/50"
+const panel = "flex min-w-0 flex-col overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800/50"
 const muted = "text-sm text-gray-600 dark:text-gray-400"
 const modal = "fixed left-1/2 top-1/2 z-50 flex w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-2xl dark:border-gray-700 dark:bg-gray-900 dark:text-white"
 
@@ -148,7 +147,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                         <StateExplorer result={result} sortMode={sortMode} setSortMode={setSortMode} />
                                     </Dialog.Content>
                                 </Dialog.Portal>
-                            <div className="min-h-0 space-y-2 overflow-visible md:overflow-y-auto"><Result result={result} sortMode={sortMode} /></div>
+                            <div className="min-h-0 space-y-2 overflow-y-auto"><Result result={result} sortMode={sortMode} /></div>
                             {result.states.length === 0 && <p className={muted}>The simulator returned no states. Review your circuit and run again.</p>}
                         </>}
                         {!result && !error && !isLoading && <p className={muted + " py-8 text-center text-xs"}>Run your OpenQASM code to see quantum states here</p>}

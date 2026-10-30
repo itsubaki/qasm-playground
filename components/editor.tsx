@@ -45,7 +45,7 @@ export function Editor({
 
     return (
         <div className={cn(
-            "relative flex-none md:flex-1 flex overflow-clip md:overflow-hidden",
+            "relative flex-none md:flex-1 flex overflow-hidden",
             "h-[22rem] min-h-0 md:h-auto border rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 dark:ring-offset-gray-800",
             "border-gray-300",
             "dark:border-gray-600",
