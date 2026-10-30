@@ -91,7 +91,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                         <Button onClick={() => simulate(code)} disabled={isLoading || !isCodeReady || !code.trim()} aria-busy={isLoading}
                             aria-describedby="simulation-status"
                             title={stale ? "Unrun changes — run to update results" : "Run current code"}
-                            className="h-9 bg-blue-600 px-5 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600">
+                            className="h-9 bg-blue-600 px-5 text-white hover:bg-blue-700">
                             {isLoading ? <LoaderCircle className="animate-spin" aria-hidden="true" /> : <Play aria-hidden="true" />}Run
                         </Button>
                         <Button onClick={() => share(code)} disabled={isSharing || !isCodeReady || !code.trim()} aria-busy={isSharing} variant="outline" className="h-9">
