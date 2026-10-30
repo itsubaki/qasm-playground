@@ -30,6 +30,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
     const [pendingCode, setPendingCode] = useState<string | null>(null)
     const [sortMode, setSortMode] = useState<SortMode>("index")
     const [isResultTableOpen, setIsResultTableOpen] = useState(false)
+    const [isExampleOpen, setIsExampleOpen] = useState(false)
     const exampleTrigger = useRef<HTMLDivElement>(null)
     const { isMounted } = useMount()
     const { sharedURL, share, isSharing, sharedCode, shareError } = useShareURL()
@@ -76,7 +77,9 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
 
     if (!isMounted) return null
 
-    return <div className="min-h-screen bg-blue-50 p-3 text-gray-900 sm:p-4 dark:bg-gray-900 dark:text-white">
+    // Overlay contents are portalled outside this element, so they remain interactive.
+    return <div inert={isResultTableOpen || pendingCode !== null || isExampleOpen}
+        className="min-h-screen bg-blue-50 p-3 text-gray-900 sm:p-4 dark:bg-gray-900 dark:text-white">
         <div className="mx-auto max-w-7xl">
             <Header />
 
@@ -85,7 +88,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                     <h1 id="editor-title" className="sr-only">Circuit</h1>
                     <div className="flex flex-wrap items-center gap-2 p-2">
                         <div ref={exampleTrigger} className="min-w-0 flex-1 basis-full sm:basis-auto">
-                            <Examples code={code} setCode={loadExample} disabled={!isCodeReady} />
+                            <Examples code={code} setCode={loadExample} disabled={!isCodeReady} onContentMountChange={setIsExampleOpen} />
                         </div>
                         <span className="sr-only">{dirty ? "Edited code" : "Example circuit"}</span>
                         <Button onClick={() => simulate(code)} disabled={isLoading || !isCodeReady || !code.trim()} aria-busy={isLoading}

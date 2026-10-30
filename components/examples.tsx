@@ -1,4 +1,5 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { useCallback } from "react"
 import { examples } from "@/lib/examples";
 import { cn } from "@/lib/utils"
 
@@ -6,11 +7,19 @@ export function Examples({
     setCode,
     code,
     disabled,
+    onContentMountChange,
 }: {
     setCode: (code: string) => void,
     code?: string,
     disabled?: boolean,
+    onContentMountChange?: (mounted: boolean) => void,
 }) {
+    // Track presence, including the closing animation, rather than only the open flag.
+    const contentRef = useCallback((node: HTMLDivElement | null) => {
+        // Radix also renders options into a detached fragment while the menu is closed.
+        onContentMountChange?.(node?.isConnected ?? false)
+        return () => onContentMountChange?.(false)
+    }, [onContentMountChange])
     const select = (name: string) => {
         const example = examples.find((ex) => ex.name === name)! // always found
         setCode(example.code)
@@ -27,7 +36,7 @@ export function Examples({
             )} aria-label="Choose an example">
                 <SelectValue placeholder="Custom code" />
             </SelectTrigger>
-            <SelectContent className={cn(
+            <SelectContent ref={contentRef} className={cn(
                 "max-h-[26rem]",
                 "bg-white border-gray-200",
                 "dark:bg-gray-900 dark:border-gray-700",
