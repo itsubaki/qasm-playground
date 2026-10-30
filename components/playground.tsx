@@ -86,8 +86,8 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
             <div className="mt-3 grid min-w-0 gap-3 md:h-[80vh] md:min-h-[28rem] md:grid-cols-[minmax(0,13fr)_minmax(0,7fr)]">
                 <section className={panel} aria-labelledby="editor-title">
                     <h1 id="editor-title" className="sr-only">Circuit</h1>
-                    <div className="flex flex-wrap items-center gap-2 p-2">
-                        <div ref={exampleTrigger} className="min-w-0 flex-1 basis-full sm:basis-auto">
+                    <div className="flex items-center gap-2 p-2">
+                        <div ref={exampleTrigger} className="min-w-0 flex-1">
                             <Examples code={code} setCode={loadExample} disabled={!isCodeReady} onContentMountChange={setIsExampleOpen} />
                         </div>
                         <span className="sr-only">{dirty ? "Edited code" : "Example circuit"}</span>
@@ -123,15 +123,17 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
 
                 <Dialog.Root open={isResultTableOpen} onOpenChange={setIsResultTableOpen}>
                 <section className={panel} aria-labelledby="results-title">
-                    <div className="flex flex-wrap items-center justify-end gap-2 px-2 py-2 dark:border-gray-700">
+                    <div className="flex items-center justify-end gap-2 px-2 pt-2 pb-6 sm:pb-2 dark:border-gray-700">
                         <div className="mr-auto flex h-9 shrink-0 items-end">
-                            <div className="flex items-baseline gap-2">
+                            <div className="relative flex items-baseline gap-2">
                             <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
-                            <span aria-hidden="true" className="w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                            <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
                             </div>
                         </div>
-                        {result && <Dialog.Trigger asChild><Button variant="ghost" className="h-9 px-2" aria-label="View all states in a table"><Table2 aria-hidden="true" />Table</Button></Dialog.Trigger>}
-                        <Button variant="ghost" className="h-9 w-9 px-0" title="Copy" disabled={!result && !error} aria-label={error ? "Copy error" : "Copy results"} onClick={() => copyToClipboard(error ?? JSON.stringify(result, null, 2))}><Copy aria-hidden="true" /></Button>
+                        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                            {result && <Dialog.Trigger asChild><Button variant="ghost" className="h-9 px-2 has-[>svg]:px-2" aria-label="View all states in a table"><Table2 aria-hidden="true" />Table</Button></Dialog.Trigger>}
+                            <Button variant="ghost" className="h-9 w-9 px-0" title="Copy" disabled={!result && !error} aria-label={error ? "Copy error" : "Copy results"} onClick={() => copyToClipboard(error ?? JSON.stringify(result, null, 2))}><Copy aria-hidden="true" /></Button>
+                        </div>
                     </div>
                     <div className="flex min-h-0 flex-1 flex-col gap-2 px-2 pb-2">
                         <div id="simulation-status" role="status" aria-live="polite" className={stale || (!isLoading && !error) ? "sr-only" : undefined}>
@@ -146,7 +148,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                     <Dialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60 backdrop-blur-sm" />
                                     <Dialog.Content className={modal + " h-[90dvh] max-w-6xl"}>
                                         <div className="flex items-center justify-between gap-3"><Dialog.Title className="text-xl font-semibold">Quantum States</Dialog.Title><Dialog.Close asChild><Button variant="outline" className="h-9">Close</Button></Dialog.Close></div>
-                                        <Dialog.Description className={muted}>Search bit strings across registers. Probabilities range from 0 to 1. {stale ? "Previous run: the code has unrun changes." : "Results for the current code."}</Dialog.Description>
+                                        <Dialog.Description className={muted}>Probabilities range from 0 to 1. {stale ? "Previous run: the code has unrun changes." : "Results for the current code."}</Dialog.Description>
                                         <StateExplorer result={result} sortMode={sortMode} setSortMode={setSortMode} />
                                     </Dialog.Content>
                                 </Dialog.Portal>

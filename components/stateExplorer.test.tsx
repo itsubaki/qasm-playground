@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react"
+import { render, screen } from "@testing-library/react"
 import { renderToStaticMarkup } from "react-dom/server"
 import { describe, expect, it } from "vitest"
 import { StateExplorer } from "./stateExplorer"
@@ -24,20 +24,17 @@ describe("StateExplorer", () => {
         expect(html.match(/<tr\b/g)).toHaveLength(4097)
         expect(html).toContain("|111111111111⟩")
     })
-    it("searches all states and handles empty matches", () => {
-        render(<StateExplorer result={result} sortMode="index" setSortMode={() => {}} />)
-        fireEvent.change(screen.getByRole("textbox"), { target: { value: "000000111111" } })
-        expect(screen.getByRole("status")).toHaveTextContent("1 of 64 states")
-        expect(screen.getByText("|000000111111⟩")).toBeInTheDocument()
-        fireEvent.change(screen.getByRole("textbox"), { target: { value: "222" } })
-        expect(screen.getByText(/No matching states/)).toBeInTheDocument()
+    it("handles an empty simulation result", () => {
+        render(<StateExplorer result={makeResult(0)} sortMode="index" setSortMode={() => {}} />)
+        expect(screen.getByRole("status")).toHaveTextContent("0 states")
+        expect(screen.getByText("The simulator returned no states.")).toBeInTheDocument()
     })
     it("sorts the complete table", () => {
         render(<StateExplorer result={result} sortMode="prob_desc" setSortMode={() => {}} />)
         const rows = (screen.getByRole("table") as HTMLTableElement).rows
         expect(rows[1]).toHaveTextContent("|000000111111⟩")
         expect(rows).toHaveLength(65)
-        expect(screen.getByRole("status")).toHaveTextContent("64 of 64 states")
+        expect(screen.getByRole("status")).toHaveTextContent("64 states")
         expect(screen.queryByRole("button", { name: "Next" })).not.toBeInTheDocument()
         expect(screen.queryByRole("button", { name: "Previous" })).not.toBeInTheDocument()
     })

@@ -1,11 +1,8 @@
-import { useMemo, useState } from "react"
-import { Search } from "lucide-react"
 import { ResultTable } from "@/components/resultTable"
 import { Button } from "@/components/ui/button"
 import type { States } from "@/lib/http"
 
 export type SortMode = "index" | "prob_desc"
-export const fieldClass = "h-9 min-w-0 rounded-md border border-gray-300 bg-white px-3 text-base md:text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
 
 export function StateSort({ value, onChange, id = "state-sort" }: {
     value: SortMode, onChange: (mode: SortMode) => void, id?: string,
@@ -28,28 +25,14 @@ export function StateSort({ value, onChange, id = "state-sort" }: {
 export function StateExplorer({ result, sortMode, setSortMode }: {
     result: States, sortMode: SortMode, setSortMode: (mode: SortMode) => void,
 }) {
-    const [query, setQuery] = useState("")
-    const states = useMemo(() => {
-        const matches = result.states.filter((state) =>
-            state.binaryString.join("").includes(query.trim()))
-        if (sortMode === "prob_desc") matches.sort((a, b) => b.probability - a.probability)
-        return matches
-    }, [result, query, sortMode])
-
     return <div className="flex min-h-0 flex-1 flex-col gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-            <label className="relative min-w-0 flex-1 basis-48">
-                <Search className="absolute left-3 top-2.5 size-4 text-gray-500" aria-hidden="true" />
-                <span className="sr-only">Search basis states</span>
-                <input className={fieldClass + " w-full pl-9"} placeholder="Search bits, e.g. 001" value={query}
-                    onChange={(event) => setQuery(event.target.value)} />
-            </label>
+        <div className="flex flex-wrap items-center justify-end gap-3">
             <StateSort id="dialog-state-sort" value={sortMode} onChange={setSortMode} />
         </div>
         <div className="min-h-0 flex-1 overflow-auto">
-            {states.length > 0 ? <ResultTable result={{ states }} sortMode={sortMode} />
-                : <p className="py-12 text-center text-gray-500 dark:text-gray-400">No matching states. Change your search.</p>}
+            {result.states.length > 0 ? <ResultTable result={result} sortMode={sortMode} />
+                : <p className="py-12 text-center text-gray-500 dark:text-gray-400">The simulator returned no states.</p>}
         </div>
-        <p role="status" className="text-sm">{states.length} of {result.states.length} states</p>
+        <p role="status" className="text-sm">{result.states.length} states</p>
     </div>
 }

@@ -30,7 +30,7 @@ export function Examples({
             ? { defaultValue: examples[0]?.name }
             : { value: examples.find((example) => example.code === code)?.name ?? "" })}>
             <SelectTrigger className={cn(
-                "h-9 w-full sm:w-52",
+                "h-9 w-full sm:w-52 [&>span]:min-w-0 [&>span]:truncate [&>svg]:shrink-0",
                 "bg-white border-gray-300 text-gray-900",
                 "dark:bg-gray-900 dark:border-gray-600 dark:text-white",
             )} aria-label="Choose an example">
