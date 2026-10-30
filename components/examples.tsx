@@ -4,8 +4,12 @@ import { cn } from "@/lib/utils"
 
 export function Examples({
     setCode,
+    code,
+    disabled,
 }: {
     setCode: (code: string) => void,
+    code?: string,
+    disabled?: boolean,
 }) {
     const select = (name: string) => {
         const example = examples.find((ex) => ex.name === name)! // always found
@@ -13,13 +17,15 @@ export function Examples({
     }
 
     return (
-        <Select onValueChange={select} defaultValue={examples[0]?.name} aria-label="Choose an example">
+        <Select onValueChange={select} disabled={disabled} {...(code === undefined
+            ? { defaultValue: examples[0]?.name }
+            : { value: examples.find((example) => example.code === code)?.name ?? "" })}>
             <SelectTrigger className={cn(
-                "w-48",
+                "h-9 w-full sm:w-52",
                 "bg-white border-gray-300 text-gray-900",
                 "dark:bg-gray-900 dark:border-gray-600 dark:text-white",
-            )}>
-                <SelectValue />
+            )} aria-label="Choose an example">
+                <SelectValue placeholder="Custom code" />
             </SelectTrigger>
             <SelectContent className={cn(
                 "max-h-[26rem]",

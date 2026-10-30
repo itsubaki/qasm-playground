@@ -1,4 +1,5 @@
 export interface State {
+    int?: number[]
     probability: number
     amplitude: {
         real?: number

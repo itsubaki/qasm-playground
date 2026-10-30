@@ -10,18 +10,18 @@ export function Header() {
     const toggle = () => { setTheme(isDark ? "light" : "dark"); };
 
     return (
-        <div className="flex justify-between items-center text-center">
-            <div className={`font-bold text-2xl leading-7 text-left text-gray-900 dark:text-white`}>
+        <div className="flex justify-between items-center gap-3 text-center">
+            <div className={`min-w-0 flex-1 font-bold text-lg leading-6 text-left text-gray-900 dark:text-white`}>
                 OpenQASM Playground
             </div>
 
-            <div className="flex gap-1">
+            <div className="flex shrink-0 gap-1">
                 <button
                     title={isDark ? "Switch to light mode" : "Switch to dark mode"}
                     onClick={toggle}
                     className={cn(
                         "flex items-center justify-center rounded",
-                        "w-8 h-8",
+                        "w-9 h-9 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
                         "bg-white text-gray-600 hover:bg-gray-50",
                         "dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-yellow-400",
                     )}
@@ -49,7 +49,7 @@ export function Header() {
                     rel="noopener noreferrer"
                     className={cn(
                         "flex items-center justify-center rounded",
-                        "w-8 h-8",
+                        "w-9 h-9 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500",
                         "bg-background",
                         "dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white",
                     )}
@@ -58,8 +58,8 @@ export function Header() {
                     <Image
                         src={isDark ? "/github-mark-white.svg" : "/github-mark.svg"}
                         alt="GitHub"
-                        width={24}
-                        height={24}
+                        width={20}
+                        height={20}
                     />
                 </a>
             </div>

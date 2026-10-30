@@ -5,11 +5,13 @@ export const useSimulate = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
     const [result, setResult] = useState<States | null>(null)
+    const [submittedCode, setSubmittedCode] = useState<string | null>(null)
 
     const simulate = async (code: string) => {
         if (!code.trim()) return
 
         setIsLoading(true)
+        setSubmittedCode(code)
         setError(null)
         setResult(null)
 
@@ -29,5 +31,6 @@ export const useSimulate = () => {
         result,
         error,
         simulate,
+        submittedCode,
     }
 }

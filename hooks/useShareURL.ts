@@ -5,28 +5,30 @@ import { copyToClipboard } from "@/lib/clipboard"
 export const useShareURL = () => {
     const [sharedURL, setSharedURL] = useState<string | null>(null)
     const [isSharing, setIsSharing] = useState(false)
+    const [sharedCode, setSharedCode] = useState<string | null>(null)
+    const [shareError, setShareError] = useState<string | null>(null)
 
     const share = async (code: string) => {
         if (!code.trim()) return
 
         setIsSharing(true)
+        setShareError(null)
 
         try {
             const snippet = await httpPost<Snippet>("/api/share", { code })
             if (!snippet.id) {
-                console.error("Share: ", snippet)
-                return
+                throw new Error("The server did not return a share link. Please try again.")
             }
 
             const url = `${window.location.origin}/p/${snippet.id}`
-            window.history.pushState(null, "", `/p/${snippet.id}`)
             setSharedURL(url)
+            setSharedCode(code)
 
             await copyToClipboard(url)
             return url
         } catch (err) {
             console.error("Share code:", err)
-            throw err
+            setShareError(err instanceof Error ? err.message : "Could not create a share link. Please try again.")
         } finally {
             setIsSharing(false)
         }
@@ -36,5 +38,7 @@ export const useShareURL = () => {
         share,
         sharedURL,
         isSharing,
+        sharedCode,
+        shareError,
     }
 }

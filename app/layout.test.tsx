@@ -41,6 +41,9 @@ describe("RootLayout", () => {
         expect(metadata).toEqual({
             title: "OpenQASM Playground",
             description: "A playground for OpenQASM in the browser",
+            formatDetection: {
+                telephone: false,
+            },
             icons: {
                 icon: [
                     {

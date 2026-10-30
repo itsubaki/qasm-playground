@@ -6,5 +6,6 @@ export const copyToClipboard = async (text: string) => {
         toast.success("Copied")
     } catch (err) {
         console.error("Copy to clipboard:", err)
+        toast.error("Could not copy. Select the text and copy it manually.")
     }
 }

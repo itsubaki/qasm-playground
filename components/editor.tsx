@@ -5,9 +5,11 @@ import { cn } from "@/lib/utils"
 export function Editor({
     code,
     setCode,
+    errorLine,
 }: {
     code: string,
     setCode: (code: string) => void,
+    errorLine?: number,
 }) {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
     const lineNumbersRef = useRef<HTMLDivElement>(null)
@@ -43,24 +45,25 @@ export function Editor({
 
     return (
         <div className={cn(
-            "relative flex-1 flex overflow-hidden",
-            "min-h-0 border rounded-lg",
+            "relative flex-none md:flex-1 flex overflow-hidden",
+            "h-[22rem] min-h-0 md:h-auto border rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 dark:ring-offset-gray-800",
             "border-gray-300",
             "dark:border-gray-600",
         )}>
-            <div ref={lineNumbersRef} className={cn(
-                "px-3 py-2 flex-shrink-0 text-right",
+            <div ref={lineNumbersRef} aria-hidden="true" className={cn(
+                "px-2 py-2 flex-shrink-0 text-right",
                 "select-none overflow-hidden scrollbar-hide",
                 "bg-gray-50",
                 "dark:bg-gray-900",
             )}>
                 {lineNumbers.map((num) => (
                     <div key={num} className={cn(
-                        "text-base leading-6 lg:text-sm lg:leading-5",
+                        "text-base leading-6 md:text-sm md:leading-5 lg:text-sm lg:leading-5",
                         "min-w-[3ch]",
                         "font-mono",
                         "text-gray-500",
                         "dark:text-gray-400",
+                        num === errorLine && "rounded bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",
                     )}>
                         {num}
                     </div>
@@ -69,6 +72,10 @@ export function Editor({
 
             <Textarea
                 id="code-editor"
+                aria-label="OpenQASM code"
+                aria-describedby="editor-help"
+                aria-invalid={!!errorLine}
+                spellCheck={false}
                 ref={textareaRef}
                 rows={20}
                 value={code}
@@ -78,7 +85,7 @@ export function Editor({
                 placeholder="Enter your OpenQASM code here..."
                 style={{ fontFamily: 'Monaco, "Menlo", "Ubuntu Mono", "Consolas", "Courier New", monospace' }}
                 className={cn(
-                    "text-base leading-6 lg:text-sm lg:leading-5",
+                    "text-base leading-6 md:text-sm md:leading-5 lg:text-sm lg:leading-5",
                     "flex-1 whitespace-pre overflow-x-auto overflow-y-auto resize-none",
                     "font-mono",
                     "border-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0",
