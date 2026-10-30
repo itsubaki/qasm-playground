@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import type { States } from "@/lib/http"
 
 export type SortMode = "index" | "prob_desc"
-export const fieldClass = "h-9 min-w-0 rounded-md border border-gray-300 bg-white px-3 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
+export const fieldClass = "h-9 min-w-0 rounded-md border border-gray-300 bg-white px-3 text-base md:text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-white"
 
 export function StateSort({ value, onChange, id = "state-sort" }: {
     value: SortMode, onChange: (mode: SortMode) => void, id?: string,
