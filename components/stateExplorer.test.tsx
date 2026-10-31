@@ -26,7 +26,6 @@ describe("StateExplorer", () => {
     })
     it("handles an empty simulation result", () => {
         render(<StateExplorer result={makeResult(0)} sortMode="index" setSortMode={() => {}} />)
-        expect(screen.getByRole("status")).toHaveTextContent("0 states")
         expect(screen.getByText("The simulator returned no states.")).toBeInTheDocument()
     })
     it("sorts the complete table", () => {
@@ -34,7 +33,6 @@ describe("StateExplorer", () => {
         const rows = (screen.getByRole("table") as HTMLTableElement).rows
         expect(rows[1]).toHaveTextContent("|000000111111⟩")
         expect(rows).toHaveLength(65)
-        expect(screen.getByRole("status")).toHaveTextContent("64 states")
         expect(screen.queryByRole("button", { name: "Next" })).not.toBeInTheDocument()
         expect(screen.queryByRole("button", { name: "Previous" })).not.toBeInTheDocument()
     })

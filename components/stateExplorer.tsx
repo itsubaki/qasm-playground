@@ -33,6 +33,5 @@ export function StateExplorer({ result, sortMode, setSortMode }: {
             {result.states.length > 0 ? <ResultTable result={result} sortMode={sortMode} />
                 : <p className="py-12 text-center text-gray-500 dark:text-gray-400">The simulator returned no states.</p>}
         </div>
-        <p role="status" className="text-sm">{result.states.length} states</p>
     </div>
 }

@@ -143,7 +143,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                 : error ? <p className="text-sm text-red-700 dark:text-red-300">Run failed. Review the details beside the editor.</p> : null}
                         </div>
                         {result && <>
-                            <div className="flex flex-wrap items-center justify-between gap-2"><p className={muted + " text-xs"}>{result.states.length} states</p><StateSort value={sortMode} onChange={setSortMode} /></div>
+                            <div className="flex items-center justify-end"><StateSort value={sortMode} onChange={setSortMode} /></div>
                                 <Dialog.Portal>
                                     <Dialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60 backdrop-blur-sm" />
                                     <Dialog.Content className={modal + " h-[90dvh] max-w-6xl p-2"}>
