@@ -45,8 +45,8 @@ export function Editor({
 
     return (
         <div className={cn(
-            "relative flex-none md:flex-1 flex overflow-hidden",
-            "h-[31.125rem] min-h-0 md:h-auto border rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 dark:ring-offset-gray-800",
+            "relative flex-1 flex overflow-hidden",
+            "min-h-0 border rounded-lg focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 dark:ring-offset-gray-800",
             "border-gray-300",
             "dark:border-gray-600",
         )}>
