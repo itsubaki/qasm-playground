@@ -1,21 +1,17 @@
 import "./globals.css"
 import type React from "react"
 import { Toaster } from 'react-hot-toast'
-import { Inter } from "next/font/google"
 import type { Metadata } from "next"
 import ThemeProvider from "../providers/theme"
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
-const inter = Inter({
-    subsets: ["latin"],
-    display: "swap",
-    variable: "--font-inter",
-})
-
 export const metadata: Metadata = {
     title: "OpenQASM Playground",
     description: "A playground for OpenQASM in the browser",
+    formatDetection: {
+        telephone: false,
+    },
     icons: {
         icon: [
             {
@@ -43,7 +39,7 @@ export default function RootLayout({
     return (
         <html
             lang="en"
-            className={`${inter.variable} antialiased`}
+            className="antialiased"
             suppressHydrationWarning // To avoid hydration mismatch due to theme change
         >
             <body className="font-sans">

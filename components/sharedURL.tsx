@@ -25,7 +25,7 @@ export function SharedURL({
             onClick={(e) => (e.target as HTMLInputElement).select()}
             readOnly
             className={cn(
-                "h-9 w-48 px-4 py-2",
+                "h-9 w-full min-w-0 px-3 py-2",
                 "text-sm",
                 "rounded-md border outline-none",
                 "focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600/50",

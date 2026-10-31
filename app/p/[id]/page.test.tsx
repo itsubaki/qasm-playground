@@ -11,7 +11,7 @@ vi.mock("next/navigation", () => ({
     useParams: () => mockUseParams(),
 }))
 
-vi.mock("@/app/page", () => ({
+vi.mock("@/components/playground", () => ({
     default: (props: { snippetId?: string }) => mockPlayground(props),
 }))
 

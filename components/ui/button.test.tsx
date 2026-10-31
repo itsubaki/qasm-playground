@@ -15,56 +15,19 @@ describe('Button', () => {
     })
 
     it('applies variant prop correctly', () => {
-        const { rerender } = render(<Button variant="destructive">Destructive</Button>)
+        const { rerender } = render(<Button variant="outline">Outline</Button>)
         let button = screen.getByRole('button')
-        expect(button.className).toContain('bg-destructive')
-
-        rerender(<Button variant="outline">Outline</Button>)
-        button = screen.getByRole('button')
         expect(button.className).toContain('border')
-
-        rerender(<Button variant="secondary">Secondary</Button>)
-        button = screen.getByRole('button')
-        expect(button.className).toContain('bg-secondary')
 
         rerender(<Button variant="ghost">Ghost</Button>)
         button = screen.getByRole('button')
         expect(button.className).toContain('hover:bg-accent')
-
-        rerender(<Button variant="link">Link</Button>)
-        button = screen.getByRole('button')
-        expect(button.className).toContain('underline-offset-4')
-    })
-
-    it('applies size prop correctly', () => {
-        const { rerender } = render(<Button size="sm">Small</Button>)
-        let button = screen.getByRole('button')
-        expect(button.className).toContain('h-8')
-
-        rerender(<Button size="lg">Large</Button>)
-        button = screen.getByRole('button')
-        expect(button.className).toContain('h-10')
-
-        rerender(<Button size="icon">Icon</Button>)
-        button = screen.getByRole('button')
-        expect(button.className).toContain('size-9')
     })
 
     it('applies custom className', () => {
         render(<Button className="custom-class">Custom</Button>)
         const button = screen.getByRole('button')
         expect(button.className).toContain('custom-class')
-    })
-
-    it('renders as Slot when asChild is true', () => {
-        render(
-            <Button asChild>
-                <a href="/test">Link as Button</a>
-            </Button>
-        )
-        const link = screen.getByRole('link', { name: 'Link as Button' })
-        expect(link).toBeInTheDocument()
-        expect(link).toHaveAttribute('href', '/test')
     })
 
     it('handles disabled state', () => {

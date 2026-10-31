@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 import { AmplitudeValue, formatBasis, ProbabilityBar } from "./resultParts"
 
@@ -26,11 +26,11 @@ describe("resultParts", () => {
         expect(container.querySelector("div[style='width: 25%;']")).not.toBeNull()
     })
 
-    it("keeps the minimum visible bar width for zero probability", () => {
+    it("does not show a positive bar for zero probability", () => {
         const { container } = render(<ProbabilityBar probability={0} />)
 
         const bar = container.querySelector("div[style='width: 0%;']")
         expect(bar).not.toBeNull()
-        expect(bar).toHaveClass("min-w-[6px]")
+        expect(bar).not.toHaveClass("min-w-[6px]")
     })
 })

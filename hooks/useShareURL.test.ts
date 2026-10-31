@@ -36,7 +36,7 @@ describe("useShareURL", () => {
         expect(result.current.sharedURL).toBeNull()
     })
 
-    it("should generate share url, pushState, and copy to clipboard", async () => {
+    it("generates and copies a snapshot link without changing the editor URL", async () => {
         vi.mocked(httpPost).mockResolvedValue({ id: "test123" })
         vi.mocked(copyToClipboard).mockResolvedValue(undefined)
         Object.defineProperty(window, "location", {
@@ -51,7 +51,8 @@ describe("useShareURL", () => {
         })
 
         expect(httpPost).toHaveBeenCalledWith("/api/share", { code: "console.log('hello');" })
-        expect(window.history.pushState).toHaveBeenCalledWith(null, "", "/p/test123")
+        expect(window.history.pushState).not.toHaveBeenCalled()
+        expect(result.current.sharedCode).toBe("console.log('hello');")
         expect(copyToClipboard).toHaveBeenCalledWith("https://test.origin/p/test123")
         expect(result.current.sharedURL).toBe("https://test.origin/p/test123")
         expect(url).toBe("https://test.origin/p/test123")
@@ -73,18 +74,19 @@ describe("useShareURL", () => {
         consoleSpy.mockRestore()
     })
 
-    it("should log error and throw when httpPost throws", async () => {
+    it("exposes an error without an unhandled rejection when sharing fails", async () => {
         vi.mocked(httpPost).mockRejectedValue(new Error("network fail"))
         const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => { })
         const { result } = renderHook(() => useShareURL())
 
         await act(async () => {
-            await expect(result.current.share("code")).rejects.toThrow("network fail")
+            await result.current.share("code")
         })
 
         expect(httpPost).toHaveBeenCalled()
         expect(copyToClipboard).not.toHaveBeenCalled()
         expect(result.current.sharedURL).toBeNull()
+        expect(result.current.shareError).toBe("network fail")
         expect(consoleSpy).toHaveBeenCalled()
         consoleSpy.mockRestore()
     })

@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest"
 import { edit } from "@/lib/edit"
 import { httpPost } from "@/lib/http"
 import { examples } from "@/lib/examples"
-import type { Snippet } from "@/lib/http"
 
 vi.mock("@/lib/http", () => ({
     httpPost: vi.fn(),

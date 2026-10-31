@@ -1,6 +1,6 @@
 "use client"
 
-import Playground from "@/app/page"
+import Playground from "@/components/playground"
 import { useParams } from "next/navigation"
 
 export default function EditPage() {

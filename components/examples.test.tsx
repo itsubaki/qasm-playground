@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest"
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import { Examples } from "./examples"
 import { examples } from "@/lib/examples"
 
@@ -13,19 +13,22 @@ describe("Examples component", () => {
         expect(selectTrigger).toHaveTextContent(examples[0].name)
     })
 
-    it("calls setCode, setResult, setError when a new example is selected", async () => {
+    it("reports menu state and loads the selected example", async () => {
         const setCode = vi.fn()
+        const onContentMountChange = vi.fn()
 
-        render(<Examples setCode={setCode} />)
+        render(<Examples setCode={setCode} onContentMountChange={onContentMountChange} />)
 
         const selected = examples[1].name
         const selectTrigger = screen.getByRole("combobox")
         fireEvent.click(selectTrigger)
+        expect(onContentMountChange).toHaveBeenLastCalledWith(true)
 
         const item = screen.getByText(selected)
         fireEvent.click(item)
 
         expect(setCode).toHaveBeenCalledWith(examples[1].code)
+        await waitFor(() => expect(onContentMountChange).toHaveBeenLastCalledWith(false))
     })
 
     it("includes dark mode classes", () => {

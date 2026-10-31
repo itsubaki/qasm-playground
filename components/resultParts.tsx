@@ -41,7 +41,7 @@ export function ProbabilityBar({
     return (
         <div className="rounded-full h-2 w-full bg-gray-200 dark:bg-gray-700">
             <div
-                className="rounded-full h-2 min-w-[6px] bg-blue-500 dark:bg-blue-400"
+                className="rounded-full h-2 bg-blue-500 dark:bg-blue-400"
                 style={{ width: `${probability * 100}%` }}
             />
         </div>

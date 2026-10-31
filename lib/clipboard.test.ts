@@ -4,7 +4,8 @@ import { toast } from "react-hot-toast"
 
 vi.mock("react-hot-toast", () => ({
     toast: {
-        success: vi.fn()
+        success: vi.fn(),
+        error: vi.fn(),
     }
 }))
 
@@ -34,6 +35,7 @@ describe("copyToClipboard", () => {
 
         await copyToClipboard("text")
         expect(consoleSpy).toHaveBeenCalled()
+        expect(toast.error).toHaveBeenCalledWith("Could not copy. Select the text and copy it manually.")
         consoleSpy.mockRestore()
     })
 })
