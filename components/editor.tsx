@@ -75,6 +75,9 @@ export function Editor({
                 aria-label="OpenQASM code"
                 aria-describedby="editor-help"
                 aria-invalid={!!errorLine}
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="none"
                 spellCheck={false}
                 ref={textareaRef}
                 rows={20}
