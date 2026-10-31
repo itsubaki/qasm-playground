@@ -1,4 +1,4 @@
-export interface State {
+interface State {
     int?: number[]
     probability: number
     amplitude: {
@@ -47,7 +47,7 @@ async function throwError(resp: Response) {
                 message += `\n${text}`;
             }
         }
-    } catch (err) {
+    } catch {
         // Silently ignore parsing errors and fall back to basic HTTP error message
     }
 

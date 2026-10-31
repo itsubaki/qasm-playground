@@ -122,15 +122,15 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                 </section>
 
                 <Dialog.Root open={isResultTableOpen} onOpenChange={setIsResultTableOpen}>
-                    <section className={panel} aria-labelledby="results-title">
-                        <div className="flex items-center justify-end gap-2 px-2 pt-2 pb-6 sm:pb-2 dark:border-gray-700">
+                    <section className={panel + " @container/results"} aria-labelledby="results-title">
+                        <div className="flex flex-wrap items-center justify-end gap-2 px-2 pt-2 pb-6 @sm/results:pb-2 dark:border-gray-700">
                             <div className="mr-auto flex h-9 shrink-0 items-end">
                                 <div className="relative flex items-baseline gap-2">
                                     <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
-                                    <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                                    <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 @sm/results:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
                                 </div>
                             </div>
-                            <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                            <div className="flex shrink-0 items-center gap-1 @sm/results:gap-2">
                                 {result && <Dialog.Trigger asChild><Button variant="ghost" className="h-9 px-2 has-[>svg]:px-2" aria-label="View all states in a table"><Table2 aria-hidden="true" />Table</Button></Dialog.Trigger>}
                                 <Button variant="ghost" className="h-9 w-9 px-0" title="Copy" disabled={!result && !error} aria-label={error ? "Copy error" : "Copy results"} onClick={() => copyToClipboard(error ?? JSON.stringify(result, null, 2))}><Copy aria-hidden="true" /></Button>
                             </div>
