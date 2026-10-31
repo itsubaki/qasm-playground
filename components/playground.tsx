@@ -21,7 +21,7 @@ import { edit } from "@/lib/edit"
 
 const panel = "flex min-w-0 flex-col overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800/50"
 const muted = "text-sm text-gray-600 dark:text-gray-400"
-const modal = "fixed left-1/2 top-1/2 z-50 flex w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-2xl dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+const modal = "fixed left-1/2 top-1/2 z-50 flex w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-xl border border-gray-200 bg-white shadow-2xl dark:border-gray-700 dark:bg-gray-900 dark:text-white"
 
 export default function Playground({ snippetId }: { snippetId?: string }) {
     const [code, setCode] = useState("")
@@ -146,9 +146,15 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                             <div className="flex flex-wrap items-center justify-between gap-2"><p className={muted + " text-xs"}>{result.states.length} states</p><StateSort value={sortMode} onChange={setSortMode} /></div>
                                 <Dialog.Portal>
                                     <Dialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60 backdrop-blur-sm" />
-                                    <Dialog.Content className={modal + " h-[90dvh] max-w-6xl"}>
-                                        <div className="flex items-center justify-between gap-3"><Dialog.Title className="text-xl font-semibold">Quantum States</Dialog.Title><Dialog.Close asChild><Button variant="outline" className="h-9">Close</Button></Dialog.Close></div>
-                                        <Dialog.Description className={muted}>Probabilities range from 0 to 1. {stale ? "Previous run: the code has unrun changes." : "Results for the current code."}</Dialog.Description>
+                                    <Dialog.Content className={modal + " h-[90dvh] max-w-6xl p-2"}>
+                                        <div className="flex items-center justify-between gap-3 pb-4 sm:pb-0">
+                                            <div className="relative flex items-baseline gap-2">
+                                                <Dialog.Title className="whitespace-nowrap text-xl font-semibold">Quantum States</Dialog.Title>
+                                                <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                                            </div>
+                                            <Dialog.Close asChild><Button variant="outline" className="h-9">Close</Button></Dialog.Close>
+                                        </div>
+                                        <Dialog.Description className="sr-only">{stale ? "Previous run: the code has unrun changes." : "Results for the current code."}</Dialog.Description>
                                         <StateExplorer result={result} sortMode={sortMode} setSortMode={setSortMode} />
                                     </Dialog.Content>
                                 </Dialog.Portal>
@@ -165,7 +171,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
             <AlertDialog.Root open={pendingCode !== null} onOpenChange={(open) => { if (!open) setPendingCode(null) }}>
                 <AlertDialog.Portal>
                     <AlertDialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60" />
-                    <AlertDialog.Content className={modal + " max-w-md"} onCloseAutoFocus={(event) => { event.preventDefault(); exampleTrigger.current?.querySelector<HTMLButtonElement>("button")?.focus() }}>
+                    <AlertDialog.Content className={modal + " max-w-md p-5"} onCloseAutoFocus={(event) => { event.preventDefault(); exampleTrigger.current?.querySelector<HTMLButtonElement>("button")?.focus() }}>
                         <AlertDialog.Title className="text-lg font-semibold">Replace your edited code?</AlertDialog.Title>
                         <AlertDialog.Description className={muted}>Loading this example will replace your changes. Keep editing to preserve your current code.</AlertDialog.Description>
                         <div className="flex flex-wrap justify-end gap-2"><AlertDialog.Cancel asChild><Button variant="outline" className="h-9">Keep editing</Button></AlertDialog.Cancel><AlertDialog.Action asChild><Button className="h-9 bg-blue-600 text-white hover:bg-blue-700" onClick={() => { if (pendingCode !== null) replaceCode(pendingCode) }}>Load example</Button></AlertDialog.Action></div>
