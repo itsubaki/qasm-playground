@@ -116,34 +116,34 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                     </div>}
                     <div className="flex min-h-0 flex-1 flex-col px-2"><Editor code={code} setCode={setCode} errorLine={errorLine} /></div>
                     <div id="editor-help" className={muted + " flex flex-wrap justify-between gap-2 px-2 py-1.5 text-xs"}>
-                        <span>Tab: indent · Esc: leave editor</span><span>{code.split("\n").length} lines · OpenQASM</span>
+                        <span>Tab: indent · Esc: leave editor</span><span>{code.split("\n").length} lines</span>
                         {isCodeReady && !code.trim() && <span className="w-full">Enter code or choose an example to run or share.</span>}
                     </div>
                 </section>
 
                 <Dialog.Root open={isResultTableOpen} onOpenChange={setIsResultTableOpen}>
-                <section className={panel} aria-labelledby="results-title">
-                    <div className="flex items-center justify-end gap-2 px-2 pt-2 pb-6 sm:pb-2 dark:border-gray-700">
-                        <div className="mr-auto flex h-9 shrink-0 items-end">
-                            <div className="relative flex items-baseline gap-2">
-                            <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
-                            <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                    <section className={panel} aria-labelledby="results-title">
+                        <div className="flex items-center justify-end gap-2 px-2 pt-2 pb-6 sm:pb-2 dark:border-gray-700">
+                            <div className="mr-auto flex h-9 shrink-0 items-end">
+                                <div className="relative flex items-baseline gap-2">
+                                    <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
+                                    <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                                </div>
+                            </div>
+                            <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+                                {result && <Dialog.Trigger asChild><Button variant="ghost" className="h-9 px-2 has-[>svg]:px-2" aria-label="View all states in a table"><Table2 aria-hidden="true" />Table</Button></Dialog.Trigger>}
+                                <Button variant="ghost" className="h-9 w-9 px-0" title="Copy" disabled={!result && !error} aria-label={error ? "Copy error" : "Copy results"} onClick={() => copyToClipboard(error ?? JSON.stringify(result, null, 2))}><Copy aria-hidden="true" /></Button>
                             </div>
                         </div>
-                        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
-                            {result && <Dialog.Trigger asChild><Button variant="ghost" className="h-9 px-2 has-[>svg]:px-2" aria-label="View all states in a table"><Table2 aria-hidden="true" />Table</Button></Dialog.Trigger>}
-                            <Button variant="ghost" className="h-9 w-9 px-0" title="Copy" disabled={!result && !error} aria-label={error ? "Copy error" : "Copy results"} onClick={() => copyToClipboard(error ?? JSON.stringify(result, null, 2))}><Copy aria-hidden="true" /></Button>
-                        </div>
-                    </div>
-                    <div className="flex min-h-0 flex-1 flex-col gap-2 px-2 pb-2">
-                        <div id="simulation-status" role="status" aria-live="polite" className={stale || (!isLoading && !error) ? "sr-only" : undefined}>
-                            {stale ? <p>{isLoading ? "Running an earlier version. Run again when it finishes to include your changes." : "Previous run shown. Run again to update the results."}</p>
-                                : isLoading ? <p className={muted + " flex items-center gap-2"}><LoaderCircle className="size-4 animate-spin" aria-hidden="true" />Waiting for remote server...</p>
-                                : result ? <p className="sr-only">Results match the current code</p>
-                                : error ? <p className="text-sm text-red-700 dark:text-red-300">Run failed. Review the details beside the editor.</p> : null}
-                        </div>
-                        {result && <>
-                            <div className="flex items-center justify-end"><StateSort value={sortMode} onChange={setSortMode} /></div>
+                        <div className="flex min-h-0 flex-1 flex-col gap-2 px-2 pb-2">
+                            <div id="simulation-status" role="status" aria-live="polite" className={stale || (!isLoading && !error) ? "sr-only" : undefined}>
+                                {stale ? <p>{isLoading ? "Running an earlier version. Run again when it finishes to include your changes." : "Previous run shown. Run again to update the results."}</p>
+                                    : isLoading ? <p className={muted + " flex items-center gap-2"}><LoaderCircle className="size-4 animate-spin" aria-hidden="true" />Waiting for remote server...</p>
+                                        : result ? <p className="sr-only">Results match the current code</p>
+                                            : error ? <p className="text-sm text-red-700 dark:text-red-300">Run failed. Review the details beside the editor.</p> : null}
+                            </div>
+                            {result && <>
+                                <div className="flex items-center justify-end"><StateSort value={sortMode} onChange={setSortMode} /></div>
                                 <Dialog.Portal>
                                     <Dialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60 backdrop-blur-sm" />
                                     <Dialog.Content className={modal + " h-[90dvh] max-w-6xl p-2"}>
@@ -158,12 +158,12 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                         <StateExplorer result={result} sortMode={sortMode} setSortMode={setSortMode} />
                                     </Dialog.Content>
                                 </Dialog.Portal>
-                            <div className="min-h-0 space-y-2 overflow-y-auto"><Result result={result} sortMode={sortMode} /></div>
-                            {result.states.length === 0 && <p className={muted}>The simulator returned no states. Review your circuit and run again.</p>}
-                        </>}
-                        {!result && !error && !isLoading && <p className={muted + " py-8 text-center text-xs"}>Run your OpenQASM code to see quantum states here</p>}
-                    </div>
-                </section>
+                                <div className="min-h-0 space-y-2 overflow-y-auto"><Result result={result} sortMode={sortMode} /></div>
+                                {result.states.length === 0 && <p className={muted}>The simulator returned no states. Review your circuit and run again.</p>}
+                            </>}
+                            {!result && !error && !isLoading && <p className={muted + " py-8 text-center text-xs"}>Run your OpenQASM code to see quantum states here</p>}
+                        </div>
+                    </section>
                 </Dialog.Root>
             </div>
             <div className="mt-2 py-2"><Notes /></div>
