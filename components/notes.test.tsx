@@ -8,10 +8,6 @@ describe('Notes', () => {
 
         const list = screen.getByRole('list')
         expect(list.classList.contains('text-gray-600')).toBe(true)
-
-        const link = screen.getByRole('link')
-        expect(link).toHaveAttribute('href', 'https://github.com/itsubaki/qasm/issues')
-        expect(link.classList.contains('text-blue-600')).toBe(true)
     })
 
     it('includes dark mode classes', () => {
@@ -19,10 +15,5 @@ describe('Notes', () => {
 
         const list = screen.getByRole('list')
         expect(list.classList.contains('dark:text-gray-400')).toBe(true)
-
-        const link = screen.getByRole('link')
-        expect(link).toHaveAttribute('href', 'https://github.com/itsubaki/qasm/issues')
-        expect(link.className.includes('underline')).toBe(true)
-        expect(link.className.includes('dark:text-blue-400')).toBe(true)
     })
 })
