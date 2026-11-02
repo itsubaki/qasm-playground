@@ -36,6 +36,10 @@ describe("call", () => {
 
         const req = new NextRequest("http://localhost:3000/api/simulate", {
             method: "POST",
+            headers: {
+                "x-real-ip": "203.0.113.1",
+                "user-agent": "Quasar test client",
+            },
             body: JSON.stringify({ code: "test code" }),
         })
 
@@ -48,7 +52,11 @@ describe("call", () => {
             "https://example.com/quasar.v1.QuasarService/Simulate",
             {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Quasar-Client-IP": "203.0.113.1",
+                    "User-Agent": "Quasar test client",
+                },
                 body: JSON.stringify({ code: "test code" }),
             }
         )

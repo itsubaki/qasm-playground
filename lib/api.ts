@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { ipAddress } from "@vercel/functions"
 
 export async function edit(request: NextRequest) {
     return call(request, API.Edit);
@@ -46,11 +47,23 @@ async function call(
             )
         }
 
+        // headers
+        const headers: Record<string, string> = {
+            "Content-Type": "application/json",
+        }
+
+        const ip = ipAddress(request)
+        const userAgent = request.headers.get("user-agent")
+        if (ip) headers["X-Quasar-Client-IP"] = ip
+        if (userAgent) headers["User-Agent"] = userAgent
+
+        // request
         const resp = await fetch(`${SERVICE_URL}/quasar.v1.QuasarService/${path}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers,
             body: JSON.stringify({ [key]: value }),
         })
+
         if (resp.ok) {
             return NextResponse.json(await resp.json())
         }
