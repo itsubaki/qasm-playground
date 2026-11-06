@@ -93,7 +93,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                         <span className="sr-only">{dirty ? "Edited code" : "Example circuit"}</span>
                         <Button onClick={() => simulate(code)} disabled={isLoading || !isCodeReady || !code.trim()} aria-busy={isLoading}
                             aria-describedby="simulation-status"
-                            title={stale ? "Unrun changes — run to update results" : "Run current code"}
+                            title={stale ? "Code changed since last run — run to update results" : "Run current code"}
                             className="h-9 bg-blue-600 px-5 text-white hover:bg-blue-700">
                             {isLoading ? <LoaderCircle className="animate-spin" aria-hidden="true" /> : <Play aria-hidden="true" />}Run
                         </Button>
@@ -103,7 +103,7 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                     </div>
 
                     {sharedURL && <div className="mx-2 mb-2 space-y-1">
-                        <p className={muted} role="status">{staleShare ? "This link contains an earlier version. Share again to include your changes." : "Share link matches the current code."}</p>
+                        <p className={staleShare ? "text-sm text-amber-800 dark:text-amber-300" : muted} role="status">{staleShare ? "This link contains an earlier version. Share again to include your changes." : "Share link matches the current code."}</p>
                         <div className="flex min-w-0 gap-2"><SharedURL sharedURL={sharedURL} /><Button variant="outline" className="h-9" aria-label="Copy share link" onClick={() => copyToClipboard(sharedURL)}><Copy aria-hidden="true" /></Button></div>
                     </div>}
                     {shareError && <p role="alert" className="mx-2 mb-2 rounded-lg bg-red-50 p-3 text-sm text-red-800 dark:bg-red-950/50 dark:text-red-200">Could not create a share link. {shareError}</p>}
@@ -123,11 +123,11 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
 
                 <Dialog.Root open={isResultTableOpen} onOpenChange={setIsResultTableOpen}>
                     <section className={panel + " @container/results"} aria-labelledby="results-title">
-                        <div className="flex flex-wrap items-center justify-end gap-2 px-2 pt-2 pb-6 @sm/results:pb-2 dark:border-gray-700">
+                        <div className="flex flex-wrap items-center justify-end gap-2 px-2 pt-2 pb-6 @lg/results:pb-2 dark:border-gray-700">
                             <div className="mr-auto flex h-9 shrink-0 items-end">
                                 <div className="relative flex items-baseline gap-2">
                                     <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
-                                    <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 @sm/results:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                                    <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 @lg/results:static dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
                                 </div>
                             </div>
                             <div className="flex shrink-0 items-center gap-1 @sm/results:gap-2">
@@ -150,11 +150,11 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                         <div className="flex items-center justify-between gap-3 pb-4 sm:pb-0">
                                             <div className="relative flex items-baseline gap-2">
                                                 <Dialog.Title className="whitespace-nowrap text-xl font-semibold">Quantum States</Dialog.Title>
-                                                <span aria-hidden="true" className="absolute top-full left-0 w-20 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Unrun changes" : null}</span>
+                                                <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
                                             </div>
                                             <Dialog.Close asChild><Button variant="outline" className="h-9">Close</Button></Dialog.Close>
                                         </div>
-                                        <Dialog.Description className="sr-only">{stale ? "Previous run: the code has unrun changes." : "Results for the current code."}</Dialog.Description>
+                                        <Dialog.Description className="sr-only">{stale ? "Code changed since last run. Previous run shown." : "Results for the current code."}</Dialog.Description>
                                         <StateExplorer result={result} sortMode={sortMode} setSortMode={setSortMode} />
                                     </Dialog.Content>
                                 </Dialog.Portal>
