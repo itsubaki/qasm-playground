@@ -13,8 +13,8 @@ export const examples: Example[] = [
 
 OPENQASM 3.0;
 
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
+gate h q { U(pi/2.0, 0, pi) q; gphase(-pi/4); }
+gate cx c, t { ctrl @ U(pi, 0, pi) c, t; ctrl @ gphase(-pi/2) c; }
 
 qubit[2] q;
 reset q;
@@ -32,8 +32,8 @@ cx q[0], q[1];
 
 OPENQASM 3.0;
 
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
+gate h q { U(pi/2.0, 0, pi) q; gphase(-pi/4); }
+gate cx c, t { ctrl @ U(pi, 0, pi) c, t; ctrl @ gphase(-pi/2) c; }
 gate cz c, t { ctrl @ U(0, pi, 0) c, t; }
 
 qubit psi;
@@ -46,6 +46,7 @@ reset t;
 
 // psi = 0.92|0> + 0.27(1+i))|1>
 U(pi/4, pi/4, pi/4) psi;
+gphase(-pi/8);
 
 h a;
 cx a, t;
@@ -73,8 +74,8 @@ measure a;
 
 OPENQASM 3.0;
 
-gate h q { U(pi/2, 0, pi) q; }
-gate x q { U(pi, 0, pi) q; }
+gate h q { U(pi/2, 0, pi) q; gphase(-pi/4); }
+gate x q { U(pi, 0, pi) q; gphase(-pi/2); }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
 def inv_qft(qubit[3] q) {
@@ -118,8 +119,8 @@ inv_qft(c);
 
 OPENQASM 3.0;
 
-gate h q { U(pi/2, 0, pi) q; }
-gate x q { U(pi, 0, pi) q; }
+gate h q { U(pi/2, 0, pi) q; gphase(-pi/4); }
+gate x q { U(pi, 0, pi) q; gphase(-pi/2); }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
 def inv_qft(qubit[7] q) {
@@ -199,10 +200,10 @@ inv_qft(c);
 
 OPENQASM 3.0;
 
-gate x q { U(pi, 0, pi) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx c, t { ctrl @ U(pi, 0, pi) c, t; }
-gate ccx c0, c1, t { ctrl(2) @ U(pi, 0, pi) c0, c1, t; }
+gate x q { U(pi, 0, pi) q; gphase(-pi/2); }
+gate h q { U(pi/2.0, 0, pi) q; gphase(-pi/4); }
+gate cx c, t { ctrl @ U(pi, 0, pi) c, t; ctrl @ gphase(-pi/2) c; }
+gate ccx c0, c1, t { ctrl(2) @ U(pi, 0, pi) c0, c1, t; ctrl(2) @ gphase(-pi/2) c0, c1; }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
 
 def modexp(qubit[3] q, qubit[4] a) {
@@ -259,12 +260,12 @@ measure a;
 
 OPENQASM 3.0;
 
-gate x q { U(pi, 0, pi) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
-gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
+gate x q { U(pi, 0, pi) q; gphase(-pi/2); }
+gate h q { U(pi/2.0, 0, pi) q; gphase(-pi/4); }
+gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; ctrl @ gphase(-pi/2) q0; }
 gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate cccz c0, c1, c2, t { ctrl(3) @ U(0, 0, pi) c0, c1, c2, t; }
-gate ccccx c0, c1, c2, c3, t { ctrl(4) @ U(pi, 0, pi) c0, c1, c2, c3, t; }
+gate ccccx c0, c1, c2, c3, t { ctrl(4) @ U(pi, 0, pi) c0, c1, c2, c3, t; ctrl(4) @ gphase(-pi/2) c0, c1, c2, c3; }
 
 def oracle(qubit[4] r, qubit[4] s, qubit a) {
     xor r[0], r[1], s[0];
@@ -334,13 +335,13 @@ measure a;
 
 OPENQASM 3.0;
 
-gate x q { U(pi, 0, pi) q; }
-gate h q { U(pi/2.0, 0, pi) q; }
+gate x q { U(pi, 0, pi) q; gphase(-pi/2); }
+gate h q { U(pi/2.0, 0, pi) q; gphase(-pi/4); }
 gate cr(theta) c, t { ctrl @ U(0, 0, theta) c, t; }
-gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; }
+gate cx q0, q1 { ctrl @ U(pi, 0, pi) q0, q1; ctrl @ gphase(-pi/2) q0; }
 gate xor q0, q1, q2 { cx q0, q2; cx q1, q2; }
 gate ccccz c0, c1, c2, c3, t { ctrl(4) @ U(0, 0, pi) c0, c1, c2, c3, t; }
-gate cccccx c0, c1, c2, c3, c4, t { ctrl(5) @ U(pi, 0, pi) c0, c1, c2, c3, c4, t; }
+gate cccccx c0, c1, c2, c3, c4, t { ctrl(5) @ U(pi, 0, pi) c0, c1, c2, c3, c4, t; ctrl(5) @ gphase(-pi/2) c0, c1, c2, c3, c4; }
 
 // The oracle flips the phase when the following uniqueness constraints are satisfied:
 // a != b, c != d, a != c, and b != d.
@@ -439,7 +440,7 @@ measure a;
 
 OPENQASM 3.0;
 
-gate Rx(theta) q { U(theta, -pi/2, pi/2) q; }
+gate Rx(theta) q { U(theta, -pi/2, pi/2) q; gphase(-theta/2); }
 gate W(theta) q { Rx(-2*theta) q; }
 gate S(phi) q { U(0, 0, -2*phi) q; }
 
