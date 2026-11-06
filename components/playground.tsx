@@ -123,11 +123,11 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
 
                 <Dialog.Root open={isResultTableOpen} onOpenChange={setIsResultTableOpen}>
                     <section className={panel + " @container/results"} aria-labelledby="results-title">
-                        <div className="flex flex-wrap items-center justify-end gap-2 px-2 pt-2 pb-6 @lg/results:pb-2 dark:border-gray-700">
+                        <div className="flex flex-wrap items-center justify-end gap-2 px-2 pt-2 pb-6 dark:border-gray-700">
                             <div className="mr-auto flex h-9 shrink-0 items-end">
                                 <div className="relative flex items-baseline gap-2">
                                     <h2 id="results-title" className="whitespace-nowrap text-lg font-semibold">Quantum States</h2>
-                                    <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 @lg/results:static dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
+                                    <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
                                 </div>
                             </div>
                             <div className="flex shrink-0 items-center gap-1 @sm/results:gap-2">
@@ -147,10 +147,10 @@ export default function Playground({ snippetId }: { snippetId?: string }) {
                                 <Dialog.Portal>
                                     <Dialog.Overlay className="fixed inset-0 z-50 bg-gray-950/60 backdrop-blur-sm" />
                                     <Dialog.Content className={modal + " h-[90dvh] max-w-6xl p-2"}>
-                                        <div className="flex items-center justify-between gap-3 pb-4 sm:pb-0">
+                                        <div className="flex items-center justify-between gap-3 pb-4">
                                             <div className="relative flex items-baseline gap-2">
                                                 <Dialog.Title className="whitespace-nowrap text-xl font-semibold">Quantum States</Dialog.Title>
-                                                <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 sm:static dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
+                                                <span aria-hidden="true" className="absolute top-full left-0 w-44 shrink-0 whitespace-nowrap text-[11px] font-medium text-amber-800 dark:text-amber-300">{stale ? "Code changed since last run" : null}</span>
                                             </div>
                                             <Dialog.Close asChild><Button variant="outline" className="h-9">Close</Button></Dialog.Close>
                                         </div>
